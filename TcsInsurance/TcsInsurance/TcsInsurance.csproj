@@ -107,7 +107,13 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Models\GetProductsInputParam.cs" />
+    <Compile Include="Models\GetProductsOutputParam.cs" />
+    <Compile Include="Models\InvestParam.cs" />
+    <Compile Include="Models\PolicyTermParam.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
+    <Compile Include="Models\RedemptionAmountParam.cs" />
+    <Compile Include="Models\RiskParam.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -125,7 +131,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\VirtuClient\VirtuClient.csproj">
+      <Project>{0cbc364b-990a-4924-b60e-58eb6c8dd3ab}</Project>
+      <Name>VirtuClient</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
