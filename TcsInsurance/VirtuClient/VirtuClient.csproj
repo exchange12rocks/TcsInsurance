@@ -55,7 +55,6 @@
     <Compile Include="Models\Core\VirtuResult.cs" />
     <Compile Include="Models\Core\VirtuRootResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Models\Core\SimpleResult.cs" />
     <Compile Include="VirtuClient.cs" />
   </ItemGroup>
   <ItemGroup>

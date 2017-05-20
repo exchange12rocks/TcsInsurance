@@ -8,23 +8,23 @@ namespace VirtuClient
 {
     public class VirtuClient
     {
-        protected Uri baseUrl { get; set; }
-        protected AuthenticationResult authenticationResult { get; set; }
+        protected Uri BaseUrl { get; set; }
+        protected AuthenticationResult AuthenticationResult { get; set; }
         public VirtuClient(Uri baseUrl, AuthenticationResult authenticationResult = null)
         {
-            this.baseUrl = baseUrl;
-            this.authenticationResult = authenticationResult;
+            this.BaseUrl = baseUrl;
+            this.AuthenticationResult = authenticationResult;
         }
         protected RestClient getClient()
         {
-            return new RestClient(baseUrl);
+            return new RestClient(BaseUrl);
         }
         protected IRestRequest getNewRequest(string resource, Method method)
         {
             IRestRequest result = new RestRequest(resource, method);
-            if (this.authenticationResult?.Cookie != null)
+            if (this.AuthenticationResult?.Cookie != null)
             {
-                result.AddCookie(this.authenticationResult.Cookie.Name, this.authenticationResult.Cookie.Value);
+                result.AddCookie(this.AuthenticationResult.Cookie.Name, this.AuthenticationResult.Cookie.Value);
             }
             return result;
         }
@@ -100,7 +100,7 @@ namespace VirtuClient
         }
         public void Authenticate(AuthenticationInputParams parameters)
         {
-            this.authenticationResult = this.GetAuthentication(parameters);
+            this.AuthenticationResult = this.GetAuthentication(parameters);
         }
 
         public GetProductResult[] GetProducts()
