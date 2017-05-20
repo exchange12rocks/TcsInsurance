@@ -146,7 +146,6 @@ namespace VirtuClient
         {
             return this.GetClassifier(productId, "33DB538C-6EDC-4708-8ABE-E90345F5361E");
         }
-
         public GetTariffResult[] GetBuyoutTariffs(string productId, bool decodeClassified = true)
         {
             IRestRequest request = this.getNewRequest("/ClientCardFeature/Product/Tariffs.dat?id=b9744a90-3196-c95a-ec62-268caf4ebfbb", Method.GET);
@@ -157,15 +156,7 @@ namespace VirtuClient
                 decodeClassified = decodeClassified,
             }));
             IRestResponse response = this.execute(request);
-
-            //return this.Mapper.Map<GetTariffOutput[], GetTariffResult[]>(this.GetResult<GetTariffOutput[]>(response));
-            return this.GetResult<GetTariffOutput[]>(response)
-                .Select(output => new GetTariffResult()
-                {
-                    InsPeriod = output.InsPeriod.value,
-                    InsSum = output.InsSum.value,
-                    Year = output.Year.value,
-                }).ToArray();
+            return this.Mapper.Map<GetTariffOutput[], GetTariffResult[]>(this.GetResult<GetTariffOutput[]>(response));
         }
     }
 }
