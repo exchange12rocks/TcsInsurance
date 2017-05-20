@@ -48,10 +48,14 @@
   <ItemGroup>
     <Compile Include="Models\AuthenticationInputParams.cs" />
     <Compile Include="Models\AuthenticationResult.cs" />
-    <Compile Include="Models\FailedResultException.cs" />
+    <Compile Include="Models\Core\VirtuException.cs" />
     <Compile Include="Models\GetProductsResult.cs" />
+    <Compile Include="Models\Core\IVirtuResult.cs" />
+    <Compile Include="Models\Core\VirtuResponceException.cs" />
+    <Compile Include="Models\Core\VirtuResult.cs" />
+    <Compile Include="Models\Core\VirtuRootResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Models\SimpleResult.cs" />
+    <Compile Include="Models\Core\SimpleResult.cs" />
     <Compile Include="VirtuClient.cs" />
   </ItemGroup>
   <ItemGroup>

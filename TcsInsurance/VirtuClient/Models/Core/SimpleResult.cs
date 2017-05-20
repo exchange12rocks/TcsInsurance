@@ -1,4 +1,4 @@
-﻿namespace VirtuClient.Models
+﻿namespace VirtuClient.Models.Core
 {
     public class SimpleResult
     {
@@ -14,7 +14,7 @@
         {
             if(!this.Success)
             {
-                throw new FailedResultException();
+                throw new VirtuException();
             }
         }
     }
