@@ -54,6 +54,7 @@
     <Compile Include="Models\GetTariffResult.cs" />
     <Compile Include="Models\GetTariffOutput.cs" />
     <Compile Include="Models\GetTariffValueOutput.cs" />
+    <Compile Include="Models\Policy.cs" />
     <Compile Include="VirtuMapper.cs" />
     <Compile Include="Models\AuthenticationInputParams.cs" />
     <Compile Include="Models\AuthenticationResult.cs" />
