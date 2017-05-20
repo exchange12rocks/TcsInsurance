@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.Http;
+using VirtuClient;
 using VirtuClient.Models;
 namespace TcsInsurance.Controllers
 {
@@ -9,8 +10,8 @@ namespace TcsInsurance.Controllers
         [ActionName("GetProducts")]
         public IHttpActionResult GetProducts()
         {
-            var virtuClient = new VirtuClient.VirtuClient(new Uri("https://uralsiblife.virtusystems.ru"));
-            virtuClient.Authenticate(new AuthenticationInputParams()
+            var virtuClient = new VirtuClient.VirtuClient(new Uri("https://uralsiblife.virtusystems.ru"), VirtuMapper.Instance);
+            virtuClient.Authenticate(new AuthenticationInput()
             {
                 userName = "site_integr",
                 password = "es4zMJ5JZs",

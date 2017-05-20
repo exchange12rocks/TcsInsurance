@@ -8,10 +8,12 @@ namespace VirtuClient
 {
     public class VirtuClient
     {
+        protected VirtuMapper Mapper { get; set; }
         protected Uri BaseUrl { get; set; }
         protected AuthenticationResult AuthenticationResult { get; set; }
-        public VirtuClient(Uri baseUrl, AuthenticationResult authenticationResult = null)
+        public VirtuClient(Uri baseUrl, VirtuMapper mapper, AuthenticationResult authenticationResult = null)
         {
+            this.Mapper = mapper;
             this.BaseUrl = baseUrl;
             this.AuthenticationResult = authenticationResult;
         }
@@ -61,7 +63,6 @@ namespace VirtuClient
             }
             return response.Content;
         }
-
         protected T GetResult<T>(VirtuResult<T> result)
         {
             if (result == null)
@@ -82,8 +83,7 @@ namespace VirtuClient
         {
             return this.GetResult<T>(this.getContent(response));
         }
-        
-        public AuthenticationResult GetAuthentication(AuthenticationInputParams parameters)
+        public AuthenticationResult GetAuthentication(AuthenticationInput parameters)
         {
             IRestRequest request = this.getNewRequest("Authentication_JSON_AppService.axd/Login", Method.POST);
             request.AddJsonBody(parameters);
@@ -98,7 +98,7 @@ namespace VirtuClient
                 Cookie = response.Cookies.Single(),
             };
         }
-        public void Authenticate(AuthenticationInputParams parameters)
+        public void Authenticate(AuthenticationInput parameters)
         {
             this.AuthenticationResult = this.GetAuthentication(parameters);
         }
@@ -107,7 +107,7 @@ namespace VirtuClient
         {
             IRestRequest request = this.getNewRequest("ClientCardFeature/product/list.dat?id=b9744a90-3196-c95a-ec62-268caf4ebfbb", Method.GET);
             IRestResponse response = this.execute(request);
-            return this.GetResult<GetProductResult[]>(response);
+            return this.Mapper.Map<GetProductOutput[], GetProductResult[]>(this.GetResult<GetProductOutput[]>(response));
         }
     }
 }

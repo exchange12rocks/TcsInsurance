@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=6.0.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.6.0.2\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -46,10 +49,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="VirtuMapper.cs" />
     <Compile Include="Models\AuthenticationInputParams.cs" />
     <Compile Include="Models\AuthenticationResult.cs" />
     <Compile Include="Models\Core\VirtuException.cs" />
     <Compile Include="Models\GetProductsResult.cs" />
+    <Compile Include="Models\GetProductOutput.cs" />
     <Compile Include="Models\Core\IVirtuResult.cs" />
     <Compile Include="Models\Core\VirtuResponceException.cs" />
     <Compile Include="Models\Core\VirtuResult.cs" />
