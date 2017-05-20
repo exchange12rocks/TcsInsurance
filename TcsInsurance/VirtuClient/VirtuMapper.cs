@@ -22,6 +22,8 @@ namespace VirtuClient
             this.mapper = new MapperConfiguration((config) =>
             {
                 config.CreateMap<GetProductOutput, GetProductResult>();
+                config.CreateMap<GetClassifierOutput, GetClassifierResult>();
+                config.CreateMap<GetTariffOutput, GetTariffResult>();
             }).CreateMapper();
         }
         public T2 Map<T1, T2>(T1 source)

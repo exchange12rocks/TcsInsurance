@@ -18,7 +18,18 @@ namespace TcsInsurance.Controllers
             });
             var products = virtuClient.GetProducts();
             var product = products.Single(A => A.Name == "Верное решение");
-            return Json(products, JsonRequestBehavior.AllowGet);
+            var test = new
+            {
+                GetRisks = virtuClient.GetRisks(product.Id),
+                GetStrategies = virtuClient.GetStrategies(product.Id),
+                GetInsuranceSums = virtuClient.GetInsuranceSums(product.Id),
+                GetInsurancePeriods = virtuClient.GetInsurancePeriods(product.Id),
+                GetDocumentTypes = virtuClient.GetDocumentTypes(product.Id),
+                GetCurrencies = virtuClient.GetCurrencies(product.Id),
+                InsuredDocumentTypes = virtuClient.InsuredDocumentTypes(product.Id),
+                GetBuyoutTariffs = virtuClient.GetBuyoutTariffs(product.Id),
+            };
+            return Json(test, JsonRequestBehavior.AllowGet);
         }
     }
 }

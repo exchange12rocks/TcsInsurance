@@ -34,7 +34,6 @@ namespace VirtuClient
         {
             return this.getClient().Execute(request);
         }
-
         private T deserializeContent<T>(string content)
         {
             if (string.IsNullOrEmpty(content))
@@ -89,7 +88,7 @@ namespace VirtuClient
             request.AddJsonBody(parameters);
             IRestResponse response = this.execute(request);
             bool? success = this.deserializeContent<VirtuRootResult<bool>>(this.getContent(response))?.d;
-            if(success != true)
+            if (success != true)
             {
                 throw new VirtuResponceException($"success: {success?.ToString() ?? "null"}");
             }
@@ -102,12 +101,71 @@ namespace VirtuClient
         {
             this.AuthenticationResult = this.GetAuthentication(parameters);
         }
-
         public GetProductResult[] GetProducts()
         {
-            IRestRequest request = this.getNewRequest("ClientCardFeature/product/list.dat?id=b9744a90-3196-c95a-ec62-268caf4ebfbb", Method.GET);
+            IRestRequest request = this.getNewRequest("/ClientCardFeature/product/list.dat?id=b9744a90-3196-c95a-ec62-268caf4ebfbb", Method.GET);
             IRestResponse response = this.execute(request);
             return this.Mapper.Map<GetProductOutput[], GetProductResult[]>(this.GetResult<GetProductOutput[]>(response));
+        }
+        protected GetClassifierResult[] GetClassifier(string productId, string classifierId)
+        {
+            IRestRequest request = this.getNewRequest("/ClassifierFeature/Classifier.dat?id=b9744a90-3196-c95a-ec62-268caf4ebfbb", Method.GET);
+            request.AddHeader("x-vs-parameters", JsonConvert.SerializeObject(new
+            {
+                productId = productId,
+                id = classifierId,
+            }));
+            IRestResponse response = this.execute(request);
+            return this.Mapper.Map<GetClassifierOutput[], GetClassifierResult[]>(this.GetResult<GetClassifierOutput[]>(response));
+        }
+        public GetClassifierResult[] GetRisks(string productId)
+        {
+            return this.GetClassifier(productId, "E6BEEA0B-C8FD-4B69-B50E-68DB8D7AEB75");
+        }
+        public GetClassifierResult[] GetInsurancePeriods(string productId)
+        {
+            return this.GetClassifier(productId, "A31BF043-5340-48E2-AB12-430412E9DB82");
+        }
+        public GetClassifierResult[] GetDocumentTypes(string productId)
+        {
+            return this.GetClassifier(productId, "3B07454C-9535-48AF-A344-780D6DED4F77");
+        }
+        public GetClassifierResult[] GetInsuranceSums(string productId)
+        {
+            return this.GetClassifier(productId, "E3F65177-9603-40C5-BD1A-DDFF5DAB5598");
+        }
+        public GetClassifierResult[] GetCurrencies(string productId)
+        {
+            return this.GetClassifier(productId, "63665791-125E-46E7-878B-7E625EA62803");
+        }
+        public GetClassifierResult[] GetStrategies(string productId)
+        {
+            return this.GetClassifier(productId, "12EB0CBE-7332-4878-B6A9-E78BC5767F74");
+        }
+        public GetClassifierResult[] InsuredDocumentTypes(string productId)
+        {
+            return this.GetClassifier(productId, "33DB538C-6EDC-4708-8ABE-E90345F5361E");
+        }
+
+        public GetTariffResult[] GetBuyoutTariffs(string productId, bool decodeClassified = true)
+        {
+            IRestRequest request = this.getNewRequest("/ClientCardFeature/Product/Tariffs.dat?id=b9744a90-3196-c95a-ec62-268caf4ebfbb", Method.GET);
+            request.AddHeader("x-vs-parameters", JsonConvert.SerializeObject(new
+            {
+                tariffId = "buyout",
+                productId = productId,
+                decodeClassified = decodeClassified,
+            }));
+            IRestResponse response = this.execute(request);
+
+            //return this.Mapper.Map<GetTariffOutput[], GetTariffResult[]>(this.GetResult<GetTariffOutput[]>(response));
+            return this.GetResult<GetTariffOutput[]>(response)
+                .Select(output => new GetTariffResult()
+                {
+                    InsPeriod = output.InsPeriod.value,
+                    InsSum = output.InsSum.value,
+                    Year = output.Year.value,
+                }).ToArray();
         }
     }
 }
