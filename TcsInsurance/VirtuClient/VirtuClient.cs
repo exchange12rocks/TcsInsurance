@@ -158,5 +158,15 @@ namespace VirtuClient
             IRestResponse response = this.execute(request);
             return this.Mapper.Map<GetTariffOutput[], GetTariffResult[]>(this.GetResult<GetTariffOutput[]>(response));
         }
+        public GetPrintformsResult[] GetPrintforms(string productId)
+        {
+            IRestRequest request = this.getNewRequest("/ClientCardFeature/product/Views.dat?id=b9744a90-3196-c95a-ec62-268caf4ebfbb", Method.GET);
+            request.AddHeader("x-vs-parameters", JsonConvert.SerializeObject(new
+            {
+                productId = productId,
+            }));
+            IRestResponse response = this.execute(request);
+            return this.Mapper.Map<GetPrintformsOutput[], GetPrintformsResult[]>(this.GetResult<GetPrintformsOutput[]>(response));
+        }
     }
 }

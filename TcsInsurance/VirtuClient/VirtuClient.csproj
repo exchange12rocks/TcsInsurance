@@ -49,6 +49,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\GetPrintformsOutput.cs" />
+    <Compile Include="Models\GetPrintformsResult.cs" />
     <Compile Include="Models\GetClassifierResult.cs" />
     <Compile Include="Models\GetClassifierOutput.cs" />
     <Compile Include="Models\GetTariffResult.cs" />

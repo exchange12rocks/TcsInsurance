@@ -27,6 +27,8 @@ namespace VirtuClient
                     .ForMember(o => o.InsPeriod, b => b.MapFrom(z => z.InsPeriod.value))
                     .ForMember(o => o.InsSum, b => b.MapFrom(z => z.InsSum.value))
                     .ForMember(o => o.Year, b => b.MapFrom(z => z.Year.value));
+                config.CreateMap<GetPrintformsOutput, GetPrintformsResult>();
+                config.CreateMap<GetPrintformsOutputValue, GetPrintformsResultValue>();
             }).CreateMapper();
         }
         public T2 Map<T1, T2>(T1 source)
