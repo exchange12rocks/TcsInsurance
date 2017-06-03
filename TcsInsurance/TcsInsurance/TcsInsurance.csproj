@@ -135,6 +135,10 @@
     <Folder Include="Views\Home\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TinkoffClient\TinkoffClient.csproj">
+      <Project>{ae7d52bc-fe45-43a5-bdc8-0b64eb6387d0}</Project>
+      <Name>TinkoffClient</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VirtuClient\VirtuClient.csproj">
       <Project>{0cbc364b-990a-4924-b60e-58eb6c8dd3ab}</Project>
       <Name>VirtuClient</Name>

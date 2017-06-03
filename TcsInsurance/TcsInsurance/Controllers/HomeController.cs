@@ -28,6 +28,7 @@ namespace TcsInsurance.Controllers
                 GetCurrencies = virtuClient.GetCurrencies(product.Id),
                 InsuredDocumentTypes = virtuClient.InsuredDocumentTypes(product.Id),
                 GetBuyoutTariffs = virtuClient.GetBuyoutTariffs(product.Id),
+                PrintForms = virtuClient.GetPrintforms(product.Id),
             };
             return Json(test, JsonRequestBehavior.AllowGet);
         }
