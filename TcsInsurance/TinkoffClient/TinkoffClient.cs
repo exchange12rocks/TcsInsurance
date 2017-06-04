@@ -38,8 +38,8 @@ namespace TinkoffClient
                         shortDescription = product.Description,
                         fullDescription = product.Description,
                         currency = Currency.RUR,
-                        minPremiums = GetInsuranceSums.Min(A => int.Parse(A.Name)).ToString(),
-                        maxPremiums = GetInsuranceSums.Max(A => int.Parse(A.Name)).ToString(),
+                        //minPremiums = GetInsuranceSums.Min(A => int.Parse(A.Name)).ToString(), //хз
+                        //maxPremiums = GetInsuranceSums.Max(A => int.Parse(A.Name)).ToString(), //хз
                         insuranceRisks = GetRisks.Select(risk => new Risk()
                         {
                             id = risk.Id,
