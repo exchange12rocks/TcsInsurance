@@ -3,6 +3,9 @@ using System.Web.Mvc;
 using VirtuClient;
 using VirtuClient.Models;
 using System.Linq;
+using TcsInsurance.Helpers;
+using TcsInsurance.Entities;
+
 namespace TcsInsurance.Controllers
 {
     public class HomeController : Controller
@@ -30,6 +33,21 @@ namespace TcsInsurance.Controllers
                 GetBuyoutTariffs = virtuClient.GetBuyoutTariffs(product.Id),
                 PrintForms = virtuClient.GetPrintforms(product.Id),
             };
+            try
+            {
+                using (var db = new Model())
+                {
+                    var helper = new TickerHistoryHelper(db);
+                    using (var stream = System.IO.File.OpenRead(@"C:\Users\iamai\OneDrive\Temporary\work\Документы по взаимодействию с Тинькофф Банком\Графики_сайт.xlsx"))
+                    {
+                        helper.AddOrUpdate(helper.GetFromExcel(stream));
+                    }
+                }
+            }
+            catch(Exception exception)
+            {
+                return Json(exception.ToString(), JsonRequestBehavior.AllowGet);
+            }
             return Json(test, JsonRequestBehavior.AllowGet);
         }
     }
