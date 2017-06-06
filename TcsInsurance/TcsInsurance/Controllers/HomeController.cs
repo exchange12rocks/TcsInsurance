@@ -32,7 +32,7 @@ namespace TcsInsurance.Controllers
                 InsuredDocumentTypes = virtuClient.InsuredDocumentTypes(product.Id),
                 GetBuyoutTariffs = virtuClient.GetTariffs(product.Id),
                 PrintForms = virtuClient.GetPrintforms(product.Id),
-                StrategiesSearch = virtuClient.StrategiesSearch(new StrategiesSearchDataInput()
+                StrategiesSearch = virtuClient.StrategiesSearch(new StrategiesSearchInput()
                 {
                     IsActive = true,
                     ReadRedefined = true,

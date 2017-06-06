@@ -1,21 +1,6 @@
 ﻿using System;
 namespace VirtuClient.Models
 {
-    public class StrategiesSearchResult
-    {
-        public string type { get; set; }
-        public int tid { get; set; }
-        public string action { get; set; }
-        public string method { get; set; }
-        public StrategiesSearchResultOutput result { get; set; }
-    }
-    public class StrategiesSearchResultResult
-    {
-        public bool success { get; set; }
-        public string message { get; set; }
-        public StrategiesSearchDataOutput[] data { get; set; }
-        public int totalCount { get; set; }
-    }
     public class StrategiesSearchDataResult
     {
         public string VersionCode { get; set; }

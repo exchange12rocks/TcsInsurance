@@ -19,7 +19,7 @@ namespace VirtuClient
         }
         protected RestClient getClient()
         {
-            return new RestClient(BaseUrl);
+            return new RestClient(this.BaseUrl);
         }
         protected IRestRequest getNewRequest(string resource, Method method)
         {
@@ -62,32 +62,45 @@ namespace VirtuClient
             }
             return response.Content;
         }
-        protected T GetResult<T>(VirtuResult<T> result)
+        protected T GetSimpleResult<T>(IRestResponse response)
         {
-            if (result == null)
+            var content = this.getContent(response);
+            var deserializedContent = this.deserializeContent<SimpleResult<SimpleDataResult<T>>>(content)?.d;
+            if (deserializedContent == null)
             {
-                throw new VirtuResponceException("result: null");
+                throw new VirtuResponceException("deserializedContent: null");
             }
-            if (!result.IsValid || result.Errors?.Any() != false)
+            if (!deserializedContent.IsValid || deserializedContent.Errors?.Any() != false)
             {
-                throw new VirtuResponceException($"IsValid: {result.IsValid}, Errors: {string.Join(", ", result.Errors ?? new string[0])}");
+                throw new VirtuResponceException($"IsValid: {deserializedContent.IsValid}, Errors: {string.Join(", ", deserializedContent.Errors ?? new string[0])}");
             }
-            return result.Result;
+            return deserializedContent.Result;
         }
-        protected T GetResult<T>(string content)
+        protected T[] GetSingleRpcResult<T>(IRestResponse response)
         {
-            return this.GetResult(this.deserializeContent<VirtuRootResult<VirtuResult<T>>>(content)?.d);
+            var content = this.getContent(response);
+            var deserializedContent = this.deserializeContent<RpcResult<T>[]>(content).SingleOrDefault()?.result;
+            if (deserializedContent == null)
+            {
+                throw new VirtuResponceException($"deserializedContent: null");
+            }
+            if (!deserializedContent.success)
+            {
+                throw new VirtuResponceException($"success: false");
+            }
+            if (deserializedContent.data == null)
+            {
+                throw new VirtuResponceException($"data: null");
+            }
+            return deserializedContent.data;
         }
-        protected T GetResult<T>(IRestResponse response)
-        {
-            return this.GetResult<T>(this.getContent(response));
-        }
+        //
         public AuthenticationResult GetAuthentication(AuthenticationInput parameters)
         {
             IRestRequest request = this.getNewRequest("Authentication_JSON_AppService.axd/Login", Method.POST);
             request.AddJsonBody(parameters);
             IRestResponse response = this.execute(request);
-            bool? success = this.deserializeContent<VirtuRootResult<bool>>(this.getContent(response))?.d;
+            bool? success = this.deserializeContent<SimpleResult<bool>>(this.getContent(response))?.d;
             if (success != true)
             {
                 throw new VirtuResponceException($"success: {success?.ToString() ?? "null"}");
@@ -105,7 +118,7 @@ namespace VirtuClient
         {
             IRestRequest request = this.getNewRequest("/ClientCardFeature/product/list.dat?id=b9744a90-3196-c95a-ec62-268caf4ebfbb", Method.GET);
             IRestResponse response = this.execute(request);
-            return this.Mapper.Map<GetProductOutput[], GetProductResult[]>(this.GetResult<GetProductOutput[]>(response));
+            return this.Mapper.Map<GetProductOutput[], GetProductResult[]>(this.GetSimpleResult<GetProductOutput[]>(response));
         }
         protected GetClassifierResult[] GetClassifier(string productId, string classifierId)
         {
@@ -116,7 +129,7 @@ namespace VirtuClient
                 id = classifierId,
             }));
             IRestResponse response = this.execute(request);
-            return this.Mapper.Map<GetClassifierOutput[], GetClassifierResult[]>(this.GetResult<GetClassifierOutput[]>(response));
+            return this.Mapper.Map<GetClassifierOutput[], GetClassifierResult[]>(this.GetSimpleResult<GetClassifierOutput[]>(response));
         }
         public GetClassifierResult[] GetRisks(string productId)
         {
@@ -156,7 +169,7 @@ namespace VirtuClient
                 decodeClassified = decodeClassified,
             }));
             IRestResponse response = this.execute(request);
-            return this.Mapper.Map<GetTariffOutput[], GetTariffResult[]>(this.GetResult<GetTariffOutput[]>(response));
+            return this.Mapper.Map<GetTariffOutput[], GetTariffResult[]>(this.GetSimpleResult<GetTariffOutput[]>(response));
         }
         public GetPrintformsResult[] GetPrintforms(string productId)
         {
@@ -166,38 +179,29 @@ namespace VirtuClient
                 productId = productId,
             }));
             IRestResponse response = this.execute(request);
-            return this.Mapper.Map<GetPrintformsOutput[], GetPrintformsResult[]>(this.GetResult<GetPrintformsOutput[]>(response));
+            return this.Mapper.Map<GetPrintformsOutput[], GetPrintformsResult[]>(this.GetSimpleResult<GetPrintformsOutput[]>(response));
         }
-        public StrategiesSearchDataResult[] StrategiesSearch(StrategiesSearchDataInput parameter)
+        public StrategiesSearchDataResult[] StrategiesSearch(StrategiesSearchInput parameter)
         {
             IRestRequest request = this.getNewRequest("/Companies/UralsibLife/RightDecision/Resources/api.vlib", Method.POST);
-            StrategiesSearchInput requestParameter = new StrategiesSearchInput()
+            var requestParameter = new RpcInput<StrategiesSearchInput>()
             {
                 tid = 11,
                 action = "RightDecisionDirect",
                 method = "StrategiesSearch",
                 type = "rpc",
-                data = new StrategiesSearchDataInput[]
+                data = new StrategiesSearchInput[]
                 {
                     parameter,
                 }
             };
             request.AddJsonBody(requestParameter);
             IRestResponse response = this.execute(request);
-            var result = this.deserializeContent<StrategiesSearchOutput[]>(this.getContent(response))?.SingleOrDefault()?.result;
-            if(result == null)
-            {
-                throw new VirtuResponceException($"result: null");
-            }
-            if (!result.success)
-            {
-                throw new VirtuResponceException($"success: false");
-            }
-            if (result.data == null)
-            {
-                throw new VirtuResponceException($"data: null");
-            }
-            return this.Mapper.Map<StrategiesSearchDataOutput[], StrategiesSearchDataResult[]>(result.data);
+            return this.Mapper.Map<StrategiesSearchDataOutput[], StrategiesSearchDataResult[]>(this.GetSingleRpcResult<StrategiesSearchDataOutput>(response));
+        }
+        public object Calculate()
+        {
+            return null;
         }
     }
 }

@@ -49,6 +49,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Core\RpcResult.cs" />
+    <Compile Include="Models\Core\RpcInput.cs" />
     <Compile Include="Models\GetPrintformsOutput.cs" />
     <Compile Include="Models\GetPrintformsResult.cs" />
     <Compile Include="Models\GetClassifierResult.cs" />
@@ -65,10 +67,8 @@
     <Compile Include="Models\Core\VirtuException.cs" />
     <Compile Include="Models\GetProductResult.cs" />
     <Compile Include="Models\GetProductOutput.cs" />
-    <Compile Include="Models\Core\IVirtuResult.cs" />
     <Compile Include="Models\Core\VirtuResponceException.cs" />
-    <Compile Include="Models\Core\VirtuResult.cs" />
-    <Compile Include="Models\Core\VirtuRootResult.cs" />
+    <Compile Include="Models\Core\SImpleResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VirtuClient.cs" />
   </ItemGroup>

@@ -2,14 +2,6 @@
 {
     public class StrategiesSearchInput
     {
-        public string action { get; set; }
-        public string method { get; set; }
-        public int tid { get; set; }
-        public string type { get; set; }
-        public StrategiesSearchDataInput[] data { get; set; }
-    }
-    public class StrategiesSearchDataInput
-    {
         /// <summary>
         /// Флаг, указывающий на необходимость загрузить активные опционы (активность опциона определяется подразделением). True – загрузка нужна, False – загрузка не нужна. 
         /// </summary>

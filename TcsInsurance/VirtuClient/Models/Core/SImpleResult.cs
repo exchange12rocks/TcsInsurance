@@ -1,6 +1,10 @@
 ﻿namespace VirtuClient.Models.Core
 {
-    public class VirtuResult<T> : IVirtuResult
+    public class SimpleResult<T>
+    {
+        public T d { get; set; }
+    }
+    public class SimpleDataResult<T>
     {
         public T Result { get; set; }
         public bool IsValid { get; set; }
