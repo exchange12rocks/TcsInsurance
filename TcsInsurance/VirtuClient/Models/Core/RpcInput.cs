@@ -6,6 +6,6 @@
         public string method { get; set; }
         public int tid { get; set; }
         public string type { get; set; }
-        public T[] data { get; set; }
+        public T data { get; set; }
     }
 }

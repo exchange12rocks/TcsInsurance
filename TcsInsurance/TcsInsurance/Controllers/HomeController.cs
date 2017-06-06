@@ -36,7 +36,17 @@ namespace TcsInsurance.Controllers
                 {
                     IsActive = true,
                     ReadRedefined = true,
-                })
+                }),
+                Calculate = virtuClient.Calculate(new CalculateInput()
+                {
+                    ProductID = product.Id,
+                    Premium = "10",
+                }),
+                Save = virtuClient.Save(new Policy()
+                {
+                    Premium = "10",
+                    ProductID = product.Id,
+                }),
             };
             try
             {

@@ -76,10 +76,10 @@ namespace VirtuClient
             }
             return deserializedContent.Result;
         }
-        protected T[] GetSingleRpcResult<T>(IRestResponse response)
+        protected T GetRpcResult<T>(IRestResponse response)
         {
             var content = this.getContent(response);
-            var deserializedContent = this.deserializeContent<RpcResult<T>[]>(content).SingleOrDefault()?.result;
+            var deserializedContent = this.deserializeContent<RpcResult<RpcDataResult<T>>[]>(content).SingleOrDefault()?.result;
             if (deserializedContent == null)
             {
                 throw new VirtuResponceException($"deserializedContent: null");
@@ -184,7 +184,7 @@ namespace VirtuClient
         public StrategiesSearchDataResult[] StrategiesSearch(StrategiesSearchInput parameter)
         {
             IRestRequest request = this.getNewRequest("/Companies/UralsibLife/RightDecision/Resources/api.vlib", Method.POST);
-            var requestParameter = new RpcInput<StrategiesSearchInput>()
+            var requestParameter = new RpcInput<StrategiesSearchInput[]>()
             {
                 tid = 11,
                 action = "RightDecisionDirect",
@@ -197,11 +197,131 @@ namespace VirtuClient
             };
             request.AddJsonBody(requestParameter);
             IRestResponse response = this.execute(request);
-            return this.Mapper.Map<StrategiesSearchDataOutput[], StrategiesSearchDataResult[]>(this.GetSingleRpcResult<StrategiesSearchDataOutput>(response));
+            return this.Mapper.Map<StrategiesSearchDataOutput[], StrategiesSearchDataResult[]>(this.GetRpcResult<StrategiesSearchDataOutput[]>(response));
         }
-        public object Calculate()
+        public CalculateOutput Calculate(CalculateInput parameter)
         {
-            return null;
+            IRestRequest request = this.getNewRequest("/Companies/UralsibLife/RightDecision/Resources/api.vlib", Method.POST);
+            var requestParameter = new RpcInput<CalculateInput[]>()
+            {
+                tid = 22,
+                action = "RightDecisionDirect",
+                method = "Calculate",
+                type = "rpc",
+                data = new CalculateInput[]
+                {
+                    parameter,
+                }
+            };
+            request.AddJsonBody(requestParameter);
+            IRestResponse response = this.execute(request);
+            return this.Mapper.Map<CalculateOutput, CalculateOutput>(this.GetRpcResult<CalculateOutput>(response));
+        }
+        public Policy Read(string policyId)
+        {
+            IRestRequest request = this.getNewRequest("/Companies/UralsibLife/RightDecision/Resources/api.vlib", Method.POST);
+            var requestParameter = new RpcInput<string[]>()
+            {
+                tid = 21,
+                action = "Policy",
+                method = "Read",
+                type = "rpc",
+                data = new string[]
+                {
+                    policyId,
+                }
+            };
+            request.AddJsonBody(requestParameter);
+            IRestResponse response = this.execute(request);
+            return this.Mapper.Map<Policy, Policy>(this.GetRpcResult<Policy>(response));
+        }
+        public Policy Save(Policy policy)
+        {
+            IRestRequest request = this.getNewRequest("/Companies/UralsibLife/RightDecision/Resources/api.vlib", Method.POST);
+            var requestParameter = new RpcInput<Policy[]>()
+            {
+                tid = 18,
+                action = "RightDecisionDirect",
+                method = "Save",
+                type = "rpc",
+                data = new Policy[]
+                {
+                    policy,
+                }
+            };
+            request.AddJsonBody(requestParameter);
+            IRestResponse response = this.execute(request);
+            return this.Mapper.Map<Policy, Policy>(this.GetRpcResult<Policy>(response));
+        }
+        public Policy Accept(Policy policy)
+        {
+            IRestRequest request = this.getNewRequest("/Companies/UralsibLife/RightDecision/Resources/api.vlib", Method.POST);
+            var requestParameter = new RpcInput<Policy[]>()
+            {
+                tid = 40,
+                action = "RightDecisionDirect",
+                method = "Accept",
+                type = "rpc",
+                data = new Policy[]
+                {
+                    policy,
+                }
+            };
+            request.AddJsonBody(requestParameter);
+            IRestResponse response = this.execute(request);
+            return this.Mapper.Map<Policy, Policy>(this.GetRpcResult<Policy>(response));
+        }
+        public Policy Annulate(Policy policy)
+        {
+            IRestRequest request = this.getNewRequest("/Companies/UralsibLife/RightDecision/Resources/api.vlib", Method.POST);
+            var requestParameter = new RpcInput<Policy[]>()
+            {
+                tid = 21,
+                action = "Policy",
+                method = "Annulate",
+                type = "rpc",
+                data = new Policy[]
+                {
+                    policy,
+                }
+            };
+            request.AddJsonBody(requestParameter);
+            IRestResponse response = this.execute(request);
+            return this.Mapper.Map<Policy, Policy>(this.GetRpcResult<Policy>(response));
+        }
+        private byte getByte(char text)
+        {
+            switch(text)
+            {
+                case '0': return 0;
+                case '1': return 1;
+                case '2': return 2;
+                case '3': return 3;
+                case '4': return 4;
+                case '5': return 5;
+                case '6': return 6;
+                case '7': return 7;
+                case '8': return 8;
+                case '9': return 9;
+            }
+            throw new VirtuResponceException($"text = {text}");
+        }
+        public byte[] Print(PrintInput parameter)
+        {
+            IRestRequest request = this.getNewRequest("/JPolicyFeature/GetPolicyPDF.cmd?id=b99699fa-43df-d981-917a-15ce29af79c6", Method.POST);
+            request.AddJsonBody(parameter);
+            IRestResponse response = this.execute(request);
+            var requestResult = this.GetSimpleResult<string>(response);
+            if(requestResult.Length % 3 != 0)
+            {
+                throw new VirtuResponceException($"requestResult.Length = {requestResult.Length}, requestResult.Length % 3 = {requestResult.Length % 3}");
+            }
+            byte[] result = new byte[requestResult.Length / 3];
+            for(int index = 0; index < result.Length; ++index)
+            {
+                result[index] = (byte)(100 * this.getByte(requestResult[3 * index]) + 10 * this.getByte(requestResult[3 * index + 1]) + 1 * this.getByte(requestResult[3 * index + 2]));
+            }
+            return result;
         }
     }
 }

@@ -49,12 +49,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\CalculateOutput.cs" />
     <Compile Include="Models\Core\RpcResult.cs" />
     <Compile Include="Models\Core\RpcInput.cs" />
     <Compile Include="Models\GetPrintformsOutput.cs" />
     <Compile Include="Models\GetPrintformsResult.cs" />
     <Compile Include="Models\GetClassifierResult.cs" />
     <Compile Include="Models\GetClassifierOutput.cs" />
+    <Compile Include="Models\CalculateInput.cs" />
+    <Compile Include="Models\PrintOutput.cs" />
+    <Compile Include="Models\PrintInput.cs" />
     <Compile Include="Models\StrategiesSearchOutput.cs" />
     <Compile Include="Models\StrategiesSearchResult.cs" />
     <Compile Include="Models\StrategiesSearchInput.cs" />
