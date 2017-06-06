@@ -29,6 +29,9 @@ namespace VirtuClient
                     .ForMember(o => o.Year, b => b.MapFrom(z => z.Year.value));
                 config.CreateMap<GetPrintformsOutput, GetPrintformsResult>();
                 config.CreateMap<GetPrintformsOutputValue, GetPrintformsResultValue>();
+                config.CreateMap<StrategiesSearchResult, StrategiesSearchResult>();
+                config.CreateMap<StrategiesSearchResultOutput, StrategiesSearchResultResult>();
+                config.CreateMap<StrategiesSearchDataOutput, StrategiesSearchDataResult>();
             }).CreateMapper();
         }
         public T2 Map<T1, T2>(T1 source)

@@ -24,7 +24,7 @@ namespace TinkoffClient
             var GetDocumentTypes = this.virtuClient.GetDocumentTypes(product.Id);
             var GetCurrencies = this.virtuClient.GetCurrencies(product.Id);
             var InsuredDocumentTypes = this.virtuClient.InsuredDocumentTypes(product.Id);
-            var GetBuyoutTariffs = this.virtuClient.GetBuyoutTariffs(product.Id);
+            var GetBuyoutTariffs = this.virtuClient.GetTariffs(product.Id);
             var PrintForms = this.virtuClient.GetPrintforms(product.Id);
 
             return new GetProductsResponse()
@@ -67,10 +67,10 @@ namespace TinkoffClient
                             {
                                 periodicitiy = 0,
                             }
-                        },
-                        investParams = GetStrategies.Select(strategy => new InvestParam() //хз
+                        }
+                        /*investParams = GetStrategies.Select(strategy => new InvestParam() //хз
                         {
-                        }).ToList(),
+                        })*/.ToList(),
                     }
                 }
             };

@@ -109,7 +109,7 @@ namespace VirtuClient
         }
         protected GetClassifierResult[] GetClassifier(string productId, string classifierId)
         {
-            IRestRequest request = this.getNewRequest("/ClassifierFeature/Classifier.dat?id=b9744a90-3196-c95a-ec62-268caf4ebfbb", Method.GET);
+            IRestRequest request = this.getNewRequest("/ClassifierFeature/Classifier.dat?id=ed85075a-da0d-cfe0-b5ae-a8fbb168872a", Method.GET);
             request.AddHeader("x-vs-parameters", JsonConvert.SerializeObject(new
             {
                 productId = productId,
@@ -146,9 +146,9 @@ namespace VirtuClient
         {
             return this.GetClassifier(productId, "33DB538C-6EDC-4708-8ABE-E90345F5361E");
         }
-        public GetTariffResult[] GetBuyoutTariffs(string productId, bool decodeClassified = true)
+        public GetTariffResult[] GetTariffs(string productId, bool decodeClassified = true)
         {
-            IRestRequest request = this.getNewRequest("/ClientCardFeature/Product/Tariffs.dat?id=b9744a90-3196-c95a-ec62-268caf4ebfbb", Method.GET);
+            IRestRequest request = this.getNewRequest("/ClientCardFeature/Product/Tariffs.dat?id=8603db0d-d9c1-c80f-53c3-422774502afd", Method.GET);
             request.AddHeader("x-vs-parameters", JsonConvert.SerializeObject(new
             {
                 tariffId = "buyout",
@@ -167,6 +167,37 @@ namespace VirtuClient
             }));
             IRestResponse response = this.execute(request);
             return this.Mapper.Map<GetPrintformsOutput[], GetPrintformsResult[]>(this.GetResult<GetPrintformsOutput[]>(response));
+        }
+        public StrategiesSearchDataResult[] StrategiesSearch(StrategiesSearchDataInput parameter)
+        {
+            IRestRequest request = this.getNewRequest("/Companies/UralsibLife/RightDecision/Resources/api.vlib", Method.POST);
+            StrategiesSearchInput requestParameter = new StrategiesSearchInput()
+            {
+                tid = 11,
+                action = "RightDecisionDirect",
+                method = "StrategiesSearch",
+                type = "rpc",
+                data = new StrategiesSearchDataInput[]
+                {
+                    parameter,
+                }
+            };
+            request.AddJsonBody(requestParameter);
+            IRestResponse response = this.execute(request);
+            var result = this.deserializeContent<StrategiesSearchResult>(this.getContent(response))?.result;
+            if(result == null)
+            {
+                throw new VirtuResponceException($"result: null");
+            }
+            if (!result.success)
+            {
+                throw new VirtuResponceException($"success: false");
+            }
+            if (result.data == null)
+            {
+                throw new VirtuResponceException($"data: null");
+            }
+            return this.Mapper.Map<StrategiesSearchDataOutput[], StrategiesSearchDataResult[]>(result.data);
         }
     }
 }
