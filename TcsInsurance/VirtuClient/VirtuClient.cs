@@ -184,7 +184,7 @@ namespace VirtuClient
             };
             request.AddJsonBody(requestParameter);
             IRestResponse response = this.execute(request);
-            var result = this.deserializeContent<StrategiesSearchResult>(this.getContent(response))?.result;
+            var result = this.deserializeContent<StrategiesSearchOutput[]>(this.getContent(response))?.SingleOrDefault()?.result;
             if(result == null)
             {
                 throw new VirtuResponceException($"result: null");
