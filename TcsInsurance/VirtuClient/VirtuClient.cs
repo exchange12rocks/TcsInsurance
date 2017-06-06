@@ -76,7 +76,7 @@ namespace VirtuClient
             }
             return deserializedContent.Result;
         }
-        protected T GetRpcResult<T>(IRestResponse response)
+        protected T GetRpcDataResult<T>(IRestResponse response)
         {
             var content = this.getContent(response);
             var deserializedContent = this.deserializeContent<RpcResult<RpcDataResult<T>>[]>(content).SingleOrDefault()?.result;
@@ -84,7 +84,7 @@ namespace VirtuClient
             {
                 throw new VirtuResponceException($"deserializedContent: null");
             }
-            if (!deserializedContent.success)
+            if (deserializedContent.success == false)
             {
                 throw new VirtuResponceException($"success: false");
             }
@@ -93,6 +93,16 @@ namespace VirtuClient
                 throw new VirtuResponceException($"data: null");
             }
             return deserializedContent.data;
+        }
+        protected T GetRpcResult<T>(IRestResponse response)
+        {
+            var content = this.getContent(response);
+            var deserializedContent = this.deserializeContent<RpcResult<T>[]>(content).SingleOrDefault().result;
+            if (deserializedContent == null)
+            {
+                throw new VirtuResponceException($"deserializedContent: null");
+            }
+            return deserializedContent;
         }
         //
         public AuthenticationResult GetAuthentication(AuthenticationInput parameters)
@@ -155,6 +165,10 @@ namespace VirtuClient
         {
             return this.GetClassifier(productId, "12EB0CBE-7332-4878-B6A9-E78BC5767F74");
         }
+        public GetClassifierResult[] GetStatuses(string productId)
+        {
+            return this.GetClassifier(productId, "471DE2BD-AF38-45D8-BDE6-C1FA2099B88A");
+        }
         public GetClassifierResult[] InsuredDocumentTypes(string productId)
         {
             return this.GetClassifier(productId, "33DB538C-6EDC-4708-8ABE-E90345F5361E");
@@ -197,7 +211,7 @@ namespace VirtuClient
             };
             request.AddJsonBody(requestParameter);
             IRestResponse response = this.execute(request);
-            return this.Mapper.Map<StrategiesSearchDataOutput[], StrategiesSearchDataResult[]>(this.GetRpcResult<StrategiesSearchDataOutput[]>(response));
+            return this.Mapper.Map<StrategiesSearchDataOutput[], StrategiesSearchDataResult[]>(this.GetRpcDataResult<StrategiesSearchDataOutput[]>(response));
         }
         public CalculateOutput Calculate(CalculateInput parameter)
         {
@@ -215,7 +229,7 @@ namespace VirtuClient
             };
             request.AddJsonBody(requestParameter);
             IRestResponse response = this.execute(request);
-            return this.Mapper.Map<CalculateOutput, CalculateOutput>(this.GetRpcResult<CalculateOutput>(response));
+            return this.Mapper.Map<CalculateOutput, CalculateOutput>(this.GetRpcDataResult<CalculateOutput>(response));
         }
         public Policy Read(string policyId)
         {
@@ -251,7 +265,7 @@ namespace VirtuClient
             };
             request.AddJsonBody(requestParameter);
             IRestResponse response = this.execute(request);
-            return this.Mapper.Map<Policy, Policy>(this.GetRpcResult<Policy>(response));
+            return this.Mapper.Map<Policy, Policy>(this.GetRpcDataResult<Policy>(response));
         }
         public Policy Accept(Policy policy)
         {
@@ -269,7 +283,7 @@ namespace VirtuClient
             };
             request.AddJsonBody(requestParameter);
             IRestResponse response = this.execute(request);
-            return this.Mapper.Map<Policy, Policy>(this.GetRpcResult<Policy>(response));
+            return this.Mapper.Map<Policy, Policy>(this.GetRpcDataResult<Policy>(response));
         }
         public Policy Annulate(Policy policy)
         {
@@ -287,7 +301,7 @@ namespace VirtuClient
             };
             request.AddJsonBody(requestParameter);
             IRestResponse response = this.execute(request);
-            return this.Mapper.Map<Policy, Policy>(this.GetRpcResult<Policy>(response));
+            return this.Mapper.Map<Policy, Policy>(this.GetRpcDataResult<Policy>(response));
         }
         private byte getByte(char text)
         {
