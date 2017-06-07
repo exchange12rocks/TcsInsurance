@@ -50,7 +50,7 @@ namespace TinkoffClient
                         name = product.Name,
                         shortDescription = product.Description,
                         fullDescription = product.Description,
-                        currency = Currency.RUR,
+                        currency = CurrencyType.RUR,
                         minPremiums = insuranceSums.Min(A => int.Parse(A.Name)).ToString(),
                         maxPremiums = insuranceSums.Max(A => int.Parse(A.Name)).ToString(),
                         insuranceRisks = this.CrossJoin(risks, insuranceSums, (risk, insuranceSum) => new Risk()
@@ -68,7 +68,7 @@ namespace TinkoffClient
                             sum = decimal.Parse(A.InsSum, CultureInfo.InvariantCulture),
                             year = int.Parse(A.Year),
                             policyTerm = int.Parse(insurancePeriods.Single(B => B.Id == A.InsPeriod).Name),
-                            currency = Currency.RUR,
+                            currency = CurrencyType.RUR,
                             contributionsPeriodicity = new Periodicity()
                             {
                                 periodicitiy = 0,
@@ -86,7 +86,7 @@ namespace TinkoffClient
                             strategyId = strategy.ID,
                             coefficient = decimal.Parse(strategy.Coefficient),
                             contributionsPeriodicity = new Periodicity() { periodicitiy = 0 },
-                            currencyInvest = Currency.RUR,
+                            currencyInvest = CurrencyType.RUR,
                             policyTerm = (int)((strategy.ExpirationDate - DateTime.Today).TotalDays / 365),
                             strategy = strategy.InvestmentStrategyRaw,
                             paymentsPeriodicities = new Periodicity() { periodicitiy = 0 },
@@ -95,6 +95,48 @@ namespace TinkoffClient
                     }
                 }
             };
+        }
+        public CreatePolicyResponse CreatePolicy(CreatePolicyRequest parameter)
+        {
+            return null;
+        }
+        public GetPolicyResponse GetPolicy(string policyId)
+        {
+
+        }
+        public List<Document> GetPolicyDocumentsList(string policyId)
+        {
+            var policy = this.virtuClient.Read(policyId);
+            string[] allowedPrintformNames = new string[]
+            {
+                "Полис",
+                "Заявление на возврат",
+                "Правила и согласие на обработку персональных данных",
+                "Онлайн оплата полиса",
+                "Форма самосертификации (FATCA)",
+                "Заявление о внесении изменений в Договор страхования",
+            };
+            return this.virtuClient.GetPrintforms(policy.ProductID)
+                .Where(A => allowedPrintformNames.Contains(A.Value.Caption, StringComparer.OrdinalIgnoreCase))
+                .Select(A => new Document()
+                {
+                    id = A.Key,
+                    name = A.Value.Caption,
+                })
+                .ToList();
+        }
+        public byte[] GetPolicyDocument(string policyId, string documentId)
+        {
+            return this.virtuClient.Print(new VirtuClient.Models.PrintInput()
+            {
+                policyID = policyId,
+                viewID = documentId,
+            });
+        }
+        public void Accept(string policyId)
+        {
+            var policy = this.virtuClient.Read(policyId);
+            this.virtuClient.Accept(policy);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace TinkoffClient.Models
         /// <summary>
         /// Валюта договора
         /// </summary>
-        public Currency currency { get; set; }
+        public string currency { get; set; }
         /// <summary>
         /// Минимальный страховой взнос
         /// </summary>

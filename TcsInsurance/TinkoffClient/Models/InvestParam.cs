@@ -29,7 +29,7 @@
         /// <summary>
         /// Валюта инвест. части договора страхования 
         /// </summary>
-        public Currency currencyInvest { get; set; }
+        public string currencyInvest { get; set; }
         /// <summary>
         /// Коэффициент участия
         /// </summary>

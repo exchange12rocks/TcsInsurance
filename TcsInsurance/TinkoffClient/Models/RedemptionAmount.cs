@@ -17,7 +17,7 @@
         /// <summary>
         /// Валюта договора
         /// </summary>
-        public Currency currency { get; set; }
+        public string currency { get; set; }
         /// <summary>
         /// Сроков действия договора страхования в годах
         /// </summary>
