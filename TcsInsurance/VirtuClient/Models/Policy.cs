@@ -5,55 +5,6 @@ namespace VirtuClient.Models
     public class Policy
     {
         public string ProductID { get; set; }
-        public string Premium { get; set; }
-        public string ReceiptSum { get; set; }
-        public string KvPartner1Rub { get; set; }
-        public string KvPartner1Percent { get; set; }
-        public string KvPartner2Rub { get; set; }
-        public string KvPartner2Percent { get; set; }
-        public string url { get; set; }
-        public string CreatorUser { get; set; }
-        public string CreatorName { get; set; }
-        public string InsurerRepresentId { get; set; }
-        public string InsurerRepresentName { get; set; }
-        public string FilialName { get; set; }
-        public string SallerDivisionID { get; set; }
-        public string SallerDivision { get; set; }
-        public string StatusName { get; set; }
-        public string NUMBAR { get; set; }
-        public string ProductName { get; set; }
-        public string ID { get; set; }
-        public string SERIAL { get; set; }
-        public string NUMBER { get; set; }
-        public string StatusID { get; set; }
-        public string DocumentStatusID { get; set; }
-        public DateTime? DocumentDate { get; set; }
-        public DateTime? EffectiveDate { get; set; }
-        public DateTime? ExpirationDate { get; set; }
-        public string InvestmentStrategy { get; set; }
-        public DateTime? AcceptationDate { get; set; }
-        public DateTime? PaymentDocumentDate { get; set; }
-        public DateTime? ReceiptDate { get; set; }
-
-    }
-
-    public class Rootobject
-    {
-        public Class1[] Property1 { get; set; }
-    }
-
-    public class Class1
-    {
-        public string type { get; set; }
-        public int tid { get; set; }
-        public string action { get; set; }
-        public string method { get; set; }
-        public Result result { get; set; }
-    }
-
-    public class Result
-    {
-        public string ProductID { get; set; }
         public string DocumentDate { get; set; }
         public string AcceptationDate { get; set; }
         public string EffectiveDate { get; set; }
@@ -185,12 +136,13 @@ namespace VirtuClient.Models
         public string SalesPartner { get; set; }
         public string SalesPartner2 { get; set; }
         public string IsForeignTaxpayer { get; set; }
-        public string ID { get; set; }
         public string StatusID { get; set; }
         public string DocumentStatusID { get; set; }
         public string SERIAL { get; set; }
         public string NUMBER { get; set; }
         public string url { get; set; }
+        public string ID { get; set; }
+        public object FilialName { get; set; }
         public string StatusName { get; set; }
         public string NUMBAR { get; set; }
         public string ProductName { get; set; }
