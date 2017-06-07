@@ -14,15 +14,15 @@ namespace TinkoffClient
         }
         private IEnumerable<TResult> CrossJoin<T1, T2, TResult>(IEnumerable<T1> enumerable1, IEnumerable<T2> enumerable2, Func<T1, T2, TResult> func)
         {
-            foreach(T1 t1 in enumerable1)
+            foreach (T1 t1 in enumerable1)
             {
                 foreach (T2 t2 in enumerable2)
                 {
-                    yield return func(t1, t2); 
+                    yield return func(t1, t2);
                 }
             }
         }
-        public GetProductsResponse GetProducts()
+        public getProductsResponse GetProducts(GetProductsRequest parameter)
         {
             var products = this.virtuClient.GetProducts();
             var product = products.Single(A => A.Name == "Верное решение");
@@ -40,9 +40,9 @@ namespace TinkoffClient
                 IsActive = true,
                 ReadRedefined = true,
             });
-            return new GetProductsResponse()
+            return new getProductsResponse()
             {
-                products = new List<Product>()
+                GetProductsResponse1 = new Product[]
                 {
                     new Product()
                     {
@@ -50,48 +50,39 @@ namespace TinkoffClient
                         name = product.Name,
                         shortDescription = product.Description,
                         fullDescription = product.Description,
-                        currency = CurrencyType.RUR,
+                        currency = currency.RUR,
                         minPremiums = insuranceSums.Min(A => int.Parse(A.Name)).ToString(),
                         maxPremiums = insuranceSums.Max(A => int.Parse(A.Name)).ToString(),
-                        insuranceRisks = this.CrossJoin(risks, insuranceSums, (risk, insuranceSum) => new Risk()
+                        insuranceRisks = this.CrossJoin(risks, insuranceSums, (risk, insuranceSum) => new risk()
                         {
                             id = risk.Id,
                             text = risk.Name,
                             sum = insuranceSum.Name,
-                        }).ToList(),
-                        policyTermOptions = insurancePeriods.Select(A => new PolicyTerm()
-                        {
-                            policyTerm = int.Parse(A.Name),
-                        }).ToList(),
-                        redemptionAmounts = getBuyoutTariffs.Select(A => new RedemptionAmount()
+                        }).ToArray(),
+                        policyTermOptions = insurancePeriods.Select(A => A.Name).ToArray(),
+                        redemptionAmounts = getBuyoutTariffs.Select(A => new redemptionAmount()
                         {
                             sum = decimal.Parse(A.InsSum, CultureInfo.InvariantCulture),
-                            year = int.Parse(A.Year),
-                            policyTerm = int.Parse(insurancePeriods.Single(B => B.Id == A.InsPeriod).Name),
-                            currency = CurrencyType.RUR,
-                            contributionsPeriodicity = new Periodicity()
-                            {
-                                periodicitiy = 0,
-                            }
-                        }).ToList(),
-                        contributionsPeriodicityOptions = new List<Periodicity>()
+                            year = A.Year,
+                            policyTerm = insurancePeriods.Single(B => B.Id == A.InsPeriod).Name,
+                            currency = currency.RUR,
+                            contributionsPeriodicity = periodicity.Item0,
+                        }).ToArray(),
+                        contributionsPeriodicityOptions = new periodicity[]
                         {
-                            new Periodicity()
-                            {
-                                periodicitiy = 0,
-                            }
+                            periodicity.Item0,
                         },
-                        investParams = strategies.Select(strategy => new InvestParam()
+                        investParams = strategies.Select(strategy => new investParam()
                         {
                             strategyId = strategy.ID,
                             coefficient = decimal.Parse(strategy.Coefficient),
-                            contributionsPeriodicity = new Periodicity() { periodicitiy = 0 },
-                            currencyInvest = CurrencyType.RUR,
-                            policyTerm = (int)((strategy.ExpirationDate - DateTime.Today).TotalDays / 365),
+                            contributionsPeriodicity = periodicity.Item0,
+                            currencyInvest = currency.RUR,
+                            policyTerm = ((int)((strategy.ExpirationDate - DateTime.Today).TotalDays / 365)).ToString(),
                             strategy = strategy.InvestmentStrategyRaw,
-                            paymentsPeriodicities = new Periodicity() { periodicitiy = 0 },
+                            paymentsPeriodicities = periodicity.Item0,
                             coverCapital = 100,
-                        }).ToList()
+                        }).ToArray()
                     }
                 }
             };
@@ -100,13 +91,13 @@ namespace TinkoffClient
         {
             return null;
         }
-        public GetPolicyResponse GetPolicy(string policyId)
+        public GetPolicyResponse GetPolicy(GetPolicyRequest parameter)
         {
             return null;
         }
-        public List<Document> GetPolicyDocumentsList(string policyId)
+        public getPolicyDocumentsListResponse GetPolicyDocumentsList(GetPolicyDocumentsListRequest parameter)
         {
-            var policy = this.virtuClient.Read(policyId);
+            var policy = this.virtuClient.Read(parameter.policyId);
             string[] allowedPrintformNames = new string[]
             {
                 "Полис",
@@ -116,27 +107,39 @@ namespace TinkoffClient
                 "Форма самосертификации (FATCA)",
                 "Заявление о внесении изменений в Договор страхования",
             };
-            return this.virtuClient.GetPrintforms(policy.ProductID)
-                .Where(A => allowedPrintformNames.Contains(A.Value.Caption, StringComparer.OrdinalIgnoreCase))
-                .Select(A => new Document()
-                {
-                    id = A.Key,
-                    name = A.Value.Caption,
-                })
-                .ToList();
-        }
-        public byte[] GetPolicyDocument(string policyId, string documentId)
-        {
-            return this.virtuClient.Print(new VirtuClient.Models.PrintInput()
+            return new getPolicyDocumentsListResponse()
             {
-                policyID = policyId,
-                viewID = documentId,
-            });
+                GetPolicyDocumentsListResponse1 = this.virtuClient.GetPrintforms(policy.ProductID)
+                    .Where(A => allowedPrintformNames.Contains(A.Value.Caption, StringComparer.OrdinalIgnoreCase))
+                    .Select(A => new document()
+                    {
+                        id = A.Key,
+                        name = A.Value.Caption,
+                    })
+                    .ToArray(),
+            };
         }
-        public void Accept(string policyId)
+        public GetPolicyDocumentResponse GetPolicyDocument(GetPolicyDocumentRequest parameter)
         {
-            var policy = this.virtuClient.Read(policyId);
+            return new GetPolicyDocumentResponse()
+            {
+                documentData = this.virtuClient.Print(new VirtuClient.Models.PrintInput()
+                {
+                    policyID = parameter.policyId,
+                    viewID = parameter.documentId,
+                }),
+                documentName = null,
+                documentType = null,
+            };
+        }
+        public AcceptPolicyResponse Accept(AcceptPolicyRequest parameter)
+        {
+            var policy = this.virtuClient.Read(parameter.policyId);
             this.virtuClient.Accept(policy);
+            return new AcceptPolicyResponse()
+            {
+                result = "OK",
+            };
         }
     }
 }

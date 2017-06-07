@@ -45,15 +45,14 @@ namespace TcsInsurance.Controllers
                 }),
             };
             var quotesHelper = new QuotesHelper(virtuClient);
-            var quotes = quotesHelper.GetQuotes(new GetQuotesRequest()
+            /*var quotes = quotesHelper.GetQuotes(new GetQuotesRequest()
             {
                 dateFrom = new DateTime(2017, 1, 1),
                 dateTo = new DateTime(2017, 1, 7),
                 strategyId = dictionaries.StrategiesSearch.First().ID,
                 productId = product.Id,
-            });
-            var draft = virtuClient.Read("37EEAC87-62EE-4A09-B9D7-0FB247124EDD");
-            var t = virtuClient.Read("C81DF550-0E96-41EC-B849-9230FC1BCBCF");
+            });*/
+            var draft = virtuClient.Read("90EE1179-F96A-4ED7-B1B5-AC205DE9BA97");
             var policy = virtuClient.Save(new Policy()
             {
                 Premium = "30000",
