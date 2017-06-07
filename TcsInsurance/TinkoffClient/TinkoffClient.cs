@@ -102,7 +102,7 @@ namespace TinkoffClient
         }
         public GetPolicyResponse GetPolicy(string policyId)
         {
-
+            return null;
         }
         public List<Document> GetPolicyDocumentsList(string policyId)
         {
