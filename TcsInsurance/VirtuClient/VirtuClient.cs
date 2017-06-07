@@ -8,12 +8,10 @@ namespace VirtuClient
 {
     public class VirtuClient
     {
-        protected VirtuMapper Mapper { get; set; }
         protected Uri BaseUrl { get; set; }
         protected AuthenticationResult AuthenticationResult { get; set; }
-        public VirtuClient(Uri baseUrl, VirtuMapper mapper, AuthenticationResult authenticationResult = null)
+        public VirtuClient(Uri baseUrl, AuthenticationResult authenticationResult = null)
         {
-            this.Mapper = mapper;
             this.BaseUrl = baseUrl;
             this.AuthenticationResult = authenticationResult;
         }
@@ -124,13 +122,13 @@ namespace VirtuClient
         {
             this.AuthenticationResult = this.GetAuthentication(parameters);
         }
-        public GetProductResult[] GetProducts()
+        public GetProductOutput[] GetProducts()
         {
             IRestRequest request = this.getNewRequest("/ClientCardFeature/product/list.dat?id=b9744a90-3196-c95a-ec62-268caf4ebfbb", Method.GET);
             IRestResponse response = this.execute(request);
-            return this.Mapper.Map<GetProductOutput[], GetProductResult[]>(this.GetSimpleResult<GetProductOutput[]>(response));
+            return this.GetSimpleResult<GetProductOutput[]>(response);
         }
-        protected GetClassifierResult[] GetClassifier(string productId, string classifierId)
+        protected GetClassifierOutput[] GetClassifier(string productId, string classifierId)
         {
             IRestRequest request = this.getNewRequest("/ClassifierFeature/Classifier.dat?id=ed85075a-da0d-cfe0-b5ae-a8fbb168872a", Method.GET);
             request.AddHeader("x-vs-parameters", JsonConvert.SerializeObject(new
@@ -139,41 +137,41 @@ namespace VirtuClient
                 id = classifierId,
             }));
             IRestResponse response = this.execute(request);
-            return this.Mapper.Map<GetClassifierOutput[], GetClassifierResult[]>(this.GetSimpleResult<GetClassifierOutput[]>(response));
+            return this.GetSimpleResult<GetClassifierOutput[]>(response);
         }
-        public GetClassifierResult[] GetRisks(string productId)
+        public GetClassifierOutput[] GetRisks(string productId)
         {
             return this.GetClassifier(productId, "E6BEEA0B-C8FD-4B69-B50E-68DB8D7AEB75");
         }
-        public GetClassifierResult[] GetInsurancePeriods(string productId)
+        public GetClassifierOutput[] GetInsurancePeriods(string productId)
         {
             return this.GetClassifier(productId, "A31BF043-5340-48E2-AB12-430412E9DB82");
         }
-        public GetClassifierResult[] GetDocumentTypes(string productId)
+        public GetClassifierOutput[] GetDocumentTypes(string productId)
         {
             return this.GetClassifier(productId, "3B07454C-9535-48AF-A344-780D6DED4F77");
         }
-        public GetClassifierResult[] GetInsuranceSums(string productId)
+        public GetClassifierOutput[] GetInsuranceSums(string productId)
         {
             return this.GetClassifier(productId, "E3F65177-9603-40C5-BD1A-DDFF5DAB5598");
         }
-        public GetClassifierResult[] GetCurrencies(string productId)
+        public GetClassifierOutput[] GetCurrencies(string productId)
         {
             return this.GetClassifier(productId, "63665791-125E-46E7-878B-7E625EA62803");
         }
-        public GetClassifierResult[] GetStrategies(string productId)
+        public GetClassifierOutput[] GetStrategies(string productId)
         {
             return this.GetClassifier(productId, "12EB0CBE-7332-4878-B6A9-E78BC5767F74");
         }
-        public GetClassifierResult[] GetStatuses(string productId)
+        public GetClassifierOutput[] GetStatuses(string productId)
         {
             return this.GetClassifier(productId, "471DE2BD-AF38-45D8-BDE6-C1FA2099B88A");
         }
-        public GetClassifierResult[] InsuredDocumentTypes(string productId)
+        public GetClassifierOutput[] InsuredDocumentTypes(string productId)
         {
             return this.GetClassifier(productId, "33DB538C-6EDC-4708-8ABE-E90345F5361E");
         }
-        public GetTariffResult[] GetTariffs(string productId, bool decodeClassified = true)
+        public GetTariffOutput[] GetTariffs(string productId, bool decodeClassified = true)
         {
             IRestRequest request = this.getNewRequest("/ClientCardFeature/Product/Tariffs.dat?id=8603db0d-d9c1-c80f-53c3-422774502afd", Method.GET);
             request.AddHeader("x-vs-parameters", JsonConvert.SerializeObject(new
@@ -183,9 +181,9 @@ namespace VirtuClient
                 decodeClassified = decodeClassified,
             }));
             IRestResponse response = this.execute(request);
-            return this.Mapper.Map<GetTariffOutput[], GetTariffResult[]>(this.GetSimpleResult<GetTariffOutput[]>(response));
+            return this.GetSimpleResult<GetTariffOutput[]>(response);
         }
-        public GetPrintformsResult[] GetPrintforms(string productId)
+        public GetPrintformsOutput[] GetPrintforms(string productId)
         {
             IRestRequest request = this.getNewRequest("/ClientCardFeature/product/Views.dat?id=b9744a90-3196-c95a-ec62-268caf4ebfbb", Method.GET);
             request.AddHeader("x-vs-parameters", JsonConvert.SerializeObject(new
@@ -193,9 +191,9 @@ namespace VirtuClient
                 productId = productId,
             }));
             IRestResponse response = this.execute(request);
-            return this.Mapper.Map<GetPrintformsOutput[], GetPrintformsResult[]>(this.GetSimpleResult<GetPrintformsOutput[]>(response));
+            return this.GetSimpleResult<GetPrintformsOutput[]>(response);
         }
-        public StrategiesSearchDataResult[] StrategiesSearch(StrategiesSearchInput parameter)
+        public StrategiesSearchDataOutput[] StrategiesSearch(StrategiesSearchInput parameter)
         {
             IRestRequest request = this.getNewRequest("/Companies/UralsibLife/RightDecision/Resources/api.vlib", Method.POST);
             var requestParameter = new RpcInput<StrategiesSearchInput[]>()
@@ -211,7 +209,7 @@ namespace VirtuClient
             };
             request.AddJsonBody(requestParameter);
             IRestResponse response = this.execute(request);
-            return this.Mapper.Map<StrategiesSearchDataOutput[], StrategiesSearchDataResult[]>(this.GetRpcDataResult<StrategiesSearchDataOutput[]>(response));
+            return this.GetRpcDataResult<StrategiesSearchDataOutput[]>(response);
         }
         public CalculateOutput Calculate(CalculateInput parameter)
         {
@@ -229,7 +227,7 @@ namespace VirtuClient
             };
             request.AddJsonBody(requestParameter);
             IRestResponse response = this.execute(request);
-            return this.Mapper.Map<CalculateOutput, CalculateOutput>(this.GetRpcDataResult<CalculateOutput>(response));
+            return this.GetRpcDataResult<CalculateOutput>(response);
         }
         public Policy Read(string policyId)
         {
@@ -247,7 +245,7 @@ namespace VirtuClient
             };
             request.AddJsonBody(requestParameter);
             IRestResponse response = this.execute(request);
-            return this.Mapper.Map<Policy, Policy>(this.GetRpcResult<Policy>(response));
+            return this.GetRpcResult<Policy>(response);
         }
         public Policy Save(Policy policy)
         {
@@ -265,7 +263,7 @@ namespace VirtuClient
             };
             request.AddJsonBody(requestParameter);
             IRestResponse response = this.execute(request);
-            return this.Mapper.Map<Policy, Policy>(this.GetRpcDataResult<Policy>(response));
+            return this.GetRpcDataResult<Policy>(response);
         }
         public Policy Accept(Policy policy)
         {
@@ -283,7 +281,7 @@ namespace VirtuClient
             };
             request.AddJsonBody(requestParameter);
             IRestResponse response = this.execute(request);
-            return this.Mapper.Map<Policy, Policy>(this.GetRpcDataResult<Policy>(response));
+            return this.GetRpcDataResult<Policy>(response);
         }
         public Policy Annulate(Policy policy)
         {
@@ -301,7 +299,7 @@ namespace VirtuClient
             };
             request.AddJsonBody(requestParameter);
             IRestResponse response = this.execute(request);
-            return this.Mapper.Map<Policy, Policy>(this.GetRpcDataResult<Policy>(response));
+            return this.GetRpcDataResult<Policy>(response);
         }
         private byte getByte(char text)
         {

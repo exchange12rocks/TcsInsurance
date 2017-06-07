@@ -27,14 +27,14 @@ namespace TinkoffClient
             var products = this.virtuClient.GetProducts();
             var product = products.Single(A => A.Name == "Верное решение");
 
-            var risks = this.virtuClient.GetRisks(product.Id);
-            var insuranceSums = this.virtuClient.GetInsuranceSums(product.Id);
-            var insurancePeriods = this.virtuClient.GetInsurancePeriods(product.Id);
-            var documentTypes = this.virtuClient.GetDocumentTypes(product.Id);
-            var currencies = this.virtuClient.GetCurrencies(product.Id);
-            var insuredDocumentTypes = this.virtuClient.InsuredDocumentTypes(product.Id);
-            var getBuyoutTariffs = this.virtuClient.GetTariffs(product.Id);
-            var printForms = this.virtuClient.GetPrintforms(product.Id);
+            var risks = this.virtuClient.GetRisks(product.ID);
+            var insuranceSums = this.virtuClient.GetInsuranceSums(product.ID);
+            var insurancePeriods = this.virtuClient.GetInsurancePeriods(product.ID);
+            var documentTypes = this.virtuClient.GetDocumentTypes(product.ID);
+            var currencies = this.virtuClient.GetCurrencies(product.ID);
+            var insuredDocumentTypes = this.virtuClient.InsuredDocumentTypes(product.ID);
+            var getBuyoutTariffs = this.virtuClient.GetTariffs(product.ID);
+            var printForms = this.virtuClient.GetPrintforms(product.ID);
             var strategies = this.virtuClient.StrategiesSearch(new VirtuClient.Models.StrategiesSearchInput()
             {
                 IsActive = true,
@@ -46,7 +46,7 @@ namespace TinkoffClient
                 {
                     new Product()
                     {
-                        id = product.Id,
+                        id = product.ID,
                         name = product.Name,
                         shortDescription = product.Description,
                         fullDescription = product.Description,
@@ -55,16 +55,16 @@ namespace TinkoffClient
                         maxPremiums = insuranceSums.Max(A => int.Parse(A.Name)).ToString(),
                         insuranceRisks = this.CrossJoin(risks, insuranceSums, (risk, insuranceSum) => new risk()
                         {
-                            id = risk.Id,
+                            id = risk.ID,
                             text = risk.Name,
                             sum = insuranceSum.Name,
                         }).ToArray(),
                         policyTermOptions = insurancePeriods.Select(A => A.Name).ToArray(),
                         redemptionAmounts = getBuyoutTariffs.Select(A => new redemptionAmount()
                         {
-                            sum = decimal.Parse(A.InsSum, CultureInfo.InvariantCulture),
-                            year = A.Year,
-                            policyTerm = insurancePeriods.Single(B => B.Id == A.InsPeriod).Name,
+                            sum = decimal.Parse(A.InsSum.value, CultureInfo.InvariantCulture),
+                            year = A.Year.value,
+                            policyTerm = insurancePeriods.Single(B => B.ID == A.InsPeriod.value).Name,
                             currency = currency.RUR,
                             contributionsPeriodicity = periodicity.Item0,
                         }).ToArray(),

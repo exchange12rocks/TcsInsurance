@@ -147,7 +147,6 @@
     <Compile Include="Models\GetProductsOutputParam.cs" />
     <Compile Include="Models\InvestParam.cs" />
     <Compile Include="Models\PolicyTermParam.cs" />
-    <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Models\RedemptionAmountParam.cs" />
     <Compile Include="Models\RiskParam.cs" />
     <Compile Include="Global.asax.cs">

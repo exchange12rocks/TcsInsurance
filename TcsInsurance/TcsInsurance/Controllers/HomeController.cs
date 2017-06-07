@@ -12,7 +12,7 @@ namespace TcsInsurance.Controllers
     {
         public ActionResult Index()
         {
-            var virtuClient = new VirtuClient.VirtuClient(new Uri("https://uralsiblife.virtusystems.ru"), VirtuMapper.Instance);
+            var virtuClient = new VirtuClient.VirtuClient(new Uri("https://uralsiblife.virtusystems.ru"));
             virtuClient.Authenticate(new AuthenticationInput()
             {
                 userName = "site_integr",
@@ -23,24 +23,24 @@ namespace TcsInsurance.Controllers
             var product = products.Single(A => A.Name == "Верное решение");
             var dictionaries = new
             {
-                GetRisks = virtuClient.GetRisks(product.Id),
-                GetStrategies = virtuClient.GetStrategies(product.Id),
-                GetInsuranceSums = virtuClient.GetInsuranceSums(product.Id),
-                GetInsurancePeriods = virtuClient.GetInsurancePeriods(product.Id),
-                GetDocumentTypes = virtuClient.GetDocumentTypes(product.Id),
-                GetCurrencies = virtuClient.GetCurrencies(product.Id),
-                InsuredDocumentTypes = virtuClient.InsuredDocumentTypes(product.Id),
-                GetBuyoutTariffs = virtuClient.GetTariffs(product.Id),
-                PrintForms = virtuClient.GetPrintforms(product.Id),
+                GetRisks = virtuClient.GetRisks(product.ID),
+                GetStrategies = virtuClient.GetStrategies(product.ID),
+                GetInsuranceSums = virtuClient.GetInsuranceSums(product.ID),
+                GetInsurancePeriods = virtuClient.GetInsurancePeriods(product.ID),
+                GetDocumentTypes = virtuClient.GetDocumentTypes(product.ID),
+                GetCurrencies = virtuClient.GetCurrencies(product.ID),
+                InsuredDocumentTypes = virtuClient.InsuredDocumentTypes(product.ID),
+                GetBuyoutTariffs = virtuClient.GetTariffs(product.ID),
+                PrintForms = virtuClient.GetPrintforms(product.ID),
                 StrategiesSearch = virtuClient.StrategiesSearch(new StrategiesSearchInput()
                 {
                     IsActive = true,
                     ReadRedefined = true,
                 }),
-                Statuses = virtuClient.GetStatuses(product.Id),
+                Statuses = virtuClient.GetStatuses(product.ID),
                 Calculate = virtuClient.Calculate(new CalculateInput()
                 {
-                    ProductID = product.Id,
+                    ProductID = product.ID,
                     Premium = "30000",
                 }),
             };
@@ -50,24 +50,24 @@ namespace TcsInsurance.Controllers
                 dateFrom = new DateTime(2017, 1, 1),
                 dateTo = new DateTime(2017, 1, 7),
                 strategyId = dictionaries.StrategiesSearch.First().ID,
-                productId = product.Id,
+                productId = product.ID,
             });*/
             var draft = virtuClient.Read("90EE1179-F96A-4ED7-B1B5-AC205DE9BA97");
             var policy = virtuClient.Save(new Policy()
             {
                 Premium = "30000",
-                ProductID = product.Id,
+                ProductID = product.ID,
                 ProductName = "Верное решение",
                 
-                StatusID = dictionaries.Statuses.First(A => A.DisplayName == "Проект").Id,
-                DocumentStatusID = dictionaries.Statuses.First(A => A.DisplayName == "Проект").Id,
+                StatusID = dictionaries.Statuses.First(A => A.DisplayName == "Проект").ID,
+                DocumentStatusID = dictionaries.Statuses.First(A => A.DisplayName == "Проект").ID,
                 StatusName = dictionaries.Statuses.First(A => A.DisplayName == "Проект").Name,
                 CreatorUser = "testaa",
                 CreatorName = "Леонтьев Тест Тестович",
                 DocumentDate = DateTime.Today,
                 EffectiveDate = DateTime.Today,
                 ExpirationDate = DateTime.Today.AddYears(5),
-                InvestmentStrategy = dictionaries.GetStrategies.First().Id,
+                InvestmentStrategy = dictionaries.GetStrategies.First().ID,
 
                 InsurerRepresentId = "e1ea1a8b-1113-4006-bfa0-0ecd5f01a7d6",
                 InsurerRepresentName = "Леонтьев Тест Тестович",
@@ -84,7 +84,7 @@ namespace TcsInsurance.Controllers
                 KvPartner2Rub = dictionaries.Calculate.KvPartner2Rub,
 
             });
-            virtuClient.Accept(policy);
+            //virtuClient.Accept(policy);
             try
             {
                 using (var db = new Model())
