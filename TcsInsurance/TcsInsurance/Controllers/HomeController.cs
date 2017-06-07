@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Web.Mvc;
-using VirtuClient;
-using VirtuClient.Models;
 using System.Linq;
-using TcsInsurance.Helpers;
+using System.Web.Mvc;
 using TcsInsurance.Entities;
-
+using TcsInsurance.Helpers;
+using TinkoffClient.Models;
+using VirtuClient.Models;
 namespace TcsInsurance.Controllers
 {
     public class HomeController : Controller
@@ -23,6 +22,8 @@ namespace TcsInsurance.Controllers
             var product = products.Single(A => A.Name == "Верное решение");
             var dictionaries = new
             {
+                Products = products,
+                Product = product,
                 GetRisks = virtuClient.GetRisks(product.ID),
                 GetStrategies = virtuClient.GetStrategies(product.ID),
                 GetInsuranceSums = virtuClient.GetInsuranceSums(product.ID),
@@ -43,16 +44,16 @@ namespace TcsInsurance.Controllers
                     ProductID = product.ID,
                     Premium = "30000",
                 }),
+                Policy = virtuClient.Read("90EE1179-F96A-4ED7-B1B5-AC205DE9BA97")
             };
-            var quotesHelper = new QuotesHelper(virtuClient);
-            /*var quotes = quotesHelper.GetQuotes(new GetQuotesRequest()
+            var quotes = new QuotesHelper(virtuClient).GetQuotes(new GetQuotesRequest()
             {
                 dateFrom = new DateTime(2017, 1, 1),
                 dateTo = new DateTime(2017, 1, 7),
                 strategyId = dictionaries.StrategiesSearch.First().ID,
                 productId = product.ID,
-            });*/
-            var draft = virtuClient.Read("90EE1179-F96A-4ED7-B1B5-AC205DE9BA97");
+            });
+            var draft = dictionaries.Policy;
             var policy = virtuClient.Save(new Policy()
             {
                 Premium = "30000",

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using TcsInsurance.Entities;
-
+using TinkoffClient.Models;
 namespace TcsInsurance.Helpers
 {
     public class QuotesHelper
@@ -13,7 +13,7 @@ namespace TcsInsurance.Helpers
         {
             this.virtuClient = virtuClient;
         }
-        public GetQuotesResponce GetQuotes(GetQuotesRequest parameter)
+        public GetQuotesResponse GetQuotes(GetQuotesRequest parameter)
         {
             Dictionary<string, string> mapping = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             mapping.Add("МЕДИЦИНА БУДУЩЕГО", "SXDP");
@@ -30,14 +30,14 @@ namespace TcsInsurance.Helpers
             using (var db = new Model())
             {
                 var queryable = db.TickerHistoryValues.Where(A => A.Ticker == index);
-                return new GetQuotesResponce()
+                return new GetQuotesResponse()
                 {
                     date = queryable.Max(A => A.Date),
-                    quotes = queryable.Where(A => A.Date >= parameter.dateFrom && A.Date < parameter.dateTo).Select(A => new Quote()
+                    quotes = queryable.Where(A => A.Date >= parameter.dateFrom && A.Date < parameter.dateTo).Select(A => new quote()
                     {
                         price = A.Value,
                         date = A.Date,
-                    }).ToList(),
+                    }).ToArray(),
                 };
             }
         }
