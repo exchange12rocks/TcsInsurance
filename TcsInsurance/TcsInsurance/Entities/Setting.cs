@@ -9,6 +9,8 @@ namespace TcsInsurance.Entities
     public partial class Setting
     {
         [Key]
+        public int Id { get; set; }
+
         [StringLength(400)]
         public string Key { get; set; }
 

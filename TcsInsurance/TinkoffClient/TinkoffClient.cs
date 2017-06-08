@@ -1,12 +1,9 @@
-﻿using System.Globalization;
-using System.Linq;
-using System;
-using TinkoffClient.Models;
+﻿using System;
 using System.Collections.Generic;
-using VirtuClient.Models;
 using System.IO;
-using System.Text;
-
+using System.Linq;
+using TinkoffClient.Models;
+using VirtuClient.Models;
 namespace TinkoffClient
 {
     public class TinkoffClient

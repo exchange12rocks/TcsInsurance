@@ -8,6 +8,7 @@ namespace TcsInsurance.Entities
 
     public partial class Log
     {
+        [Key]
         public int Id { get; set; }
 
         [Required]
