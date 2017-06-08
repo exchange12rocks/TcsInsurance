@@ -519,9 +519,54 @@ namespace TinkoffClient
         }
         public GetPolicyResponse GetPolicy(GetPolicyRequest parameter)
         {
-            return null;
-        }
+            var product = this.virtuClient.GetProducts()
+                .Single(A => string.Equals(A.Name, "Верное решение", StringComparison.OrdinalIgnoreCase));
+            var risks = this.virtuClient.GetRisks(product.ID);
+            var insuranceSums = this.virtuClient.GetInsuranceSums(product.ID).ToDictionary(A => A.ID, StringComparer.OrdinalIgnoreCase);
+            var insurancePeriods = this.virtuClient.GetInsurancePeriods(product.ID).ToDictionary(A => A.ID, StringComparer.OrdinalIgnoreCase);
+            var documentTypes = this.virtuClient.GetDocumentTypes(product.ID).ToDictionary(A => A.ID, StringComparer.OrdinalIgnoreCase);
+            var currencies = this.virtuClient.GetCurrencies(product.ID).ToDictionary(A => A.ID, StringComparer.OrdinalIgnoreCase);
+            var insuredDocumentTypes = this.virtuClient.InsuredDocumentTypes(product.ID).ToDictionary(A => A.ID, StringComparer.OrdinalIgnoreCase);
+            var getBuyoutTariffs = this.virtuClient.GetTariffs(product.ID);
+            var strategies = this.virtuClient.GetStrategies(product.ID).ToDictionary(A => A.ID, StringComparer.OrdinalIgnoreCase);
+            var strategyDetails = this.virtuClient.StrategiesSearch(new StrategiesSearchInput()
+            {
+                IsActive = true,
+                ReadRedefined = true,
+            }).ToDictionary(A => A.ID, StringComparer.OrdinalIgnoreCase);
 
+            var policy = this.virtuClient.Read(parameter.policyId);
+            return new GetPolicyResponse()
+            {
+                policyId = policy.ID,
+                amount = policy.Premium.Value,
+                coefficient = policy.ParticipationCoefficient.Value.ToString(),
+                status = policy.StatusName,
+                strategy = policy.InvestmentStrategyRaw,
+                fullDescription = product.Description,
+                currency = getCurrency(currencies[policy.Currency]).Value,
+                coverCapital = "100",
+                //profitability = policy.pro
+                effectiveDate = getDate(policy.EffectiveDate).Value,
+                expirationDate = getDate(policy.ExpirationDate).Value,
+                insuranceRisks = null,
+                paymentsPlan = new paymentsPlanItem[]
+                {
+                    new paymentsPlanItem()
+                    {
+                        //a
+                    }
+                },
+                policyNumber = policy.SERIAL + " " + policy.NUMBER,
+                productId = policy.ProductID,
+                productName = product.Name,
+                redemptionAmounts = getBuyoutTariffs.Select(A => new redemptionAmountInfo()
+                {
+                    sum = decimal.Parse(A.InsSum.value),
+                    date = DateTime.Today.AddYears(int.Parse(A.Year.value))
+                }).ToArray(),
+            };
+        }
         public getPolicyDocumentsListResponse GetPolicyDocumentsList(GetPolicyDocumentsListRequest parameter)
         {
             var policy = this.virtuClient.Read(parameter.policyId);
@@ -546,7 +591,6 @@ namespace TinkoffClient
                     .ToArray(),
             };
         }
-
         public GetPolicyDocumentResponse GetPolicyDocument(GetPolicyDocumentRequest parameter)
         {
             var productId = this.virtuClient.Read(parameter.policyId).ProductID;
