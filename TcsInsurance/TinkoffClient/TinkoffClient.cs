@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using TinkoffClient.Models;
+using tinkoff.ru.partners.insurance.investing.types;
 using VirtuClient.Models;
 namespace TinkoffClient
 {

@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using TcsInsurance.Entities;
 using TcsInsurance.Helpers;
-using TinkoffClient.Models;
+using tinkoff.ru.partners.insurance.investing.types;
 using VirtuClient.Models;
 namespace TcsInsurance.Controllers
 {
@@ -100,7 +100,7 @@ namespace TcsInsurance.Controllers
                     placeOfBirth = "г.Ульяновск",
                     documentSerie = "1212",
                     documentNumber = "123123",
-                    documentIssueDate = DateTime.Today.AddYears(2),
+                    documentIssueDate = DateTime.Today.AddYears(-2),
                     documentIssueDateSpecified = true,
                     documentOrganisation = "отделом ОФМС",
                     documentOrganisationCode = "123-123"

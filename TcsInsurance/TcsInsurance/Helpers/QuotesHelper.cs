@@ -2,7 +2,7 @@
 using System;
 using System.Linq;
 using TcsInsurance.Entities;
-using TinkoffClient.Models;
+using tinkoff.ru.partners.insurance.investing.types;
 namespace TcsInsurance.Helpers
 {
     internal class quotesMapping
