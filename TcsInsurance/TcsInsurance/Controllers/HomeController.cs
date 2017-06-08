@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using TcsInsurance.Entities;
 using TcsInsurance.Helpers;
@@ -9,15 +10,21 @@ namespace TcsInsurance.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        private VirtuClient.VirtuClient virtuClient;
+        private TinkoffClient.TinkoffClient tinkoffClient;
+        public HomeController()
         {
-            var virtuClient = new VirtuClient.VirtuClient(new Uri("https://uralsiblife.virtusystems.ru"));
-            virtuClient.Authenticate(new AuthenticationInput()
+            this.virtuClient = new VirtuClient.VirtuClient(new Uri("https://uralsiblife.virtusystems.ru"));
+            this.virtuClient.Authenticate(new AuthenticationInput()
             {
                 userName = "site_integr",
                 password = "es4zMJ5JZs",
                 createPersistentCookie = true,
             });
+            this.tinkoffClient = new TinkoffClient.TinkoffClient(this.virtuClient);
+        }
+        public ActionResult Index()
+        {
             var products = virtuClient.GetProducts();
             var product = products.Single(A => A.Name == "Верное решение");
             var dictionaries = new
@@ -54,7 +61,7 @@ namespace TcsInsurance.Controllers
                 productId = product.ID,
             });
             var draft = dictionaries.Policy;
-            var policy = virtuClient.Save(new Policy()
+            /*var policy = virtuClient.Save(new Policy()
             {
                 Premium = "30000",
                 ProductID = product.ID,
@@ -84,8 +91,22 @@ namespace TcsInsurance.Controllers
                 KvPartner1Rub = dictionaries.Calculate.KvPartner1Rub,
                 KvPartner2Rub = dictionaries.Calculate.KvPartner2Rub,
 
-            });
+            });*/
             //virtuClient.Accept(policy);
+            /*tinkoffClient.Accept(new AcceptPolicyRequest()
+            {
+                policyId = "1F3CBF24-EB48-4700-AD52-759725543E81",
+            });*/
+            var document = tinkoffClient.GetPolicyDocumentsList(new GetPolicyDocumentsListRequest()
+            {
+                policyId = "1F3CBF24-EB48-4700-AD52-759725543E81",
+            }).GetPolicyDocumentsListResponse1.Single(A => string.Equals(A.name, "Полис", StringComparison.OrdinalIgnoreCase));
+            var pdf = tinkoffClient.GetPolicyDocument(new GetPolicyDocumentRequest()
+            {
+                policyId = "1F3CBF24-EB48-4700-AD52-759725543E81",
+                documentId = document.id,
+            });
+            System.IO.File.WriteAllBytes(@"C:\Users\iamai\Desktop\1.pdf", pdf.documentData);
             try
             {
                 using (var db = new Model())
@@ -102,6 +123,24 @@ namespace TcsInsurance.Controllers
                 return Json(exception.ToString(), JsonRequestBehavior.AllowGet);
             }
             return Json(dictionaries, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public ActionResult LoadTickets()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Upload(HttpPostedFileBase upload)
+        {
+            if (upload != null)
+            {
+                using (var db = new Model())
+                {
+                    TickerHistoryHelper helper = new TickerHistoryHelper(db);
+                    helper.GetFromExcel(upload.InputStream);
+                }
+            }
+            return RedirectToAction("LoadTickets");
         }
     }
 }

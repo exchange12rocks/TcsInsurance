@@ -26,11 +26,11 @@ namespace VirtuClient.Models
         public string StrategyCurrencyRaw { get; set; }
         public string InsurancePeriod { get; set; }
         public string InsurancePeriodRaw { get; set; }
-        public int ParticipationCoefficient { get; set; }
+        public decimal? ParticipationCoefficient { get; set; }
         public string InsuranceSum { get; set; }
         public string ManualInsuranceSum { get; set; }
         public string ContributionsFrequency { get; set; }
-        public int Premium { get; set; }
+        public decimal? Premium { get; set; }
         public string Currency { get; set; }
         public string LastName { get; set; }
         public string FirstName { get; set; }
@@ -120,7 +120,7 @@ namespace VirtuClient.Models
         public string PaymentDocumentDate { get; set; }
         public string SellerComment { get; set; }
         public string ReceiptDate { get; set; }
-        public int ReceiptSum { get; set; }
+        public decimal? ReceiptSum { get; set; }
         public string SalesChannel { get; set; }
         public Bayout[] Bayout { get; set; }
         public string UserTown { get; set; }
@@ -151,18 +151,18 @@ namespace VirtuClient.Models
     public class Investmentstrategydata
     {
         public string BaseIndex { get; set; }
-        public int BaseIndexOnStartDate { get; set; }
-        public int Coefficient { get; set; }
-        public int CurrencyRate { get; set; }
+        public decimal? BaseIndexOnStartDate { get; set; }
+        public decimal? Coefficient { get; set; }
+        public decimal? CurrencyRate { get; set; }
         public object Date1 { get; set; }
         public object Date2 { get; set; }
         public object Date3 { get; set; }
         public object Date4 { get; set; }
         public string ExpirationDate { get; set; }
-        public float FIPart { get; set; }
-        public float GFPart { get; set; }
+        public decimal? FIPart { get; set; }
+        public decimal? GFPart { get; set; }
         public string ID { get; set; }
-        public int InsuranceCurrencyRate { get; set; }
+        public decimal? InsuranceCurrencyRate { get; set; }
         public string InvestmentStartDate { get; set; }
         public string InvestmentStrategy { get; set; }
         public string InvestmentStrategyRaw { get; set; }
@@ -172,20 +172,20 @@ namespace VirtuClient.Models
         public string OptionPeriod { get; set; }
         public string OptionCurrency { get; set; }
         public string OptionCurrencyRaw { get; set; }
-        public int OptionPrice { get; set; }
-        public int OptionPriceRUR { get; set; }
+        public decimal? OptionPrice { get; set; }
+        public decimal? OptionPriceRUR { get; set; }
         public string OptionType { get; set; }
         public string OptionTypeRaw { get; set; }
-        public int OptionValue { get; set; }
-        public int OptionValueRUR { get; set; }
-        public int Profitability { get; set; }
+        public decimal? OptionValue { get; set; }
+        public decimal? OptionValueRUR { get; set; }
+        public decimal? Profitability { get; set; }
         public object SellingEndDate { get; set; }
         public object SellingStartDate { get; set; }
         public string VersionCode { get; set; }
-        public int RateOfReturn { get; set; }
+        public decimal? RateOfReturn { get; set; }
         public bool isNotBought { get; set; }
-        public int FIPartRUR { get; set; }
-        public int GFPartRUR { get; set; }
+        public decimal? FIPartRUR { get; set; }
+        public decimal? GFPartRUR { get; set; }
     }
 
     public class Address
