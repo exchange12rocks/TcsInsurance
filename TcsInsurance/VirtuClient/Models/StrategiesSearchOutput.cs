@@ -8,9 +8,9 @@ namespace VirtuClient.Models
         public string InvestmentStrategy { get; set; }
         public string BaseIndex { get; set; }
         public string OptionPeriod { get; set; }
-        public string Coefficient { get; set; }
+        public decimal? Coefficient { get; set; }
         public string OptionType { get; set; }
-        public DateTime InvestmentStartDate { get; set; }
+        public string InvestmentStartDate { get; set; }
         public string OptionKind { get; set; }
         public string OptionCurrency { get; set; }
         public DateTime? SellingStartDate { get; set; }
@@ -23,10 +23,12 @@ namespace VirtuClient.Models
         public decimal OptionPriceRUR { get; set; }
         public decimal? OptionValue { get; set; }
         public decimal OptionValueRUR { get; set; }
-        public string GFPart { get; set; }
-        public string FIPart { get; set; }
+        public decimal? GFPart { get; set; }
+        public decimal? FIPart { get; set; }
+        public decimal? GFPartRUR { get; set; }
+        public decimal? FIPartRUR { get; set; }
         public decimal Profitability { get; set; }
-        public DateTime ExpirationDate { get; set; }
+        public string ExpirationDate { get; set; }
         public string Date1 { get; set; }
         public string Date2 { get; set; }
         public string Date3 { get; set; }

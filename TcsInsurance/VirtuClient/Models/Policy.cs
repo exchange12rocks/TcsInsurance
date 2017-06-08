@@ -115,7 +115,7 @@ namespace VirtuClient.Models
         public string InsuredIsResidentOfEconomicZone { get; set; }
         public string InsuredIsPublicFace { get; set; }
         public string IsSuccessor { get; set; }
-        public object[] Beneficiaries { get; set; }
+        public Beneficiary[] Beneficiaries { get; set; }
         public string PaymentType { get; set; }
         public string PaymentDocumentDate { get; set; }
         public string SellerComment { get; set; }
@@ -202,6 +202,23 @@ namespace VirtuClient.Models
     {
         public string InsPeriod { get; set; }
         public string InsSum { get; set; }
+    }
+
+    public class Beneficiary
+    {
+        public string LastName { get; set; }
+        public string FirstName { get; set; }
+        public string Patronymic { get; set; }
+        public string BirthDate { get; set; }
+        public string BirthPlace { get; set; }
+        public string DocumentType { get; set; }
+        public string DocumentTypeRaw { get; set; }
+        public string DocumentSerial { get; set; }
+        public string DocumentNumber { get; set; }
+        public string DocumentDate { get; set; }
+        public string DocumentOrganisation { get; set; }
+        public string DocumentOrganisationCode { get; set; }
+        public decimal? Part { get; set; }
     }
 
 }

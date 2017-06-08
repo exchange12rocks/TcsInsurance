@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -8,6 +9,14 @@ using TinkoffClient.Models;
 using VirtuClient.Models;
 namespace TcsInsurance.Controllers
 {
+    public static class Extensions
+    {
+        public static T Random<T>(this IEnumerable<T> enumerable)
+        {
+            int skip = new Random().Next(enumerable.Count());
+            return enumerable.Skip(skip).First();
+        }
+    }
     public class HomeController : Controller
     {
         private VirtuClient.VirtuClient virtuClient;
@@ -51,7 +60,6 @@ namespace TcsInsurance.Controllers
                     ProductID = product.ID,
                     Premium = "30000",
                 }),
-                Policy = virtuClient.Read("90EE1179-F96A-4ED7-B1B5-AC205DE9BA97")
             };
             var quotes = new QuotesHelper(virtuClient).GetQuotes(new GetQuotesRequest()
             {
@@ -60,50 +68,59 @@ namespace TcsInsurance.Controllers
                 strategyId = dictionaries.StrategiesSearch.First().ID,
                 productId = product.ID,
             });
-            var draft = dictionaries.Policy;
-            /*var policy = virtuClient.Save(new Policy()
-            {
-                Premium = "30000",
-                ProductID = product.ID,
-                ProductName = "Верное решение",
-                
-                StatusID = dictionaries.Statuses.First(A => A.DisplayName == "Проект").ID,
-                DocumentStatusID = dictionaries.Statuses.First(A => A.DisplayName == "Проект").ID,
-                StatusName = dictionaries.Statuses.First(A => A.DisplayName == "Проект").Name,
-                CreatorUser = "testaa",
-                CreatorName = "Леонтьев Тест Тестович",
-                DocumentDate = DateTime.Today,
-                EffectiveDate = DateTime.Today,
-                ExpirationDate = DateTime.Today.AddYears(5),
-                InvestmentStrategy = dictionaries.GetStrategies.First().ID,
 
-                InsurerRepresentId = "e1ea1a8b-1113-4006-bfa0-0ecd5f01a7d6",
-                InsurerRepresentName = "Леонтьев Тест Тестович",
-                SallerDivisionID = "79489087-3082-4c78-bb32-81f5039ffb25",
-                SallerDivision = "УРАЛСИБ Жизнь",
-                SERIAL = "ИСЖ",
-                AcceptationDate = DateTime.Today,
-                ReceiptSum = "30000",
-                PaymentDocumentDate = DateTime.Now,
-                ReceiptDate = DateTime.Now,
-                KvPartner1Percent = dictionaries.Calculate.KvPartner1Percent,
-                KvPartner2Percent = dictionaries.Calculate.KvPartner2Percent,
-                KvPartner1Rub = dictionaries.Calculate.KvPartner1Rub,
-                KvPartner2Rub = dictionaries.Calculate.KvPartner2Rub,
 
-            });*/
-            //virtuClient.Accept(policy);
-            /*tinkoffClient.Accept(new AcceptPolicyRequest()
+            var strategy = dictionaries.StrategiesSearch.Random();
+            var policy = tinkoffClient.CreatePolicy(new CreatePolicyRequest()
             {
-                policyId = "1F3CBF24-EB48-4700-AD52-759725543E81",
-            });*/
+                amount = 200000,
+                currency = currency.RUR,
+                insurantIsInsured = true,
+                insurant = new person()
+                {
+                    firstName = "Имя",
+                    lastName = "Фамилия",
+                    patronymicName = "Отчество",
+                    addresses = new address[]
+                    {
+                        new address()
+                        {
+                            type = addressType.registration,
+                            city = "г.Ульяновск",
+                            index = "432000",
+                            country = "Россия",
+                            street = "пер. Меньковского",
+                            house = "22",
+                            flat = "11"
+                        }
+                    },
+                    inn = "123123123",
+                    dateOfBirth = DateTime.Today.AddYears(-29),
+                    sex = sex.male,
+                    placeOfBirth = "г.Ульяновск",
+                    documentSerie = "1212",
+                    documentNumber = "123123",
+                    documentIssueDate = DateTime.Today.AddYears(2),
+                    documentIssueDateSpecified = true,
+                    documentOrganisation = "отделом ОФМС",
+                    documentOrganisationCode = "123-123"
+                },
+                policyTerm = dictionaries.GetInsurancePeriods.Single(A => A.ID == strategy.OptionPeriod).Name,
+                strategyId = strategy.ID,
+                productId = product.ID,
+                periodicityOfContributions = periodicity.Item0,
+            });
+            var accept = tinkoffClient.Accept(new AcceptPolicyRequest()
+            {
+                policyId = policy.policyId,
+            });
             var document = tinkoffClient.GetPolicyDocumentsList(new GetPolicyDocumentsListRequest()
             {
-                policyId = "1F3CBF24-EB48-4700-AD52-759725543E81",
+                policyId = policy.policyId,
             }).GetPolicyDocumentsListResponse1.Single(A => string.Equals(A.name, "Полис", StringComparison.OrdinalIgnoreCase));
             var pdf = tinkoffClient.GetPolicyDocument(new GetPolicyDocumentRequest()
             {
-                policyId = "1F3CBF24-EB48-4700-AD52-759725543E81",
+                policyId = policy.policyId,
                 documentId = document.id,
             });
             System.IO.File.WriteAllBytes(@"C:\Users\iamai\Desktop\1.pdf", pdf.documentData);
