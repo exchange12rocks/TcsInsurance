@@ -144,6 +144,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Entities\Log.cs" />
     <Compile Include="Entities\Model.cs" />
+    <Compile Include="Entities\Setting.cs" />
     <Compile Include="Entities\TickerHistoryValue.cs" />
     <Compile Include="Helpers\Excel\CellHelper.cs" />
     <Compile Include="Helpers\DatabaseExtensions.cs" />
