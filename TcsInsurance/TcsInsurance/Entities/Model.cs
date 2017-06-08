@@ -1,9 +1,6 @@
 namespace TcsInsurance.Entities
 {
-    using System;
     using System.Data.Entity;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Linq;
 
     public partial class Model : DbContext
     {
@@ -12,6 +9,7 @@ namespace TcsInsurance.Entities
         {
         }
 
+        public virtual DbSet<Log> Logs { get; set; }
         public virtual DbSet<TickerHistoryValue> TickerHistoryValues { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

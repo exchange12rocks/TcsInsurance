@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace VirtuClient.Models
+﻿namespace VirtuClient.Models
 {
     public class Policy
     {
@@ -147,7 +145,6 @@ namespace VirtuClient.Models
         public string NUMBAR { get; set; }
         public string ProductName { get; set; }
     }
-
     public class Investmentstrategydata
     {
         public string BaseIndex { get; set; }
@@ -187,23 +184,19 @@ namespace VirtuClient.Models
         public decimal? FIPartRUR { get; set; }
         public decimal? GFPartRUR { get; set; }
     }
-
     public class Address
     {
         public string KLADRCode { get; set; }
     }
-
     public class Insuredaddress
     {
         public string KLADRCode { get; set; }
     }
-
     public class Bayout
     {
         public string InsPeriod { get; set; }
         public string InsSum { get; set; }
     }
-
     public class Beneficiary
     {
         public string LastName { get; set; }
@@ -220,5 +213,4 @@ namespace VirtuClient.Models
         public string DocumentOrganisationCode { get; set; }
         public decimal? Part { get; set; }
     }
-
 }

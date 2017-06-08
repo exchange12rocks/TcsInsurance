@@ -1,11 +1,9 @@
 ﻿using NPOI.SS.UserModel;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using TcsInsurance.Entities;
 using TcsInsurance.Helpers.Excel;
-
 namespace TcsInsurance.Helpers
 {
     public class TickerHistoryHelper
