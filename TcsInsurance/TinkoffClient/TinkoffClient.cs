@@ -116,6 +116,58 @@ namespace TinkoffClient
                 throw new ArgumentException("unknown sex value");
             }
         }
+        private static string getFullName(person person)
+        {
+            return $"{person.lastName ?? ""} {person.firstName ?? ""} {person.patronymicName ?? ""}".Trim();
+        }
+        private static string getFullAddress(address address)
+        {
+            List<string> result = new List<string>();
+            if (!string.IsNullOrEmpty(address.index))
+            {
+                result.Add(address.index);
+            }
+            if (!string.IsNullOrEmpty(address.country))
+            {
+                result.Add(address.country);
+            }
+            if (!string.IsNullOrEmpty(address.region))
+            {
+                result.Add(address.region);
+            }
+            if (!string.IsNullOrEmpty(address.district))
+            {
+                result.Add(address.district);
+            }
+            if (!string.IsNullOrEmpty(address.city))
+            {
+                result.Add(address.city);
+            }
+            if (!string.IsNullOrEmpty(address.locality))
+            {
+                result.Add(address.locality);
+            }
+            if (!string.IsNullOrEmpty(address.street))
+            {
+                result.Add(address.street);
+            }
+            if (!string.IsNullOrEmpty(address.house))
+            {
+                if (string.IsNullOrEmpty(address.building))
+                {
+                    result.Add(address.house);
+                }
+                else
+                {
+                    result.Add(address.house + " " + address.building);
+                }
+            }
+            if (!string.IsNullOrEmpty(address.flat))
+            {
+                result.Add(address.flat);
+            }
+            return string.Join(", ", result);
+        }
         private static string getExtension(string transformFile)
         {
             string extension = Path.GetExtension(transformFile);
@@ -165,7 +217,6 @@ namespace TinkoffClient
             var currencies = this.virtuClient.GetCurrencies(product.ID).ToDictionary(A => A.ID, StringComparer.OrdinalIgnoreCase);
             var insuredDocumentTypes = this.virtuClient.InsuredDocumentTypes(product.ID).ToDictionary(A => A.ID, StringComparer.OrdinalIgnoreCase);
             var getBuyoutTariffs = this.virtuClient.GetTariffs(product.ID);
-            var strategies = this.virtuClient.GetStrategies(product.ID).ToDictionary(A => A.ID, StringComparer.OrdinalIgnoreCase);
             var strategyDetails = this.virtuClient.StrategiesSearch(new StrategiesSearchInput()
             {
                 IsActive = true,
@@ -221,58 +272,6 @@ namespace TinkoffClient
                 }
             };
         }
-        private static string getFullName(person person)
-        {
-            return $"{person.lastName ?? ""} {person.firstName ?? ""} {person.patronymicName ?? ""}".Trim();
-        }
-        private static string getFullAddress(address address)
-        {
-            List<string> result = new List<string>();
-            if (!string.IsNullOrEmpty(address.index))
-            {
-                result.Add(address.index);
-            }
-            if (!string.IsNullOrEmpty(address.country))
-            {
-                result.Add(address.country);
-            }
-            if (!string.IsNullOrEmpty(address.region))
-            {
-                result.Add(address.region);
-            }
-            if (!string.IsNullOrEmpty(address.district))
-            {
-                result.Add(address.district);
-            }
-            if (!string.IsNullOrEmpty(address.city))
-            {
-                result.Add(address.city);
-            }
-            if (!string.IsNullOrEmpty(address.locality))
-            {
-                result.Add(address.locality);
-            }
-            if (!string.IsNullOrEmpty(address.street))
-            {
-                result.Add(address.street);
-            }
-            if (!string.IsNullOrEmpty(address.house))
-            {
-                if (string.IsNullOrEmpty(address.building))
-                {
-                    result.Add(address.house);
-                }
-                else
-                {
-                    result.Add(address.house + " " + address.building);
-                }
-            }
-            if (!string.IsNullOrEmpty(address.flat))
-            {
-                result.Add(address.flat);
-            }
-            return string.Join(", ", result);
-        }
         public CreatePolicyResponse CreatePolicy(CreatePolicyRequest parameter)
         {
             var product = this.virtuClient.GetProducts()
@@ -284,7 +283,6 @@ namespace TinkoffClient
             var currencies = this.virtuClient.GetCurrencies(product.ID).ToDictionary(A => A.ID, StringComparer.OrdinalIgnoreCase);
             var insuredDocumentTypes = this.virtuClient.InsuredDocumentTypes(product.ID).ToDictionary(A => A.ID, StringComparer.OrdinalIgnoreCase);
             var getBuyoutTariffs = this.virtuClient.GetTariffs(product.ID);
-            var strategies = this.virtuClient.GetStrategies(product.ID).ToDictionary(A => A.ID, StringComparer.OrdinalIgnoreCase);
             var strategyDetails = this.virtuClient.StrategiesSearch(new StrategiesSearchInput()
             {
                 IsActive = true,
@@ -525,7 +523,6 @@ namespace TinkoffClient
             var currencies = this.virtuClient.GetCurrencies(product.ID).ToDictionary(A => A.ID, StringComparer.OrdinalIgnoreCase);
             var insuredDocumentTypes = this.virtuClient.InsuredDocumentTypes(product.ID).ToDictionary(A => A.ID, StringComparer.OrdinalIgnoreCase);
             var getBuyoutTariffs = this.virtuClient.GetTariffs(product.ID);
-            var strategies = this.virtuClient.GetStrategies(product.ID).ToDictionary(A => A.ID, StringComparer.OrdinalIgnoreCase);
             var strategyDetails = this.virtuClient.StrategiesSearch(new StrategiesSearchInput()
             {
                 IsActive = true,

@@ -105,7 +105,8 @@ namespace TinkoffService
                 this.addLog(
                     input: input,
                     output: output,
-                    exception: exception);
+                    exception: exception,
+                    methodName: methodName);
             }
             throw this.handleException(exception);
         }

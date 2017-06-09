@@ -19,6 +19,12 @@ namespace TinkoffService.Helpers
         }
         public GetQuotesResponse GetQuotes(GetQuotesRequest parameter)
         {
+            var strategies = this.virtuClient.StrategiesSearch(new VirtuClient.Models.StrategiesSearchInput()
+            {
+                IsActive = true,
+                ReadRedefined = true,
+            });
+            var strategy = strategies.Single(A => A.ID == parameter.strategyId);
             using (var db = new Model())
             {
                 var mapping = db.Settings.Where(A => A.Key == "quotesMapping")
@@ -26,18 +32,11 @@ namespace TinkoffService.Helpers
                     .ToArray()
                     .Select(A => JsonConvert.DeserializeObject<quotesMapping>(A))
                     .ToDictionary(A => A.strategy, A => A.quote, StringComparer.OrdinalIgnoreCase);
-                var strategies = this.virtuClient.StrategiesSearch(new VirtuClient.Models.StrategiesSearchInput()
-                {
-                    IsActive = true,
-                    ReadRedefined = true,
-                });
-                var strategy = strategies.Single(A => A.ID == parameter.strategyId);
                 string index = mapping[strategy.InvestmentStrategyRaw];
                 var queryable = db.TickerHistoryValues.Where(A => A.Ticker == index);
-                var lastDate = queryable.Max(A => A.Date);
                 return new GetQuotesResponse()
                 {
-                    date = lastDate,
+                    date = queryable.Max(A => A.Date),
                     dateSpecified = true,
                     quotes = queryable.Where(A => A.Date >= parameter.dateFrom && A.Date < parameter.dateTo).Select(A => new quote()
                     {
