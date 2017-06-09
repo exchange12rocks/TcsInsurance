@@ -1,4 +1,6 @@
-﻿[assembly: System.Runtime.Serialization.ContractNamespaceAttribute("http://tinkoff.ru/partners/insurance/investing/types", ClrNamespace = "tinkoff.ru.partners.insurance.investing.types")]
+﻿using System.Runtime.Serialization;
+
+[assembly: System.Runtime.Serialization.ContractNamespaceAttribute("http://tinkoff.ru/partners/insurance/investing/types", ClrNamespace = "tinkoff.ru.partners.insurance.investing.types")]
 
 
 
@@ -20,7 +22,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
+    [DataContract] [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
     public partial class CommonFault : object, System.ComponentModel.INotifyPropertyChanged
     {
 
@@ -29,7 +31,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         private string errorMessageField;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 0)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 0)]
         public string errorCode
         {
             get
@@ -44,7 +46,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 1)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 1)]
         public string errorMessage
         {
             get
@@ -75,7 +77,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
+    [DataContract] [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
     public partial class investParam : object, System.ComponentModel.INotifyPropertyChanged
     {
 
@@ -100,7 +102,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         private decimal coefficientField;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 0)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 0)]
         public string strategyId
         {
             get
@@ -115,7 +117,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 1)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 1)]
         public string strategy
         {
             get
@@ -130,7 +132,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 2)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 2)]
         public periodicity contributionsPeriodicity
         {
             get
@@ -145,7 +147,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 3)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 3)]
         public periodicity paymentsPeriodicities
         {
             get
@@ -175,7 +177,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, DataType = "integer", Order = 4)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, DataType = "integer", Order = 4)]
         public string policyTerm
         {
             get
@@ -190,7 +192,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 5)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 5)]
         public decimal coverCapital
         {
             get
@@ -220,7 +222,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 6)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 6)]
         public currency currencyInvest
         {
             get
@@ -235,7 +237,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 7)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 7)]
         public decimal coefficient
         {
             get
@@ -264,7 +266,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2046.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
+    [DataContract] [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
     public enum periodicity
     {
 
@@ -292,7 +294,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2046.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
+    [DataContract] [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
     public enum currency
     {
 
@@ -311,7 +313,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
+    [DataContract] [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
     public partial class redemptionAmount : object, System.ComponentModel.INotifyPropertyChanged
     {
 
@@ -330,7 +332,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         private decimal sumField;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, DataType = "integer", Order = 0)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, DataType = "integer", Order = 0)]
         public string year
         {
             get
@@ -345,7 +347,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 1)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 1)]
         public periodicity contributionsPeriodicity
         {
             get
@@ -360,7 +362,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 2)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 2)]
         public periodicity paymentsPeriodicities
         {
             get
@@ -390,7 +392,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 3)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 3)]
         public currency currency
         {
             get
@@ -405,7 +407,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, DataType = "integer", Order = 4)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, DataType = "integer", Order = 4)]
         public string policyTerm
         {
             get
@@ -420,7 +422,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 5)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 5)]
         public decimal sum
         {
             get
@@ -451,7 +453,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
+    [DataContract] [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
     public partial class risk : object, System.ComponentModel.INotifyPropertyChanged
     {
 
@@ -462,7 +464,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         private string sumField;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 0)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 0)]
         public string id
         {
             get
@@ -477,7 +479,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 1)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 1)]
         public string text
         {
             get
@@ -492,7 +494,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 2)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 2)]
         public string sum
         {
             get
@@ -523,7 +525,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
+    [DataContract] [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
     public partial class Product : object, System.ComponentModel.INotifyPropertyChanged
     {
 
@@ -554,7 +556,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         private investParam[] investParamsField;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 0)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 0)]
         public string id
         {
             get
@@ -569,7 +571,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 1)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 1)]
         public string name
         {
             get
@@ -584,7 +586,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 2)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 2)]
         public string shortDescription
         {
             get
@@ -599,7 +601,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 3)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 3)]
         public string fullDescription
         {
             get
@@ -614,7 +616,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 4)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 4)]
         public currency currency
         {
             get
@@ -629,7 +631,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 5)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 5)]
         public string minPremiums
         {
             get
@@ -644,7 +646,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 6)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 6)]
         public string maxPremiums
         {
             get
@@ -659,7 +661,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("policyTermOptions", Form = System.Xml.Schema.XmlSchemaForm.Unqualified, DataType = "integer", Order = 7)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute("policyTermOptions", Form = System.Xml.Schema.XmlSchemaForm.Unqualified, DataType = "integer", Order = 7)]
         public string[] policyTermOptions
         {
             get
@@ -674,7 +676,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("contributionsPeriodicityOptions", Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 8)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute("contributionsPeriodicityOptions", Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 8)]
         public periodicity[] contributionsPeriodicityOptions
         {
             get
@@ -689,7 +691,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("paymentsPeriodicityOptions", Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 9)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute("paymentsPeriodicityOptions", Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 9)]
         public periodicity[] paymentsPeriodicityOptions
         {
             get
@@ -704,7 +706,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("insuranceRisks", Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 10)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute("insuranceRisks", Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 10)]
         public risk[] insuranceRisks
         {
             get
@@ -719,7 +721,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("redemptionAmounts", Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 11)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute("redemptionAmounts", Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 11)]
         public redemptionAmount[] redemptionAmounts
         {
             get
@@ -734,7 +736,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("investParams", Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 12)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute("investParams", Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 12)]
         public investParam[] investParams
         {
             get
@@ -765,7 +767,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
+    [DataContract] [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
     public partial class GetProductsRequest : object, System.ComponentModel.INotifyPropertyChanged
     {
 
@@ -787,43 +789,43 @@ namespace tinkoff.ru.partners.insurance.investing.types
     {
 
         // CODEGEN: Generating message contract since the operation getProducts is neither RPC nor document wrapped.
-        [System.ServiceModel.OperationContractAttribute(Action = "", ReplyAction = "*")]
+        [System.ServiceModel.OperationContractAttribute]
         [System.ServiceModel.FaultContractAttribute(typeof(CommonFault), Action = "", Name = "CommonFault", Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults = true)]
         getProductsResponse getProducts(getProductsRequest1 request);
 
         // CODEGEN: Generating message contract since the operation getQuotes is neither RPC nor document wrapped.
-        [System.ServiceModel.OperationContractAttribute(Action = "", ReplyAction = "*")]
+        [System.ServiceModel.OperationContractAttribute]
         [System.ServiceModel.FaultContractAttribute(typeof(CommonFault), Action = "", Name = "CommonFault", Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults = true)]
         getQuotesResponse1 getQuotes(getQuotesRequest1 request);
 
         // CODEGEN: Generating message contract since the operation createPolicy is neither RPC nor document wrapped.
-        [System.ServiceModel.OperationContractAttribute(Action = "", ReplyAction = "*")]
+        [System.ServiceModel.OperationContractAttribute]
         [System.ServiceModel.FaultContractAttribute(typeof(CommonFault), Action = "", Name = "CommonFault", Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults = true)]
         createPolicyResponse1 createPolicy(createPolicyRequest1 request);
 
         // CODEGEN: Generating message contract since the operation getPolicy is neither RPC nor document wrapped.
-        [System.ServiceModel.OperationContractAttribute(Action = "", ReplyAction = "*")]
+        [System.ServiceModel.OperationContractAttribute]
         [System.ServiceModel.FaultContractAttribute(typeof(CommonFault), Action = "", Name = "CommonFault", Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults = true)]
         getPolicyResponse1 getPolicy(getPolicyRequest1 request);
 
         // CODEGEN: Generating message contract since the operation getPolicyDocumentsList is neither RPC nor document wrapped.
-        [System.ServiceModel.OperationContractAttribute(Action = "", ReplyAction = "*")]
+        [System.ServiceModel.OperationContractAttribute]
         [System.ServiceModel.FaultContractAttribute(typeof(CommonFault), Action = "", Name = "CommonFault", Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults = true)]
         getPolicyDocumentsListResponse getPolicyDocumentsList(getPolicyDocumentsListRequest1 request);
 
         // CODEGEN: Generating message contract since the operation getPolicyDocument is neither RPC nor document wrapped.
-        [System.ServiceModel.OperationContractAttribute(Action = "", ReplyAction = "*")]
+        [System.ServiceModel.OperationContractAttribute]
         [System.ServiceModel.FaultContractAttribute(typeof(CommonFault), Action = "", Name = "CommonFault", Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults = true)]
         getPolicyDocumentResponse1 getPolicyDocument(getPolicyDocumentRequest1 request);
 
         // CODEGEN: Generating message contract since the operation acceptPolicy is neither RPC nor document wrapped.
-        [System.ServiceModel.OperationContractAttribute(Action = "", ReplyAction = "*")]
+        [System.ServiceModel.OperationContractAttribute]
         [System.ServiceModel.FaultContractAttribute(typeof(CommonFault), Action = "", Name = "CommonFault", Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults = true)]
         acceptPolicyResponse1 acceptPolicy(acceptPolicyRequest1 request);
@@ -837,7 +839,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
     {
 
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types", Order = 0)]
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
         public GetProductsRequest GetProductsRequest;
 
         public getProductsRequest1()
@@ -877,7 +879,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
+    [DataContract] [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
     public partial class GetQuotesRequest : object, System.ComponentModel.INotifyPropertyChanged
     {
 
@@ -890,7 +892,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         private System.DateTime dateToField;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 0)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 0)]
         public string productId
         {
             get
@@ -905,7 +907,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 1)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 1)]
         public string strategyId
         {
             get
@@ -920,7 +922,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, DataType = "date", Order = 2)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, DataType = "date", Order = 2)]
         public System.DateTime dateFrom
         {
             get
@@ -935,7 +937,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, DataType = "date", Order = 3)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, DataType = "date", Order = 3)]
         public System.DateTime dateTo
         {
             get
@@ -966,7 +968,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
+    [DataContract] [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
     public partial class GetQuotesResponse : object, System.ComponentModel.INotifyPropertyChanged
     {
 
@@ -977,7 +979,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         private bool dateFieldSpecified;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("quotes", Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 0)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute("quotes", Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 0)]
         public quote[] quotes
         {
             get
@@ -992,7 +994,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, DataType = "date", Order = 1)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, DataType = "date", Order = 1)]
         public System.DateTime date
         {
             get
@@ -1038,7 +1040,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
+    [DataContract] [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
     public partial class quote : object, System.ComponentModel.INotifyPropertyChanged
     {
 
@@ -1047,7 +1049,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         private decimal priceField;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, DataType = "date", Order = 0)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, DataType = "date", Order = 0)]
         public System.DateTime date
         {
             get
@@ -1062,7 +1064,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 1)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 1)]
         public decimal price
         {
             get
@@ -1096,7 +1098,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
     {
 
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types", Order = 0)]
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
         public GetQuotesRequest GetQuotesRequest;
 
         public getQuotesRequest1()
@@ -1117,7 +1119,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
     {
 
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types", Order = 0)]
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
         public GetQuotesResponse GetQuotesResponse;
 
         public getQuotesResponse1()
@@ -1135,7 +1137,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
+    [DataContract] [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
     public partial class CreatePolicyRequest : object, System.ComponentModel.INotifyPropertyChanged
     {
 
@@ -1170,7 +1172,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         private beneficiary[] beneficiariesField;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 0)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 0)]
         public string applicationId
         {
             get
@@ -1185,7 +1187,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 1)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 1)]
         public string productId
         {
             get
@@ -1200,7 +1202,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 2)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 2)]
         public currency currency
         {
             get
@@ -1215,7 +1217,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, DataType = "integer", Order = 3)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, DataType = "integer", Order = 3)]
         public string policyTerm
         {
             get
@@ -1230,7 +1232,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 4)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 4)]
         public periodicity periodicityOfContributions
         {
             get
@@ -1245,7 +1247,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 5)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 5)]
         public periodicity periodicitiesOfPayments
         {
             get
@@ -1275,7 +1277,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 6)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 6)]
         public string strategyId
         {
             get
@@ -1290,7 +1292,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 7)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 7)]
         public decimal coverCapital
         {
             get
@@ -1320,7 +1322,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 8)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 8)]
         public decimal amount
         {
             get
@@ -1335,7 +1337,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 9)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 9)]
         public person insurant
         {
             get
@@ -1350,7 +1352,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 10)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 10)]
         public person insured
         {
             get
@@ -1365,7 +1367,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 11)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 11)]
         public bool insurantIsInsured
         {
             get
@@ -1380,7 +1382,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("beneficiaries", Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 12)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute("beneficiaries", Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 12)]
         public beneficiary[] beneficiaries
         {
             get
@@ -1412,7 +1414,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
+    [DataContract] [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
     public partial class person : object, System.ComponentModel.INotifyPropertyChanged
     {
 
@@ -1445,7 +1447,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         private address[] addressesField;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 0)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 0)]
         public string lastName
         {
             get
@@ -1460,7 +1462,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 1)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 1)]
         public string firstName
         {
             get
@@ -1475,7 +1477,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 2)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 2)]
         public string patronymicName
         {
             get
@@ -1490,7 +1492,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 3)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 3)]
         public string documentSerie
         {
             get
@@ -1505,7 +1507,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 4)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 4)]
         public string documentNumber
         {
             get
@@ -1520,7 +1522,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, DataType = "date", Order = 5)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, DataType = "date", Order = 5)]
         public System.DateTime documentIssueDate
         {
             get
@@ -1550,7 +1552,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 6)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 6)]
         public string documentOrganisation
         {
             get
@@ -1565,7 +1567,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 7)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 7)]
         public string documentOrganisationCode
         {
             get
@@ -1580,7 +1582,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, DataType = "date", Order = 8)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, DataType = "date", Order = 8)]
         public System.DateTime dateOfBirth
         {
             get
@@ -1595,7 +1597,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 9)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 9)]
         public string placeOfBirth
         {
             get
@@ -1610,7 +1612,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 10)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 10)]
         public sex sex
         {
             get
@@ -1625,7 +1627,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 11)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 11)]
         public string inn
         {
             get
@@ -1640,7 +1642,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("addresses", Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 12)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute("addresses", Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 12)]
         public address[] addresses
         {
             get
@@ -1669,7 +1671,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2046.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
+    [DataContract] [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
     public enum sex
     {
 
@@ -1685,7 +1687,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
+    [DataContract] [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
     public partial class address : object, System.ComponentModel.INotifyPropertyChanged
     {
 
@@ -1712,7 +1714,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         private string flatField;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 0)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 0)]
         public addressType type
         {
             get
@@ -1727,7 +1729,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 1)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 1)]
         public string country
         {
             get
@@ -1742,7 +1744,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 2)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 2)]
         public string index
         {
             get
@@ -1757,7 +1759,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 3)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 3)]
         public string region
         {
             get
@@ -1772,7 +1774,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 4)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 4)]
         public string district
         {
             get
@@ -1787,7 +1789,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 5)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 5)]
         public string city
         {
             get
@@ -1802,7 +1804,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 6)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 6)]
         public string locality
         {
             get
@@ -1817,7 +1819,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 7)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 7)]
         public string street
         {
             get
@@ -1832,7 +1834,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 8)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 8)]
         public string house
         {
             get
@@ -1847,7 +1849,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 9)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 9)]
         public string building
         {
             get
@@ -1862,7 +1864,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 10)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 10)]
         public string flat
         {
             get
@@ -1891,7 +1893,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2046.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
+    [DataContract] [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
     public enum addressType
     {
 
@@ -1907,7 +1909,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
+    [DataContract] [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
     public partial class beneficiary : person
     {
 
@@ -1922,7 +1924,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         private decimal percentField;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("sex", Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 0)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute("sex", Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 0)]
         public sex sex1
         {
             get
@@ -1952,7 +1954,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 1)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 1)]
         public relationType relation
         {
             get
@@ -1982,7 +1984,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 2)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 2)]
         public decimal percent
         {
             get
@@ -2000,7 +2002,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2046.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
+    [DataContract] [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
     public enum relationType
     {
 
@@ -2074,7 +2076,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
+    [DataContract] [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
     public partial class CreatePolicyResponse : object, System.ComponentModel.INotifyPropertyChanged
     {
 
@@ -2083,7 +2085,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         private string policyIdField;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 0)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 0)]
         public string policyNumber
         {
             get
@@ -2098,7 +2100,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 1)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 1)]
         public string policyId
         {
             get
@@ -2132,7 +2134,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
     {
 
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types", Order = 0)]
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
         public CreatePolicyRequest CreatePolicyRequest;
 
         public createPolicyRequest1()
@@ -2153,7 +2155,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
     {
 
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types", Order = 0)]
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
         public CreatePolicyResponse CreatePolicyResponse;
 
         public createPolicyResponse1()
@@ -2171,14 +2173,14 @@ namespace tinkoff.ru.partners.insurance.investing.types
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
+    [DataContract] [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
     public partial class GetPolicyRequest : object, System.ComponentModel.INotifyPropertyChanged
     {
 
         private string policyIdField;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 0)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 0)]
         public string policyId
         {
             get
@@ -2209,7 +2211,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
+    [DataContract] [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
     public partial class GetPolicyResponse : object, System.ComponentModel.INotifyPropertyChanged
     {
 
@@ -2248,7 +2250,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         private redemptionAmountInfo[] redemptionAmountsField;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 0)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 0)]
         public string productId
         {
             get
@@ -2263,7 +2265,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 1)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 1)]
         public string productName
         {
             get
@@ -2278,7 +2280,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 2)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 2)]
         public string policyId
         {
             get
@@ -2293,7 +2295,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 3)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 3)]
         public string policyNumber
         {
             get
@@ -2308,7 +2310,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 4)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 4)]
         public string fullDescription
         {
             get
@@ -2323,7 +2325,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, DataType = "date", Order = 5)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, DataType = "date", Order = 5)]
         public System.DateTime effectiveDate
         {
             get
@@ -2338,7 +2340,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, DataType = "date", Order = 6)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, DataType = "date", Order = 6)]
         public System.DateTime expirationDate
         {
             get
@@ -2353,7 +2355,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 7)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 7)]
         public string coefficient
         {
             get
@@ -2368,7 +2370,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 8)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 8)]
         public decimal profitability
         {
             get
@@ -2383,7 +2385,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 9)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 9)]
         public string status
         {
             get
@@ -2398,7 +2400,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 10)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 10)]
         public currency currency
         {
             get
@@ -2413,7 +2415,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 11)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 11)]
         public decimal amount
         {
             get
@@ -2428,7 +2430,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 12)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 12)]
         public string coverCapital
         {
             get
@@ -2443,7 +2445,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 13)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 13)]
         public string strategy
         {
             get
@@ -2458,7 +2460,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("paymentsPlan", Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 14)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute("paymentsPlan", Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 14)]
         public paymentsPlanItem[] paymentsPlan
         {
             get
@@ -2473,7 +2475,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("insuranceRisks", Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 15)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute("insuranceRisks", Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 15)]
         public risk[] insuranceRisks
         {
             get
@@ -2488,7 +2490,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("redemptionAmounts", Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 16)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute("redemptionAmounts", Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 16)]
         public redemptionAmountInfo[] redemptionAmounts
         {
             get
@@ -2519,7 +2521,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
+    [DataContract] [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
     public partial class paymentsPlanItem : object, System.ComponentModel.INotifyPropertyChanged
     {
 
@@ -2528,7 +2530,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         private decimal sumField;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, DataType = "date", Order = 0)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, DataType = "date", Order = 0)]
         public System.DateTime date
         {
             get
@@ -2543,7 +2545,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 1)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 1)]
         public decimal sum
         {
             get
@@ -2574,7 +2576,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
+    [DataContract] [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
     public partial class redemptionAmountInfo : object, System.ComponentModel.INotifyPropertyChanged
     {
 
@@ -2583,7 +2585,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         private decimal sumField;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, DataType = "date", Order = 0)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, DataType = "date", Order = 0)]
         public System.DateTime date
         {
             get
@@ -2598,7 +2600,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 1)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 1)]
         public decimal sum
         {
             get
@@ -2632,7 +2634,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
     {
 
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types", Order = 0)]
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
         public GetPolicyRequest GetPolicyRequest;
 
         public getPolicyRequest1()
@@ -2653,7 +2655,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
     {
 
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types", Order = 0)]
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
         public GetPolicyResponse GetPolicyResponse;
 
         public getPolicyResponse1()
@@ -2671,14 +2673,14 @@ namespace tinkoff.ru.partners.insurance.investing.types
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
+    [DataContract] [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
     public partial class GetPolicyDocumentsListRequest : object, System.ComponentModel.INotifyPropertyChanged
     {
 
         private string policyIdField;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 0)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 0)]
         public string policyId
         {
             get
@@ -2709,7 +2711,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
+    [DataContract] [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
     public partial class document : object, System.ComponentModel.INotifyPropertyChanged
     {
 
@@ -2718,7 +2720,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         private string nameField;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 0)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 0)]
         public string id
         {
             get
@@ -2733,7 +2735,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 1)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 1)]
         public string name
         {
             get
@@ -2767,7 +2769,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
     {
 
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types", Order = 0)]
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
         public GetPolicyDocumentsListRequest GetPolicyDocumentsListRequest;
 
         public getPolicyDocumentsListRequest1()
@@ -2807,7 +2809,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
+    [DataContract] [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
     public partial class GetPolicyDocumentRequest : object, System.ComponentModel.INotifyPropertyChanged
     {
 
@@ -2816,7 +2818,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         private string documentIdField;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 0)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 0)]
         public string policyId
         {
             get
@@ -2831,7 +2833,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 1)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 1)]
         public string documentId
         {
             get
@@ -2862,7 +2864,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
+    [DataContract] [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
     public partial class GetPolicyDocumentResponse : object, System.ComponentModel.INotifyPropertyChanged
     {
 
@@ -2873,7 +2875,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         private string documentNameField;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, DataType = "base64Binary", Order = 0)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, DataType = "base64Binary", Order = 0)]
         public byte[] documentData
         {
             get
@@ -2888,7 +2890,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 1)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 1)]
         public string documentType
         {
             get
@@ -2903,7 +2905,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 2)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 2)]
         public string documentName
         {
             get
@@ -2937,7 +2939,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
     {
 
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types", Order = 0)]
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
         public GetPolicyDocumentRequest GetPolicyDocumentRequest;
 
         public getPolicyDocumentRequest1()
@@ -2958,7 +2960,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
     {
 
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types", Order = 0)]
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
         public GetPolicyDocumentResponse GetPolicyDocumentResponse;
 
         public getPolicyDocumentResponse1()
@@ -2976,14 +2978,14 @@ namespace tinkoff.ru.partners.insurance.investing.types
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
+    [DataContract] [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
     public partial class AcceptPolicyRequest : object, System.ComponentModel.INotifyPropertyChanged
     {
 
         private string policyIdField;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 0)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 0)]
         public string policyId
         {
             get
@@ -3014,14 +3016,14 @@ namespace tinkoff.ru.partners.insurance.investing.types
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
+    [DataContract] [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
     public partial class AcceptPolicyResponse : object, System.ComponentModel.INotifyPropertyChanged
     {
 
         private string resultField;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 0)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 0)]
         public string result
         {
             get
@@ -3055,7 +3057,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
     {
 
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types", Order = 0)]
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
         public AcceptPolicyRequest AcceptPolicyRequest;
 
         public acceptPolicyRequest1()
@@ -3076,7 +3078,7 @@ namespace tinkoff.ru.partners.insurance.investing.types
     {
 
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/types", Order = 0)]
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
+        [DataMember] [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
         public AcceptPolicyResponse AcceptPolicyResponse;
 
         public acceptPolicyResponse1()
