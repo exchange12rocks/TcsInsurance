@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.ServiceModel;
-using System.Text;
 using System.Xml;
-using System.Xml.Linq;
 using tinkoff.ru.partners.insurance.investing.types;
 namespace TinkoffService
 {
@@ -15,7 +9,8 @@ namespace TinkoffService
     {
         public acceptPolicyResponse1 acceptPolicy(acceptPolicyRequest1 request)
         {
-            XmlDocument doc = new XmlDocument();
+            throw new NotImplementedException();
+            /*XmlDocument doc = new XmlDocument();
             var node1 = doc.CreateNode(XmlNodeType.Element, "", null);
             node1.Value = "errorCode";
             var node2 = doc.CreateNode(XmlNodeType.Element, "", null);
@@ -27,7 +22,7 @@ namespace TinkoffService
                     node1,
                     node2,
                 },
-            };
+            };*/
         }
 
         public createPolicyResponse1 createPolicy(createPolicyRequest1 request)
