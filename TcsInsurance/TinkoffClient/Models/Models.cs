@@ -1,4 +1,5 @@
 ﻿using System.Runtime.Serialization;
+using System.ServiceModel;
 
 [assembly: System.Runtime.Serialization.ContractNamespaceAttribute("http://tinkoff.ru/partners/insurance/investing/types", ClrNamespace = "tinkoff.ru.partners.insurance.investing.types")]
 

@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="TinkoffService.Insurance" CodeBehind="Insurance.svc.cs" %>
