@@ -88,7 +88,7 @@ namespace TinkoffClient
         }
         private static string getSex(sex value)
         {
-            if(value == sex.male)
+            if (value == sex.male)
             {
                 return "1";
             }
@@ -103,11 +103,11 @@ namespace TinkoffClient
         }
         private static sex getSex(string value)
         {
-            if(string.Equals(value, "1", StringComparison.OrdinalIgnoreCase))
+            if (string.Equals(value, "1", StringComparison.OrdinalIgnoreCase))
             {
                 return sex.male;
             }
-            else if(string.Equals(value, "2", StringComparison.OrdinalIgnoreCase))
+            else if (string.Equals(value, "2", StringComparison.OrdinalIgnoreCase))
             {
                 return sex.female;
             }
@@ -199,6 +199,21 @@ namespace TinkoffClient
                 return null;
             }
         }
+        private static string getPrintformCaption(policyDocumentType documentType)
+        {
+            if (documentType == policyDocumentType.Item1 || documentType == policyDocumentType.Item2)
+            {
+                return "Полис";
+            }
+            else if (documentType == policyDocumentType.Item)
+            {
+                return "Правила и согласие на обработку персональных данных";
+            }
+            else
+            {
+                throw new Exception($"неизвестный тип документа documentType: {documentType.ToString()}");
+            }
+        }
 
         private VirtuClient.VirtuClient virtuClient;
         public TinkoffClient(VirtuClient.VirtuClient virtuClient)
@@ -224,9 +239,9 @@ namespace TinkoffClient
             }).ToDictionary(A => A.ID, StringComparer.OrdinalIgnoreCase);
             return new getProductsResponse()
             {
-                GetProductsResponse1 = new Product[]
+                GetProductsResponse1 = new product[]
                 {
-                    new Product()
+                    new product()
                     {
                         id = product.ID,
                         name = product.Name,
@@ -300,7 +315,7 @@ namespace TinkoffClient
             DateTime effectiveDate = new DateTime(today.Year, today.Month + 1, 1);
             int periodInYears = int.Parse(parameter.policyTerm);
             var insured = parameter.insurantIsInsured ? parameter.insurant : parameter.insured;
-            
+
             var strategyDetail = strategyDetails[parameter.strategyId];
             var strategyCurrency = currencies[strategyDetail.OptionCurrency];
             var currency = getCurrency(parameter.currency, currencies.Values);
@@ -362,7 +377,7 @@ namespace TinkoffClient
                 },
                 StrategyCurrency = strategyCurrency.ID,
                 StrategyCurrencyRaw = strategyCurrency.Name,
-                
+
                 InsurancePeriod = insurancePeriod.ID,
                 InsurancePeriodRaw = insurancePeriod.Name,
                 ParticipationCoefficient = strategyDetail.Coefficient,
@@ -512,6 +527,22 @@ namespace TinkoffClient
                 policyNumber = policy.SERIAL + " " + policy.NUMBER,
             };
         }
+        private static policyStatus getStatus(string status)
+        {
+            if (string.Equals(status, "Проект", StringComparison.OrdinalIgnoreCase))
+            {
+                return policyStatus.Item;
+            }
+            else if (string.Equals(status, "Действующий", StringComparison.OrdinalIgnoreCase))
+            {
+                return policyStatus.Item1;
+            }
+            else
+            {
+                throw new Exception($"неизвестный статус полиса, status: {status}");
+            }
+
+        }
         public GetPolicyResponse GetPolicy(GetPolicyRequest parameter)
         {
             var product = this.virtuClient.GetProducts()
@@ -532,25 +563,18 @@ namespace TinkoffClient
             var policy = this.virtuClient.Read(parameter.policyId);
             return new GetPolicyResponse()
             {
-                policyId = policy.ID,
                 amount = policy.Premium.Value,
-                coefficient = policy.ParticipationCoefficient.Value.ToString(),
-                status = policy.StatusName,
+                coefficient = policy.ParticipationCoefficient.Value,
+                status = getStatus(policy.StatusName),
                 strategy = policy.InvestmentStrategyRaw,
                 fullDescription = product.Description,
                 currency = getCurrency(currencies[policy.Currency]).Value,
-                coverCapital = "100",
+                coverCapital = 100,
                 //profitability = policy.pro
                 effectiveDate = getDate(policy.EffectiveDate).Value,
                 expirationDate = getDate(policy.ExpirationDate).Value,
                 insuranceRisks = null,
-                paymentsPlan = new paymentsPlanItem[]
-                {
-                    new paymentsPlanItem()
-                    {
-                        //a
-                    }
-                },
+                paymentsPlan = null,
                 policyNumber = policy.SERIAL + " " + policy.NUMBER,
                 productId = policy.ProductID,
                 productName = product.Name,
@@ -561,43 +585,21 @@ namespace TinkoffClient
                 }).ToArray(),
             };
         }
-        public getPolicyDocumentsListResponse GetPolicyDocumentsList(GetPolicyDocumentsListRequest parameter)
-        {
-            var policy = this.virtuClient.Read(parameter.policyId);
-            string[] allowedPrintformNames = new string[]
-            {
-                "Полис",
-                //"Заявление на возврат",
-                "Правила и согласие на обработку персональных данных",
-                //"Онлайн оплата полиса",
-                //"Форма самосертификации (FATCA)",
-                //"Заявление о внесении изменений в Договор страхования",
-            };
-            return new getPolicyDocumentsListResponse()
-            {
-                GetPolicyDocumentsListResponse1 = this.virtuClient.GetPrintforms(policy.ProductID)
-                    .Where(A => allowedPrintformNames.Contains(A.Value.Caption, StringComparer.OrdinalIgnoreCase))
-                    .Select(A => new document()
-                    {
-                        id = A.Key,
-                        name = A.Value.Caption,
-                    })
-                    .ToArray(),
-            };
-        }
+
         public GetPolicyDocumentResponse GetPolicyDocument(GetPolicyDocumentRequest parameter)
         {
             var productId = this.virtuClient.Read(parameter.policyId).ProductID;
-            var printform = this.virtuClient.GetPrintforms(productId).Single(A => string.Equals(A.Key, parameter.documentId, StringComparison.OrdinalIgnoreCase));
+            string printformCaption = getPrintformCaption(parameter.documentType);
+            var printform = this.virtuClient.GetPrintforms(productId).Single(A => string.Equals(A.Value.Caption, printformCaption, StringComparison.OrdinalIgnoreCase));
             return new GetPolicyDocumentResponse()
             {
                 documentData = this.virtuClient.Print(new PrintInput()
                 {
                     policyID = parameter.policyId,
-                    viewID = parameter.documentId,
+                    viewID = printform.Key,
                 }),
                 documentName = printform.Value.Caption,
-                documentType = getContentType(getExtension(printform.Value.Transform)),
+                contentType = getContentType(getExtension(printform.Value.Transform)),
             };
         }
         public AcceptPolicyResponse Accept(AcceptPolicyRequest parameter)

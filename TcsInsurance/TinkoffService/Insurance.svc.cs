@@ -138,13 +138,6 @@ namespace TinkoffService
                actionFunc: input => this.createTinkoffClient().GetPolicyDocument(input),
                outputFunc: output => new getPolicyDocumentResponse1(output));
         }
-        public getPolicyDocumentsListResponse getPolicyDocumentsList(getPolicyDocumentsListRequest1 request)
-        {
-            return this.tryAction(
-                inputFunc: () => request.GetPolicyDocumentsListRequest,
-                actionFunc: input => this.createTinkoffClient().GetPolicyDocumentsList(input),
-                outputFunc: output => output);
-        }
         public getProductsResponse getProducts(getProductsRequest1 request)
         {
             return this.tryAction(
