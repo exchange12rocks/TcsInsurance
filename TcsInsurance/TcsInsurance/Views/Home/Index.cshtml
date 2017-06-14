@@ -1,6 +1,8 @@
-﻿@{
+﻿@model TcsInsurance.ViewModels.UploadViewModel
+@{
     ViewBag.Title = "Загрузка исторических данных котировок";
 }
+<h3>Последняя дата актуализации - @(Model.ActualDate?.ToString("dd.MM.yyyy") ?? "нет данных")</h3>
 <h3>Выберите файл для загрузки</h3>
 @using (Html.BeginForm("Upload", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {

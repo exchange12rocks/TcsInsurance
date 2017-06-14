@@ -2,6 +2,9 @@
 using System.Web.Mvc;
 using TcsInsurance.Entities;
 using TcsInsurance.Helpers;
+using System.Linq;
+using System;
+using TcsInsurance.ViewModels;
 namespace TcsInsurance.Controllers
 {
     public class HomeController : Controller
@@ -12,7 +15,18 @@ namespace TcsInsurance.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            return View();
+            DateTime? actualDate = null;
+            using (var db = new Model())
+            {
+                if(db.TickerHistoryValues.Any())
+                {
+                    actualDate = db.TickerHistoryValues.Max(A => A.Date);
+                }
+            }
+            return View(new UploadViewModel()
+            {
+                ActualDate = actualDate,
+            });
         }
         [HttpPost]
         public ActionResult Upload(HttpPostedFileBase upload)
