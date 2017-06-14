@@ -1,9 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.12
+VisualStudioVersion = 15.0.26430.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TcsInsurance", "TcsInsurance\TcsInsurance.csproj", "{A2A0C4C7-EAF6-468C-9A83-51DE60120126}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4462D19B-97D2-4398-8FA3-FB1789599228} = {4462D19B-97D2-4398-8FA3-FB1789599228}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtuClient", "VirtuClient\VirtuClient.csproj", "{0CBC364B-990A-4924-B60E-58EB6C8DD3AB}"
 EndProject

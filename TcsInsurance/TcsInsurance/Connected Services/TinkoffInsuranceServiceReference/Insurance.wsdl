@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tinkoff.ru/partners/insurance/investing/0.1" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://tinkoff.ru/partners/insurance/investing/0.1" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tinkoff.ru/partners/insurance/investing/0.1/Imports">
+      <xsd:import schemaLocation="http://localhost:53175/Insurance.svc?xsd=xsd0" namespace="http://tinkoff.ru/partners/insurance/investing/types" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="getProductsRequest1">
+    <wsdl:part xmlns:q1="http://tinkoff.ru/partners/insurance/investing/types" name="GetProductsRequest" element="q1:GetProductsRequest" />
+  </wsdl:message>
+  <wsdl:message name="getProductsResponse">
+    <wsdl:part xmlns:q2="http://tinkoff.ru/partners/insurance/investing/types" name="GetProductsResponse" element="q2:GetProductsResponse" />
+  </wsdl:message>
+  <wsdl:message name="InvestingInsuranceInterface_getProducts_CommonFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://tinkoff.ru/partners/insurance/investing/types" name="detail" element="q3:CommonFault" />
+  </wsdl:message>
+  <wsdl:message name="getQuotesRequest1">
+    <wsdl:part xmlns:q4="http://tinkoff.ru/partners/insurance/investing/types" name="GetQuotesRequest" element="q4:GetQuotesRequest" />
+  </wsdl:message>
+  <wsdl:message name="getQuotesResponse1">
+    <wsdl:part xmlns:q5="http://tinkoff.ru/partners/insurance/investing/types" name="GetQuotesResponse" element="q5:GetQuotesResponse" />
+  </wsdl:message>
+  <wsdl:message name="InvestingInsuranceInterface_getQuotes_CommonFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://tinkoff.ru/partners/insurance/investing/types" name="detail" element="q6:CommonFault" />
+  </wsdl:message>
+  <wsdl:message name="createPolicyRequest1">
+    <wsdl:part xmlns:q7="http://tinkoff.ru/partners/insurance/investing/types" name="CreatePolicyRequest" element="q7:CreatePolicyRequest" />
+  </wsdl:message>
+  <wsdl:message name="createPolicyResponse1">
+    <wsdl:part xmlns:q8="http://tinkoff.ru/partners/insurance/investing/types" name="CreatePolicyResponse" element="q8:CreatePolicyResponse" />
+  </wsdl:message>
+  <wsdl:message name="InvestingInsuranceInterface_createPolicy_CommonFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://tinkoff.ru/partners/insurance/investing/types" name="detail" element="q9:CommonFault" />
+  </wsdl:message>
+  <wsdl:message name="getPolicyRequest1">
+    <wsdl:part xmlns:q10="http://tinkoff.ru/partners/insurance/investing/types" name="GetPolicyRequest" element="q10:GetPolicyRequest" />
+  </wsdl:message>
+  <wsdl:message name="getPolicyResponse1">
+    <wsdl:part xmlns:q11="http://tinkoff.ru/partners/insurance/investing/types" name="GetPolicyResponse" element="q11:GetPolicyResponse" />
+  </wsdl:message>
+  <wsdl:message name="InvestingInsuranceInterface_getPolicy_CommonFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://tinkoff.ru/partners/insurance/investing/types" name="detail" element="q12:CommonFault" />
+  </wsdl:message>
+  <wsdl:message name="getPolicyDocumentRequest1">
+    <wsdl:part xmlns:q13="http://tinkoff.ru/partners/insurance/investing/types" name="GetPolicyDocumentRequest" element="q13:GetPolicyDocumentRequest" />
+  </wsdl:message>
+  <wsdl:message name="getPolicyDocumentResponse1">
+    <wsdl:part xmlns:q14="http://tinkoff.ru/partners/insurance/investing/types" name="GetPolicyDocumentResponse" element="q14:GetPolicyDocumentResponse" />
+  </wsdl:message>
+  <wsdl:message name="InvestingInsuranceInterface_getPolicyDocument_CommonFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://tinkoff.ru/partners/insurance/investing/types" name="detail" element="q15:CommonFault" />
+  </wsdl:message>
+  <wsdl:message name="acceptPolicyRequest1">
+    <wsdl:part xmlns:q16="http://tinkoff.ru/partners/insurance/investing/types" name="AcceptPolicyRequest" element="q16:AcceptPolicyRequest" />
+  </wsdl:message>
+  <wsdl:message name="acceptPolicyResponse1">
+    <wsdl:part xmlns:q17="http://tinkoff.ru/partners/insurance/investing/types" name="AcceptPolicyResponse" element="q17:AcceptPolicyResponse" />
+  </wsdl:message>
+  <wsdl:message name="InvestingInsuranceInterface_acceptPolicy_CommonFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://tinkoff.ru/partners/insurance/investing/types" name="detail" element="q18:CommonFault" />
+  </wsdl:message>
+  <wsdl:portType name="InvestingInsuranceInterface">
+    <wsdl:operation name="getProducts">
+      <wsdl:input wsaw:Action="http://tinkoff.ru/partners/insurance/investing/0.1/InvestingInsuranceInterface/getProducts" name="getProductsRequest1" message="tns:getProductsRequest1" />
+      <wsdl:output wsaw:Action="http://tinkoff.ru/partners/insurance/investing/0.1/InvestingInsuranceInterface/getProductsResponse" name="getProductsResponse" message="tns:getProductsResponse" />
+      <wsdl:fault wsaw:Action="" name="CommonFault" message="tns:InvestingInsuranceInterface_getProducts_CommonFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getQuotes">
+      <wsdl:input wsaw:Action="http://tinkoff.ru/partners/insurance/investing/0.1/InvestingInsuranceInterface/getQuotes" name="getQuotesRequest1" message="tns:getQuotesRequest1" />
+      <wsdl:output wsaw:Action="http://tinkoff.ru/partners/insurance/investing/0.1/InvestingInsuranceInterface/getQuotesResponse" name="getQuotesResponse1" message="tns:getQuotesResponse1" />
+      <wsdl:fault wsaw:Action="" name="CommonFault" message="tns:InvestingInsuranceInterface_getQuotes_CommonFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="createPolicy">
+      <wsdl:input wsaw:Action="http://tinkoff.ru/partners/insurance/investing/0.1/InvestingInsuranceInterface/createPolicy" name="createPolicyRequest1" message="tns:createPolicyRequest1" />
+      <wsdl:output wsaw:Action="http://tinkoff.ru/partners/insurance/investing/0.1/InvestingInsuranceInterface/createPolicyResponse" name="createPolicyResponse1" message="tns:createPolicyResponse1" />
+      <wsdl:fault wsaw:Action="" name="CommonFault" message="tns:InvestingInsuranceInterface_createPolicy_CommonFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getPolicy">
+      <wsdl:input wsaw:Action="http://tinkoff.ru/partners/insurance/investing/0.1/InvestingInsuranceInterface/getPolicy" name="getPolicyRequest1" message="tns:getPolicyRequest1" />
+      <wsdl:output wsaw:Action="http://tinkoff.ru/partners/insurance/investing/0.1/InvestingInsuranceInterface/getPolicyResponse" name="getPolicyResponse1" message="tns:getPolicyResponse1" />
+      <wsdl:fault wsaw:Action="" name="CommonFault" message="tns:InvestingInsuranceInterface_getPolicy_CommonFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getPolicyDocument">
+      <wsdl:input wsaw:Action="http://tinkoff.ru/partners/insurance/investing/0.1/InvestingInsuranceInterface/getPolicyDocument" name="getPolicyDocumentRequest1" message="tns:getPolicyDocumentRequest1" />
+      <wsdl:output wsaw:Action="http://tinkoff.ru/partners/insurance/investing/0.1/InvestingInsuranceInterface/getPolicyDocumentResponse" name="getPolicyDocumentResponse1" message="tns:getPolicyDocumentResponse1" />
+      <wsdl:fault wsaw:Action="" name="CommonFault" message="tns:InvestingInsuranceInterface_getPolicyDocument_CommonFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="acceptPolicy">
+      <wsdl:input wsaw:Action="http://tinkoff.ru/partners/insurance/investing/0.1/InvestingInsuranceInterface/acceptPolicy" name="acceptPolicyRequest1" message="tns:acceptPolicyRequest1" />
+      <wsdl:output wsaw:Action="http://tinkoff.ru/partners/insurance/investing/0.1/InvestingInsuranceInterface/acceptPolicyResponse" name="acceptPolicyResponse1" message="tns:acceptPolicyResponse1" />
+      <wsdl:fault wsaw:Action="" name="CommonFault" message="tns:InvestingInsuranceInterface_acceptPolicy_CommonFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>
