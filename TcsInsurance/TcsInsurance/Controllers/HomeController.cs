@@ -22,7 +22,7 @@ namespace TcsInsurance.Controllers
                 using (var db = new Model())
                 {
                     TickerHistoryHelper helper = new TickerHistoryHelper(db);
-                    helper.GetFromExcel(upload.InputStream);
+                    helper.AddOrUpdate(helper.GetFromExcel(upload.InputStream));
                 }
             }
             return RedirectToAction("Index");
