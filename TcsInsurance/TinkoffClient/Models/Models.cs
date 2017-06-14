@@ -3191,9 +3191,4 @@ namespace tinkoff.ru.partners.insurance.investing.types
             this.AcceptPolicyResponse = AcceptPolicyResponse;
         }
     }
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface InvestingInsuranceInterfaceChannel : InvestingInsuranceInterface, System.ServiceModel.IClientChannel
-    {
-    }
 }
