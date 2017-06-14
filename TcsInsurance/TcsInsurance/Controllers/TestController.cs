@@ -32,7 +32,7 @@ namespace TcsInsurance.Controllers
                 productId = "",
                 strategyId = "",
             });
-            var policy = this.tinkoffClient.createPolicy(new CreatePolicyRequest()
+            /*var policy = this.tinkoffClient.createPolicy(new CreatePolicyRequest()
             {
                 amount = 60000,
                 currency = currency.RUR,
@@ -57,7 +57,7 @@ namespace TcsInsurance.Controllers
                         }
                     }
                 },
-            });
+            });*/
             return View();
         }
     }
