@@ -2731,23 +2731,23 @@ namespace tinkoff.ru.partners.insurance.investing.types
     {
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlEnumAttribute("???? ??????????????")]
+        [System.Xml.Serialization.XmlEnumAttribute("Не оплачен")]
         Item,
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlEnumAttribute("??????????????????")]
+        [System.Xml.Serialization.XmlEnumAttribute("Действует")]
         Item1,
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlEnumAttribute("????????????????????")]
+        [System.Xml.Serialization.XmlEnumAttribute("Расторгнут")]
         Item2,
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlEnumAttribute("??????????????")]
+        [System.Xml.Serialization.XmlEnumAttribute("Отменен")]
         Item3,
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlEnumAttribute("?????????????????? ????????????")]
+        [System.Xml.Serialization.XmlEnumAttribute("Страховой случай")]
         Item4,
     }
 
