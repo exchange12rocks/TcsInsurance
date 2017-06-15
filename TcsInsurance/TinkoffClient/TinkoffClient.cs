@@ -250,11 +250,11 @@ namespace TinkoffClient
                         currency = currency.RUR,
                         minPremiums = insuranceSums.Min(A => int.Parse(A.Value.Name)).ToString(),
                         maxPremiums = insuranceSums.Max(A => int.Parse(A.Value.Name)).ToString(),
-                        insuranceRisks = CrossJoin(risks, insuranceSums, (risk, insuranceSum) => new risk()
+                        insuranceRisks = CrossJoin(risks, insuranceSums.Select(A => A.Value.Name).Distinct(), (risk, insuranceSum) => new risk()
                         {
                             id = risk.ID,
                             text = risk.Name,
-                            sum = insuranceSum.Value.Name,
+                            sum = insuranceSum,
                         }).ToArray(),
                         policyTermOptions = insurancePeriods.Select(A => A.Value.Name).ToArray(),
                         redemptionAmounts = getBuyoutTariffs.Select(A => new redemptionAmount()
