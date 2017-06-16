@@ -561,7 +561,9 @@ namespace TinkoffClient
             }).ToDictionary(A => A.ID, StringComparer.OrdinalIgnoreCase);
 
             var policy = this.virtuClient.Read(parameter.policyId);
-            return new GetPolicyResponse()
+			var strategyDetail = strategyDetails[policy.InvestmentStrategy];
+
+			return new GetPolicyResponse()
             {
                 amount = policy.Premium.Value,
                 coefficient = policy.ParticipationCoefficient.Value,
@@ -570,8 +572,8 @@ namespace TinkoffClient
                 fullDescription = product.Description,
                 currency = getCurrency(currencies[policy.Currency]).Value,
                 coverCapital = 100,
-                //profitability = policy.pro
-                effectiveDate = getDate(policy.EffectiveDate).Value,
+                profitability = strategyDetail.Profitability,
+				effectiveDate = getDate(policy.EffectiveDate).Value,
                 expirationDate = getDate(policy.ExpirationDate).Value,
                 insuranceRisks = null,
                 paymentsPlan = null,
