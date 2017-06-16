@@ -9,6 +9,7 @@ using VirtuClient.Models;
 using VirtuClient.Models.Core;
 namespace TinkoffService
 {
+    [ServiceBehavior(IncludeExceptionDetailInFaults = true)]
     public class Insurance : InvestingInsuranceInterface
     {
         private VirtuClient.VirtuClient createVirtuClient(AuthenticationInput authenticationInput = null)

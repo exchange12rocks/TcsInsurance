@@ -2948,15 +2948,15 @@ namespace tinkoff.ru.partners.insurance.investing.types
     {
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlEnumAttribute("условия страхования")]
+        [System.Xml.Serialization.XmlEnumAttribute("Условия страхования")]
         Item,
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlEnumAttribute("проект полиса")]
+        [System.Xml.Serialization.XmlEnumAttribute("Проект полиса")]
         Item1,
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlEnumAttribute("полис")]
+        [System.Xml.Serialization.XmlEnumAttribute("Полис")]
         Item2,
     }
 
