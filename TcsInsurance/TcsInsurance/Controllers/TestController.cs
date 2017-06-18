@@ -24,13 +24,17 @@ namespace TcsInsurance.Controllers
         // GET: Test
         public ActionResult Index()
         {
-            var product = this.tinkoffClient.getProducts(new GetProductsRequest())[0];
+            /*var product = this.tinkoffClient.getProducts(new GetProductsRequest())[0];
             var quotes = this.tinkoffClient.getQuotes(new GetQuotesRequest()
             {
                 dateFrom = DateTime.Today.AddYears(-1),
                 dateTo = DateTime.Today,
                 productId = "",
                 strategyId = "",
+            });*/
+			var policy = this.tinkoffClient.getPolicy(new GetPolicyRequest()
+			{
+				policyId = "9334F82E-DA02-4AA7-B1D2-2C8EAD488993",
             });
             /*var policy = this.tinkoffClient.createPolicy(new CreatePolicyRequest()
             {

@@ -16,6 +16,22 @@ namespace TinkoffService
         {
             ConfigurationManagerHelper configurationManagerHelper = ConfigurationManagerHelper.Default;
             VirtuClient.VirtuClient result = new VirtuClient.VirtuClient(new Uri(configurationManagerHelper.virtuBaseUrl));
+			result.Logger = (log) =>
+			{
+				using (var db = new Model())
+				{
+					db.Logs.Add(new Log()
+					{
+						DateTime = log.DateTime,
+						Input = log.Input,
+						Output = log.Output,
+						Exception = log.Exception,
+						Name = log.Name ?? "",
+					});
+					db.SaveChanges();
+				}
+			};
+
             result.Authenticate(authenticationInput ?? new AuthenticationInput()
             {
                 createPersistentCookie = true,
