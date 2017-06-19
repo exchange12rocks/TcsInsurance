@@ -338,7 +338,7 @@ namespace TinkoffClient
                 //SallerDivisionID = null, //Хз
                 //SallerDivision = "\"Электронный\"",
                 //InsurerRepresentName = null, //Хз
-                InvestmentStrategy = strategyDetail.ID,
+                InvestmentStrategy = strategyDetail.InvestmentStrategy,
                 InvestmentStrategyRaw = strategyDetail.InvestmentStrategyRaw,
                 InvestmentStrategyData = new Investmentstrategydata()
                 {
@@ -545,7 +545,7 @@ namespace TinkoffClient
         }
         public GetPolicyResponse GetPolicy(GetPolicyRequest parameter)
         {
-            var product = this.virtuClient.GetProducts()
+			var product = this.virtuClient.GetProducts()
                 .Single(A => string.Equals(A.Name, "Верное решение", StringComparison.OrdinalIgnoreCase));
             var risks = this.virtuClient.GetRisks(product.ID);
             var insuranceSums = this.virtuClient.GetInsuranceSums(product.ID).ToDictionary(A => A.ID, StringComparer.OrdinalIgnoreCase);
@@ -561,7 +561,7 @@ namespace TinkoffClient
             }).ToDictionary(A => A.ID, StringComparer.OrdinalIgnoreCase);
 
             var policy = this.virtuClient.Read(parameter.policyId);
-			var strategyDetail = strategyDetails[policy.InvestmentStrategy];
+			var strategyDetail = strategyDetails.Where(A => string.Equals(A.Value.InvestmentStrategy, policy.InvestmentStrategy, StringComparison.OrdinalIgnoreCase)).First().Value;
 
 			return new GetPolicyResponse()
             {
@@ -575,7 +575,12 @@ namespace TinkoffClient
                 profitability = strategyDetail.Profitability,
 				effectiveDate = getDate(policy.EffectiveDate).Value,
                 expirationDate = getDate(policy.ExpirationDate).Value,
-                insuranceRisks = null,
+                insuranceRisks = risks.Select(A => new risk()
+				{
+					id = A.ID,
+					sum = policy.Premium.Value.ToString(),
+					text = A.Name,
+				}).ToArray(),
                 paymentsPlan = null,
                 policyNumber = policy.SERIAL + " " + policy.NUMBER,
                 productId = policy.ProductID,
