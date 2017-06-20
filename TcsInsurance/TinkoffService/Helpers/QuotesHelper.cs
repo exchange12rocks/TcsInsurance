@@ -24,7 +24,7 @@ namespace TinkoffService.Helpers
                 IsActive = true,
                 ReadRedefined = true,
             });
-            var strategy = strategies.Single(A => A.ID == parameter.strategyId);
+            var strategy = strategies.First(A => string.Equals(A.ID, parameter.strategyId, StringComparison.OrdinalIgnoreCase));
             using (var db = new Model())
             {
                 var mapping = db.Settings.Where(A => A.Key == "quotesMapping")
