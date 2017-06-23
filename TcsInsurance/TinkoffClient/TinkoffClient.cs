@@ -312,7 +312,7 @@ namespace TinkoffClient
             var status = statuses.Single(A => string.Equals(A.Name, "Проект", StringComparison.OrdinalIgnoreCase));
 
             DateTime today = DateTime.Today;
-            DateTime effectiveDate = new DateTime(today.Year, today.Month + 1, 1);
+            DateTime effectiveDate = today;
             int periodInYears = int.Parse(parameter.policyTerm);
             var insured = parameter.insurantIsInsured ? parameter.insurant : parameter.insured;
 
