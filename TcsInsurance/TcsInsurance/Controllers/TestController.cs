@@ -59,8 +59,13 @@ namespace TcsInsurance.Controllers
 						}
 					}
 				}
-
 			});
+            var document = this.tinkoffClient.getPolicyDocument(new GetPolicyDocumentRequest()
+            {
+                policyId = policy.policyId,
+                documentType = policyDocumentType.Полис,
+            });
+            System.IO.File.WriteAllBytes(@"C:\temp\document.pdf", document.documentData);
             /*var policy = this.tinkoffClient.createPolicy(new CreatePolicyRequest()
             {
                 amount = 60000,

@@ -264,9 +264,9 @@
   </xs:complexType>
   <xs:simpleType name="policyDocumentType">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="условия страхования" />
-      <xs:enumeration value="проект полиса" />
-      <xs:enumeration value="полис" />
+      <xs:enumeration value="Условия страхования" />
+      <xs:enumeration value="Проект полиса" />
+      <xs:enumeration value="Полис" />
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="GetPolicyDocumentResponse" nillable="true" type="tns:GetPolicyDocumentResponse" />
