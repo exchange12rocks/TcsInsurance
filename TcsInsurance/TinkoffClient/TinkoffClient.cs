@@ -505,7 +505,7 @@ namespace TinkoffClient
                     InsPeriod = A.InsPeriod.value,
                     InsSum = A.InsSum.value,
                 }).ToArray(),
-                UserTown = "",
+                UserTown = "Москва",
                 KvPartner1Percent = calculate.KvPartner1Percent,
                 KvPartner1Rub = calculate.KvPartner1Rub,
                 KvPartner2Percent = calculate.KvPartner2Percent,
