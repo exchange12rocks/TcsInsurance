@@ -1,4 +1,5 @@
-﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -86,6 +87,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Insurance.svc" />
+    <None Include="Service References\TickerServiceReference\configuration91.svcinfo" />
+    <None Include="Service References\TickerServiceReference\configuration.svcinfo" />
+    <None Include="Service References\TickerServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -105,12 +112,60 @@
     <Compile Include="Insurance.svc.cs">
       <DependentUpon>Insurance.svc</DependentUpon>
     </Compile>
+    <Compile Include="Service References\TickerServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <Content Include="Service References\TickerServiceReference\TinkoffService.TickerServiceReference.checkInsurerResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\TickerServiceReference\TinkoffService.TickerServiceReference.checkTResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\TickerServiceReference\TinkoffService.TickerServiceReference.getInsurerContractsResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\TickerServiceReference\TinkoffService.TickerServiceReference.getInsurerInfoResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\TickerServiceReference\TinkoffService.TickerServiceReference.getStrategyTickersResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\TickerServiceReference\TinkoffService.TickerServiceReference.getStrategyTickerTotalResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\TickerServiceReference\TinkoffService.TickerServiceReference.pingResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\TickerServiceReference\TinkoffService.TickerServiceReference.registerInsurerResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\TickerServiceReference\TinkoffService.TickerServiceReference.wsContractResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\TickerServiceReference\TinkoffService.TickerServiceReference.wsInsurerInfoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\TickerServiceReference\TinkoffService.TickerServiceReference.wsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\TickerServiceReference\TinkoffService.TickerServiceReference.wsTickersResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\TickerServiceReference\TinkoffService.TickerServiceReference.wsTickerTotalResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Service References\TickerServiceReference\WSService.wsdl" />
+    <None Include="Service References\TickerServiceReference\WSService.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -127,6 +182,12 @@
       <Project>{0cbc364b-990a-4924-b60e-58eb6c8dd3ab}</Project>
       <Name>VirtuClient</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\TickerServiceReference\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

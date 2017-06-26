@@ -27,7 +27,18 @@ namespace TinkoffService.Helpers
             var strategy = strategies.First(A => string.Equals(A.ID, parameter.strategyId, StringComparison.OrdinalIgnoreCase));
             using (var db = new Model())
             {
-                var mapping = db.Settings.Where(A => A.Key == "quotesMapping")
+
+
+
+
+                TickerHistoryHelper helper = new TickerHistoryHelper(db);
+                var a = helper.LoadFromService(strategy.ID);
+
+
+
+
+
+                    var mapping = db.Settings.Where(A => A.Key == "quotesMapping")
                     .Select(A => A.Value)
                     .ToArray()
                     .Select(A => JsonConvert.DeserializeObject<quotesMapping>(A))
