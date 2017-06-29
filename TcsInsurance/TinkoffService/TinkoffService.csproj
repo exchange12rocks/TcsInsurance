@@ -1,4 +1,5 @@
-﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -86,6 +87,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Insurance.svc" />
+    <None Include="Service References\TikerHistoryServiceReference\configuration91.svcinfo" />
+    <None Include="Service References\TikerHistoryServiceReference\configuration.svcinfo" />
+    <None Include="Service References\TikerHistoryServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -105,12 +112,66 @@
     <Compile Include="Insurance.svc.cs">
       <DependentUpon>Insurance.svc</DependentUpon>
     </Compile>
+    <Compile Include="Service References\TikerHistoryServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <Content Include="Service References\TikerHistoryServiceReference\TinkoffService.TikerHistoryServiceReference.checkInsurerResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\TikerHistoryServiceReference\TinkoffService.TikerHistoryServiceReference.checkTResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\TikerHistoryServiceReference\TinkoffService.TikerHistoryServiceReference.getDictStrategiesResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\TikerHistoryServiceReference\TinkoffService.TikerHistoryServiceReference.getInsurerContractsResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\TikerHistoryServiceReference\TinkoffService.TikerHistoryServiceReference.getInsurerInfoResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\TikerHistoryServiceReference\TinkoffService.TikerHistoryServiceReference.getStrategyTickersResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\TikerHistoryServiceReference\TinkoffService.TikerHistoryServiceReference.getStrategyTickerTotalResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\TikerHistoryServiceReference\TinkoffService.TikerHistoryServiceReference.pingResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\TikerHistoryServiceReference\TinkoffService.TikerHistoryServiceReference.registerInsurerResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\TikerHistoryServiceReference\TinkoffService.TikerHistoryServiceReference.wsContractResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\TikerHistoryServiceReference\TinkoffService.TikerHistoryServiceReference.wsInsurerInfoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\TikerHistoryServiceReference\TinkoffService.TikerHistoryServiceReference.wsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\TikerHistoryServiceReference\TinkoffService.TikerHistoryServiceReference.wsSimpleDictResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\TikerHistoryServiceReference\TinkoffService.TikerHistoryServiceReference.wsTickersResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\TikerHistoryServiceReference\TinkoffService.TikerHistoryServiceReference.wsTickerTotalResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Service References\TikerHistoryServiceReference\WSService.wsdl" />
+    <None Include="Service References\TikerHistoryServiceReference\WSService.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -127,6 +188,12 @@
       <Project>{0cbc364b-990a-4924-b60e-58eb6c8dd3ab}</Project>
       <Name>VirtuClient</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\TikerHistoryServiceReference\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

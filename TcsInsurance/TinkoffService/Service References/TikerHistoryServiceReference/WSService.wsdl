@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:tns="http://ws.backend.uralsibins.ru/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" name="WSService" targetNamespace="http://ws.backend.uralsibins.ru/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xsd:schema>
+      <xsd:import schemaLocation="https://msk01-lfeapp03:8181/ws.udsj/WSService?xsd=1" namespace="http://ws.backend.uralsibins.ru/" />
+    </xsd:schema>
+  </types>
+  <message name="getDictStrategies">
+    <part name="parameters" element="tns:getDictStrategies" />
+  </message>
+  <message name="getDictStrategiesResponse">
+    <part name="parameters" element="tns:getDictStrategiesResponse" />
+  </message>
+  <message name="getStrategyTickerTotal">
+    <part name="parameters" element="tns:getStrategyTickerTotal" />
+  </message>
+  <message name="getStrategyTickerTotalResponse">
+    <part name="parameters" element="tns:getStrategyTickerTotalResponse" />
+  </message>
+  <message name="getInsurerContracts">
+    <part name="parameters" element="tns:getInsurerContracts" />
+  </message>
+  <message name="getInsurerContractsResponse">
+    <part name="parameters" element="tns:getInsurerContractsResponse" />
+  </message>
+  <message name="getStrategyTickers">
+    <part name="parameters" element="tns:getStrategyTickers" />
+  </message>
+  <message name="getStrategyTickersResponse">
+    <part name="parameters" element="tns:getStrategyTickersResponse" />
+  </message>
+  <message name="getInsurerInfo">
+    <part name="parameters" element="tns:getInsurerInfo" />
+  </message>
+  <message name="getInsurerInfoResponse">
+    <part name="parameters" element="tns:getInsurerInfoResponse" />
+  </message>
+  <message name="checkInsurer">
+    <part name="parameters" element="tns:checkInsurer" />
+  </message>
+  <message name="checkInsurerResponse">
+    <part name="parameters" element="tns:checkInsurerResponse" />
+  </message>
+  <message name="checkT">
+    <part name="parameters" element="tns:checkT" />
+  </message>
+  <message name="checkTResponse">
+    <part name="parameters" element="tns:checkTResponse" />
+  </message>
+  <message name="registerInsurer">
+    <part name="parameters" element="tns:registerInsurer" />
+  </message>
+  <message name="registerInsurerResponse">
+    <part name="parameters" element="tns:registerInsurerResponse" />
+  </message>
+  <message name="ping">
+    <part name="parameters" element="tns:ping" />
+  </message>
+  <message name="pingResponse">
+    <part name="parameters" element="tns:pingResponse" />
+  </message>
+  <portType name="WS">
+    <operation name="getDictStrategies">
+      <input wsam:Action="http://ws.backend.uralsibins.ru/WS/getDictStrategiesRequest" message="tns:getDictStrategies" />
+      <output wsam:Action="http://ws.backend.uralsibins.ru/WS/getDictStrategiesResponse" message="tns:getDictStrategiesResponse" />
+    </operation>
+    <operation name="getStrategyTickerTotal">
+      <input wsam:Action="http://ws.backend.uralsibins.ru/WS/getStrategyTickerTotalRequest" message="tns:getStrategyTickerTotal" />
+      <output wsam:Action="http://ws.backend.uralsibins.ru/WS/getStrategyTickerTotalResponse" message="tns:getStrategyTickerTotalResponse" />
+    </operation>
+    <operation name="getInsurerContracts">
+      <input wsam:Action="http://ws.backend.uralsibins.ru/WS/getInsurerContractsRequest" message="tns:getInsurerContracts" />
+      <output wsam:Action="http://ws.backend.uralsibins.ru/WS/getInsurerContractsResponse" message="tns:getInsurerContractsResponse" />
+    </operation>
+    <operation name="getStrategyTickers">
+      <input wsam:Action="http://ws.backend.uralsibins.ru/WS/getStrategyTickersRequest" message="tns:getStrategyTickers" />
+      <output wsam:Action="http://ws.backend.uralsibins.ru/WS/getStrategyTickersResponse" message="tns:getStrategyTickersResponse" />
+    </operation>
+    <operation name="getInsurerInfo">
+      <input wsam:Action="http://ws.backend.uralsibins.ru/WS/getInsurerInfoRequest" message="tns:getInsurerInfo" />
+      <output wsam:Action="http://ws.backend.uralsibins.ru/WS/getInsurerInfoResponse" message="tns:getInsurerInfoResponse" />
+    </operation>
+    <operation name="checkInsurer">
+      <input wsam:Action="http://ws.backend.uralsibins.ru/WS/checkInsurerRequest" message="tns:checkInsurer" />
+      <output wsam:Action="http://ws.backend.uralsibins.ru/WS/checkInsurerResponse" message="tns:checkInsurerResponse" />
+    </operation>
+    <operation name="checkT">
+      <input wsam:Action="http://ws.backend.uralsibins.ru/WS/checkTRequest" message="tns:checkT" />
+      <output wsam:Action="http://ws.backend.uralsibins.ru/WS/checkTResponse" message="tns:checkTResponse" />
+    </operation>
+    <operation name="registerInsurer">
+      <input wsam:Action="http://ws.backend.uralsibins.ru/WS/registerInsurerRequest" message="tns:registerInsurer" />
+      <output wsam:Action="http://ws.backend.uralsibins.ru/WS/registerInsurerResponse" message="tns:registerInsurerResponse" />
+    </operation>
+    <operation name="ping">
+      <input wsam:Action="http://ws.backend.uralsibins.ru/WS/pingRequest" message="tns:ping" />
+      <output wsam:Action="http://ws.backend.uralsibins.ru/WS/pingResponse" message="tns:pingResponse" />
+    </operation>
+  </portType>
+  <binding name="WSPortBinding" type="tns:WS">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="getDictStrategies">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="getStrategyTickerTotal">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="getInsurerContracts">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="getStrategyTickers">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="getInsurerInfo">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="checkInsurer">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="checkT">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="registerInsurer">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="ping">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <service name="WSService">
+    <port name="WSPort" binding="tns:WSPortBinding">
+      <soap:address location="https://msk01-lfeapp03:8181/ws.udsj/WSService" />
+    </port>
+  </service>
+</definitions>

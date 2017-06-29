@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using tinkoff.ru.partners.insurance.investing.types;
 using TinkoffService.Entities;
+using TinkoffService.TikerHistoryServiceReference;
 namespace TinkoffService.Helpers
 {
     internal class quotesMapping
@@ -19,32 +20,79 @@ namespace TinkoffService.Helpers
         }
         public GetQuotesResponse GetQuotes(GetQuotesRequest parameter)
         {
-            var strategies = this.virtuClient.StrategiesSearch(new VirtuClient.Models.StrategiesSearchInput()
+            System.Net.ServicePointManager.ServerCertificateValidationCallback +=
+            (se, cert, chain, sslerror) =>
+            {
+                return true;
+            };
+            WSClient client = new WSClient();
+            client.ClientCredentials.UserName.UserName = "tinkoff_svc";
+            client.ClientCredentials.UserName.Password = "tinkoff_svc_12345";
+            string productId = "50de0164-cfb5-4843-a166-43a8c0b41084";
+
+            var a = this.virtuClient.GetStrategies(productId);
+            var b = this.virtuClient.StrategiesSearch(new VirtuClient.Models.StrategiesSearchInput()
             {
                 IsActive = true,
                 ReadRedefined = true,
             });
-            var strategy = strategies.First(A => string.Equals(A.ID, parameter.strategyId, StringComparison.OrdinalIgnoreCase));
-            using (var db = new Model())
+            foreach(var aa in a)
             {
-                var mapping = db.Settings.Where(A => A.Key == "quotesMapping")
-                    .Select(A => A.Value)
-                    .ToArray()
-                    .Select(A => JsonConvert.DeserializeObject<quotesMapping>(A))
-                    .ToDictionary(A => A.strategy, A => A.quote, StringComparer.OrdinalIgnoreCase);
-                string index = mapping[strategy.InvestmentStrategyRaw];
-                var queryable = db.TickerHistoryValues.Where(A => A.Ticker == index);
-                return new GetQuotesResponse()
+                var result1 = client.getStrategyTickers(aa.ID);
+                if(result1.tickers?.Any() == true)
                 {
-                    date = queryable.Max(A => A.Date),
-                    dateSpecified = true,
-                    quotes = queryable.Where(A => A.Date >= parameter.dateFrom && A.Date < parameter.dateTo).Select(A => new quote()
-                    {
-                        price = A.Value,
-                        date = A.Date,
-                    }).ToArray(),
-                };
+                    throw new Exception();
+                }
+                var result2 = client.getStrategyTickers(aa.Name);
+                if (result2.tickers?.Any() == true)
+                {
+                    throw new Exception();
+                }
+                var result3 = client.getStrategyTickers(aa.DisplayName);
+                if (result3.tickers?.Any() == true)
+                {
+                    throw new Exception();
+                }
             }
+            foreach (var bb in b)
+            {
+                var result1 = client.getStrategyTickers(bb.ID);
+                if (result1.tickers?.Any() == true)
+                {
+                    throw new Exception();
+                }
+                var result2 = client.getStrategyTickers(bb.InvestmentStrategy);
+                if (result2.tickers?.Any() == true)
+                {
+                    throw new Exception();
+                }
+                var result3 = client.getStrategyTickers(bb.InvestmentStrategyRaw);
+                if (result3.tickers?.Any() == true)
+                {
+                    throw new Exception();
+                }
+                var result4 = client.getStrategyTickers(bb.OptionID);
+                if (result4.tickers?.Any() == true)
+                {
+                    throw new Exception();
+                }
+                var result5 = client.getStrategyTickers(bb.BaseIndex);
+                if (result5.tickers?.Any() == true)
+                {
+                    throw new Exception();
+                }
+            }
+
+            return new GetQuotesResponse()
+            {
+                date = DateTime.Today,
+                dateSpecified = true,
+                /*quotes = result.tickers.Select(A => new quote()
+                {
+                    date = A.date,
+                    price = (decimal)A.rate,
+                }).ToArray(),*/
+            };
         }
     }
 }
