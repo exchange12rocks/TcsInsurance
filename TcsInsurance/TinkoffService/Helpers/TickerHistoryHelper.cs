@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using TinkoffService.Entities;
 using TinkoffService.Helpers.Excel;
-using TinkoffService.TickerServiceReference;
 namespace TinkoffService.Helpers
 {
     public class TickerHistoryHelper
@@ -34,26 +33,6 @@ namespace TinkoffService.Helpers
                     }));
             }
             return result;
-        }
-        public IEnumerable<TickerHistoryValue> LoadFromService(string strategyId)
-        {
-            WSClient client = new WSClient();
-            System.Net.ServicePointManager.ServerCertificateValidationCallback +=
-            (se, cert, chain, sslerror) =>
-            {
-                return true;
-            };
-            client.ClientCredentials.UserName.UserName = "tinkoff_svc";
-            client.ClientCredentials.UserName.Password = "tinkoff_svc_12345";
-            //"8CF52283-575E-461B-BE79-F2AF4F289812"
-            var result = client.getStrategyTickers(strategyId);
-            var t = result.tickers[0];
-            return result.tickers.Select(A => new TickerHistoryValue()
-            {
-                Ticker = A.strategy_code,
-                Date = A.date,
-                Value = (decimal)A.rate,
-            });
         }
         public void AddOrUpdate(IEnumerable<TickerHistoryValue> values)
         {
