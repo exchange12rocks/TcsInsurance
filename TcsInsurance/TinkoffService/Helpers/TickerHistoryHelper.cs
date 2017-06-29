@@ -1,9 +1,12 @@
 ﻿using NPOI.SS.UserModel;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using TinkoffService.Entities;
 using TinkoffService.Helpers.Excel;
+using TinkoffService.TikerHistoryServiceReference;
+
 namespace TinkoffService.Helpers
 {
     public class TickerHistoryHelper
@@ -33,6 +36,20 @@ namespace TinkoffService.Helpers
                     }));
             }
             return result;
+        }
+        public IEnumerable<TickerHistoryValue> LoadFromService(string strategyCode)
+        {
+            WSClient client = new WSClient();
+            client.ClientCredentials.UserName.UserName = "tinkoff_svc";
+            client.ClientCredentials.UserName.Password = "tinkoff_svc_12345";
+            // XLP, SXDP, CBKIGINF
+            var result = client.getStrategyTickers(strategyCode);
+            return result.tickers.Select(A => new TickerHistoryValue()
+            {
+                Ticker = strategyCode,
+                Date = A.date,
+                Value = (decimal)A.rate,
+            });
         }
         public void AddOrUpdate(IEnumerable<TickerHistoryValue> values)
         {
