@@ -16,25 +16,39 @@ namespace TinkoffService.Helpers
         {
             this.appSettings = appSettings;
         }
-        public string virtuBaseUrl
+        public string VirtuBaseUrl
         {
             get
             {
                 return this.appSettings["virtuBaseUrl"];
             }
         }
-        public string virtuUserName
+        public string VirtuUserName
         {
             get
             {
                 return this.appSettings["virtuUserName"];
             }
         }
-        public string virtuPassword
+        public string VirtuPassword
         {
             get
             {
                 return this.appSettings["virtuPassword"];
+            }
+        }
+        public string WSUserName
+        {
+            get
+            {
+                return this.appSettings["wsUserName"];
+            }
+        }
+        public string WSPassword
+        {
+            get
+            {
+                return this.appSettings["wsPassword"];
             }
         }
     }

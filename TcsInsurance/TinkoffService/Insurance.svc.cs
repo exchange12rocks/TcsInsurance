@@ -15,7 +15,7 @@ namespace TinkoffService
         private VirtuClient.VirtuClient createVirtuClient(AuthenticationInput authenticationInput = null)
         {
             ConfigurationManagerHelper configurationManagerHelper = ConfigurationManagerHelper.Default;
-            VirtuClient.VirtuClient result = new VirtuClient.VirtuClient(new Uri(configurationManagerHelper.virtuBaseUrl));
+            VirtuClient.VirtuClient result = new VirtuClient.VirtuClient(new Uri(configurationManagerHelper.VirtuBaseUrl));
 			result.Logger = (log) =>
 			{
 				using (var db = new Model())
@@ -35,8 +35,8 @@ namespace TinkoffService
             result.Authenticate(authenticationInput ?? new AuthenticationInput()
             {
                 createPersistentCookie = true,
-                userName = configurationManagerHelper.virtuUserName,
-                password = configurationManagerHelper.virtuPassword,
+                userName = configurationManagerHelper.VirtuUserName,
+                password = configurationManagerHelper.VirtuPassword,
             });
             return result;
         }
