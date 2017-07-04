@@ -1,8 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.13
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TcsInsurance", "TcsInsurance\TcsInsurance.csproj", "{A2A0C4C7-EAF6-468C-9A83-51DE60120126}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4462D19B-97D2-4398-8FA3-FB1789599228} = {4462D19B-97D2-4398-8FA3-FB1789599228}
+	EndProjectSection
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtuClient", "VirtuClient\VirtuClient.csproj", "{0CBC364B-990A-4924-B60E-58EB6C8DD3AB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TinkoffClient", "TinkoffClient\TinkoffClient.csproj", "{AE7D52BC-FE45-43A5-BDC8-0B64EB6387D0}"
@@ -19,6 +24,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A2A0C4C7-EAF6-468C-9A83-51DE60120126}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2A0C4C7-EAF6-468C-9A83-51DE60120126}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2A0C4C7-EAF6-468C-9A83-51DE60120126}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2A0C4C7-EAF6-468C-9A83-51DE60120126}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0CBC364B-990A-4924-B60E-58EB6C8DD3AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0CBC364B-990A-4924-B60E-58EB6C8DD3AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0CBC364B-990A-4924-B60E-58EB6C8DD3AB}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tinkoff.ru/partners/insurance/investing/types" elementFormDefault="qualified" targetNamespace="http://tinkoff.ru/partners/insurance/investing/types" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="GetProductsRequest" nillable="true" type="tns:GetProductsRequest" />
+  <xs:complexType name="GetProductsRequest" />
+  <xs:element name="GetProductsResponse" nillable="true" type="tns:ArrayOfProduct" />
+  <xs:complexType name="ArrayOfProduct">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" form="unqualified" name="products" type="tns:product" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="product">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="id" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="name" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="shortDescription" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="fullDescription" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" form="unqualified" name="currency" type="tns:currency" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="minPremiums" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="maxPremiums" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" form="unqualified" name="policyTermOptions" type="xs:integer" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" form="unqualified" name="contributionsPeriodicityOptions" type="tns:periodicity" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" form="unqualified" name="paymentsPeriodicityOptions" type="tns:periodicity" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" form="unqualified" name="insuranceRisks" type="tns:risk" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" form="unqualified" name="redemptionAmounts" type="tns:redemptionAmount" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" form="unqualified" name="investParams" type="tns:investParam" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="currency">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="RUR" />
+      <xs:enumeration value="USD" />
+      <xs:enumeration value="EUR" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="periodicity">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="0" />
+      <xs:enumeration value="1" />
+      <xs:enumeration value="2" />
+      <xs:enumeration value="4" />
+      <xs:enumeration value="12" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="risk">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="id" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="text" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="sum" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="redemptionAmount">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="year" type="xs:integer" />
+      <xs:element minOccurs="1" maxOccurs="1" form="unqualified" name="contributionsPeriodicity" type="tns:periodicity" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="paymentsPeriodicities" type="tns:periodicity" />
+      <xs:element minOccurs="1" maxOccurs="1" form="unqualified" name="currency" type="tns:currency" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="policyTerm" type="xs:integer" />
+      <xs:element minOccurs="1" maxOccurs="1" form="unqualified" name="sum" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="investParam">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="strategyId" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="strategy" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" form="unqualified" name="contributionsPeriodicity" type="tns:periodicity" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="paymentsPeriodicities" type="tns:periodicity" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="policyTerm" type="xs:integer" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="coverCapital" type="xs:decimal" />
+      <xs:element minOccurs="1" maxOccurs="1" form="unqualified" name="currencyInvest" type="tns:currency" />
+      <xs:element minOccurs="1" maxOccurs="1" form="unqualified" name="coefficient" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CommonFault" type="tns:CommonFault" />
+  <xs:complexType name="CommonFault">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="errorCode" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="errorMessage" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="GetQuotesRequest" nillable="true" type="tns:GetQuotesRequest" />
+  <xs:complexType name="GetQuotesRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="productId" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="strategyId" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" form="unqualified" name="dateFrom" type="xs:date" />
+      <xs:element minOccurs="1" maxOccurs="1" form="unqualified" name="dateTo" type="xs:date" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="GetQuotesResponse" nillable="true" type="tns:GetQuotesResponse" />
+  <xs:complexType name="GetQuotesResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" form="unqualified" name="quotes" type="tns:quote" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="date" type="xs:date" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="quote">
+    <xs:sequence>
+      <xs:element minOccurs="1" maxOccurs="1" form="unqualified" name="date" type="xs:date" />
+      <xs:element minOccurs="1" maxOccurs="1" form="unqualified" name="price" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CreatePolicyRequest" nillable="true" type="tns:CreatePolicyRequest" />
+  <xs:complexType name="CreatePolicyRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="applicationId" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="productId" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" form="unqualified" name="currency" type="tns:currency" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="policyTerm" type="xs:integer" />
+      <xs:element minOccurs="1" maxOccurs="1" form="unqualified" name="periodicityOfContributions" type="tns:periodicity" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="periodicitiesOfPayments" type="tns:periodicity" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="strategyId" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="coverCapital" type="xs:decimal" />
+      <xs:element minOccurs="1" maxOccurs="1" form="unqualified" name="amount" type="xs:decimal" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="insurant" type="tns:person" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="insured" type="tns:person" />
+      <xs:element minOccurs="1" maxOccurs="1" form="unqualified" name="insurantIsInsured" type="xs:boolean" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" form="unqualified" name="beneficiaries" type="tns:beneficiary" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="person">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="lastName" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="firstName" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="patronymicName" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="documentSerie" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="documentNumber" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" form="unqualified" name="documentIssueDate" type="xs:date" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="documentOrganisation" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="documentOrganisationCode" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" form="unqualified" name="dateOfBirth" type="xs:date" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="placeOfBirth" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" form="unqualified" name="sex" type="tns:sex" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="inn" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" form="unqualified" name="addresses" type="tns:address" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="sex">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="male" />
+      <xs:enumeration value="female" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="address">
+    <xs:sequence>
+      <xs:element minOccurs="1" maxOccurs="1" form="unqualified" name="type" type="tns:addressType" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="country" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="index" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="region" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="district" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="city" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="locality" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="street" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="house" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="building" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="flat" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="addressType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="residence" />
+      <xs:enumeration value="registration" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="beneficiary">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="lastName" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="firstName" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="patronymicName" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="documentSerie" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="documentNumber" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="documentIssueDate" type="xs:date" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="documentOrganisation" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="documentOrganisationCode" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" form="unqualified" name="dateOfBirth" type="xs:date" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="placeOfBirth" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="sex" type="tns:sex" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="inn" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" form="unqualified" name="addresses" type="tns:address" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="relation" type="tns:relationType" />
+      <xs:element minOccurs="1" maxOccurs="1" form="unqualified" name="percent" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="relationType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="1" />
+      <xs:enumeration value="2" />
+      <xs:enumeration value="3" />
+      <xs:enumeration value="4" />
+      <xs:enumeration value="5" />
+      <xs:enumeration value="6" />
+      <xs:enumeration value="7" />
+      <xs:enumeration value="8" />
+      <xs:enumeration value="9" />
+      <xs:enumeration value="10" />
+      <xs:enumeration value="11" />
+      <xs:enumeration value="12" />
+      <xs:enumeration value="13" />
+      <xs:enumeration value="14" />
+      <xs:enumeration value="15" />
+      <xs:enumeration value="16" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="CreatePolicyResponse" nillable="true" type="tns:CreatePolicyResponse" />
+  <xs:complexType name="CreatePolicyResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="policyNumber" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="policyId" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="GetPolicyRequest" nillable="true" type="tns:GetPolicyRequest" />
+  <xs:complexType name="GetPolicyRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="policyId" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="GetPolicyResponse" nillable="true" type="tns:GetPolicyResponse" />
+  <xs:complexType name="GetPolicyResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="productId" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="productName" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="policyNumber" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="fullDescription" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" form="unqualified" name="effectiveDate" type="xs:date" />
+      <xs:element minOccurs="1" maxOccurs="1" form="unqualified" name="expirationDate" type="xs:date" />
+      <xs:element minOccurs="1" maxOccurs="1" form="unqualified" name="coefficient" type="xs:decimal" />
+      <xs:element minOccurs="1" maxOccurs="1" form="unqualified" name="profitability" type="xs:decimal" />
+      <xs:element minOccurs="1" maxOccurs="1" form="unqualified" name="status" type="tns:policyStatus" />
+      <xs:element minOccurs="1" maxOccurs="1" form="unqualified" name="currency" type="tns:currency" />
+      <xs:element minOccurs="1" maxOccurs="1" form="unqualified" name="amount" type="xs:decimal" />
+      <xs:element minOccurs="1" maxOccurs="1" form="unqualified" name="coverCapital" type="xs:decimal" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="strategy" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" form="unqualified" name="paymentsPlan" type="tns:paymentsPlanItem" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" form="unqualified" name="insuranceRisks" type="tns:risk" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" form="unqualified" name="redemptionAmounts" type="tns:redemptionAmountInfo" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="policyStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Не оплачен" />
+      <xs:enumeration value="Действует" />
+      <xs:enumeration value="Расторгнут" />
+      <xs:enumeration value="Отменен" />
+      <xs:enumeration value="Страховой случай" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="paymentsPlanItem">
+    <xs:sequence>
+      <xs:element minOccurs="1" maxOccurs="1" form="unqualified" name="date" type="xs:date" />
+      <xs:element minOccurs="1" maxOccurs="1" form="unqualified" name="sum" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="redemptionAmountInfo">
+    <xs:sequence>
+      <xs:element minOccurs="1" maxOccurs="1" form="unqualified" name="date" type="xs:date" />
+      <xs:element minOccurs="1" maxOccurs="1" form="unqualified" name="sum" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="GetPolicyDocumentRequest" nillable="true" type="tns:GetPolicyDocumentRequest" />
+  <xs:complexType name="GetPolicyDocumentRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="policyId" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" form="unqualified" name="documentType" type="tns:policyDocumentType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="policyDocumentType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Условия страхования" />
+      <xs:enumeration value="Проект полиса" />
+      <xs:enumeration value="Полис" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="GetPolicyDocumentResponse" nillable="true" type="tns:GetPolicyDocumentResponse" />
+  <xs:complexType name="GetPolicyDocumentResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="documentData" type="xs:base64Binary" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="contentType" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="documentName" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AcceptPolicyRequest" nillable="true" type="tns:AcceptPolicyRequest" />
+  <xs:complexType name="AcceptPolicyRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="policyId" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AcceptPolicyResponse" nillable="true" type="tns:AcceptPolicyResponse" />
+  <xs:complexType name="AcceptPolicyResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="result" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
