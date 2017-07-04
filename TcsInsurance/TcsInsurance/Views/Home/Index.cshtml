@@ -1,11 +1,26 @@
-﻿@model TcsInsurance.ViewModels.UploadViewModel
+﻿@model IEnumerable<TcsInsurance.Entities.Log>
 @{
-    ViewBag.Title = "Загрузка исторических данных котировок";
+    ViewBag.Title = "Index";
 }
-<h3>Последняя дата актуализации - @(Model.ActualDate?.ToString("dd.MM.yyyy") ?? "нет данных")</h3>
-<h3>Выберите файл для загрузки</h3>
-@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    <input type="file" name="upload" /><br>
-    <input type="submit" value="Загрузить" />
+<h2>Index</h2>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>DateTime</th>
+        <th>MethodName</th>
+        <th>Input</th>
+        <th>Output</th>
+        <th>Exception</th>
+    </tr>
+@foreach (var item in Model) {
+    <tr>
+        <td>@item.DateTime.ToString("yyyy-MM-dd hh-mm-ss")</td>
+        <td>@item.Name</td>
+        <td>@item.Input</td>
+        <td>@item.Output</td>
+        <td>@item.Exception</td>
+    </tr>
 }
+</table>
