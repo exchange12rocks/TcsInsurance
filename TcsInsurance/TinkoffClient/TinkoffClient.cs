@@ -2,10 +2,78 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using tinkoff.ru.partners.insurance.investing.types;
 using VirtuClient.Models;
 namespace TinkoffClient
 {
+    public static class PropertyHelper
+    {
+        public static string GetPropertyName<T, TValue>(Expression<Func<T, TValue>> expression)
+        {
+            var body = expression.Body as MemberExpression;
+            if (body == null)
+            {
+                body = ((UnaryExpression)expression.Body).Operand as MemberExpression;
+            }
+            return body.Member.Name;
+        }
+    }
+    public static class EnumerableExtensions
+    {
+        public static T Single<T>(this IEnumerable<T> enumerable, Expression<Func<T, string>> predicator, string key)
+        {
+            Func<T, string> predicatorFunc = predicator.Compile();
+            var values = enumerable.Where(A => string.Equals(predicatorFunc(A), key, StringComparison.OrdinalIgnoreCase));
+            if (values.Count() == 0)
+            {
+                throw new Exception($"Не найдено записей {typeof(T).Name} удовлетворяющих условию: {PropertyHelper.GetPropertyName(predicator)}={key}. Возможные значения: {string.Join(", ", enumerable.Select(predicatorFunc))}");
+            }
+            if (values.Count() > 1)
+            {
+                throw new Exception($"Найдено {values.Count()} записей {typeof(T).Name} удовлетворяющих условию: {PropertyHelper.GetPropertyName(predicator)}={key}. Возможные значения: {string.Join(", ", enumerable.Select(predicatorFunc))}");
+            }
+            return values.Single();
+        }
+        public static T First<T>(this IEnumerable<T> enumerable, Expression<Func<T, string>> predicator, string key)
+        {
+            Func<T, string> predicatorFunc = predicator.Compile();
+            var values = enumerable.Where(A => string.Equals(predicatorFunc(A), key, StringComparison.OrdinalIgnoreCase));
+            if (values.Count() == 0)
+            {
+                throw new Exception($"Не найдено записей {typeof(T).Name} удовлетворяющих условию: {PropertyHelper.GetPropertyName(predicator)}={key}. Возможные значения: {string.Join(", ", enumerable.Select(predicatorFunc))}");
+            }
+            return values.First();
+        }
+        public static T First<T, TValue>(this IEnumerable<T> enumerable, Expression<Func<T, TValue>> predicator, TValue key)
+        {
+            Func<T, TValue> predicatorFunc = predicator.Compile();
+            var values = enumerable.Where(A => key.Equals(predicatorFunc(A)));
+            if (values.Count() == 0)
+            {
+                throw new Exception($"Не найдено записей {typeof(T).Name} удовлетворяющих условию: {PropertyHelper.GetPropertyName(predicator)}={key}. Возможные значения: {string.Join(", ", enumerable.Select(predicatorFunc))}");
+            }
+            return values.First();
+        }
+        public static int Min<T>(this IEnumerable<T> enumerable, Expression<Func<T, string>> predicator, Func<string, int> converter)
+        {
+            Func<T, string> predicatorFunc = predicator.Compile();
+            if (enumerable.Count() == 0)
+            {
+                throw new Exception($"Не найдено записей {typeof(T).Name} для вычисления Min");
+            }
+            return enumerable.Min(A => converter(predicatorFunc(A)));
+        }
+        public static int Max<T>(this IEnumerable<T> enumerable, Expression<Func<T, string>> predicator, Func<string, int> converter)
+        {
+            Func<T, string> predicatorFunc = predicator.Compile();
+            if (enumerable.Count() == 0)
+            {
+                throw new Exception($"Не найдено записей {typeof(T).Name} для вычисления Max");
+            }
+            return enumerable.Min(A => converter(predicatorFunc(A)));
+        }
+    }
     public class TinkoffClient
     {
         private static IEnumerable<TResult> CrossJoin<T1, T2, TResult>(IEnumerable<T1> enumerable1, IEnumerable<T2> enumerable2, Func<T1, T2, TResult> func)
@@ -223,20 +291,17 @@ namespace TinkoffClient
 
         public getProductsResponse GetProducts(GetProductsRequest parameter)
         {
-            var product = this.virtuClient.GetProducts()
-                .Single(A => string.Equals(A.Name, "Верное решение", StringComparison.OrdinalIgnoreCase));
+            var product = this.virtuClient.GetProducts().Single(A => A.Name, "Верное решение");
             var risks = this.virtuClient.GetRisks(product.ID);
-            var insuranceSums = this.virtuClient.GetInsuranceSums(product.ID).ToDictionary(A => A.ID, StringComparer.OrdinalIgnoreCase);
-            var insurancePeriods = this.virtuClient.GetInsurancePeriods(product.ID).ToDictionary(A => A.ID, StringComparer.OrdinalIgnoreCase);
-            var documentTypes = this.virtuClient.GetDocumentTypes(product.ID).ToDictionary(A => A.ID, StringComparer.OrdinalIgnoreCase);
-            var currencies = this.virtuClient.GetCurrencies(product.ID).ToDictionary(A => A.ID, StringComparer.OrdinalIgnoreCase);
-            var insuredDocumentTypes = this.virtuClient.InsuredDocumentTypes(product.ID).ToDictionary(A => A.ID, StringComparer.OrdinalIgnoreCase);
+            var insuranceSums = this.virtuClient.GetInsuranceSums(product.ID);
+            var insurancePeriods = this.virtuClient.GetInsurancePeriods(product.ID);
+            var currencies = this.virtuClient.GetCurrencies(product.ID);
             var getBuyoutTariffs = this.virtuClient.GetTariffs(product.ID);
             var strategyDetails = this.virtuClient.StrategiesSearch(new StrategiesSearchInput()
             {
                 IsActive = true,
                 ReadRedefined = true,
-            }).ToDictionary(A => A.ID, StringComparer.OrdinalIgnoreCase);
+            });
             return new getProductsResponse()
             {
                 GetProductsResponse1 = new product[]
@@ -248,20 +313,20 @@ namespace TinkoffClient
                         shortDescription = product.Description,
                         fullDescription = product.Description,
                         currency = currency.RUR,
-                        minPremiums = insuranceSums.Min(A => int.Parse(A.Value.Name)).ToString(),
-                        maxPremiums = insuranceSums.Max(A => int.Parse(A.Value.Name)).ToString(),
-                        insuranceRisks = CrossJoin(risks, insuranceSums.Select(A => A.Value.Name).Distinct(), (risk, insuranceSum) => new risk()
+                        minPremiums = insuranceSums.Min(A => A.Name, int.Parse).ToString(),
+                        maxPremiums = insuranceSums.Max(A => A.Name, int.Parse).ToString(),
+                        insuranceRisks = CrossJoin(risks, insuranceSums.Select(A => A.Name).Distinct(), (risk, insuranceSum) => new risk()
                         {
                             id = risk.ID,
                             text = risk.Name,
                             sum = insuranceSum,
                         }).ToArray(),
-                        policyTermOptions = insurancePeriods.Select(A => A.Value.Name).ToArray(),
+                        policyTermOptions = insurancePeriods.Select(A => A.Name).ToArray(),
                         redemptionAmounts = getBuyoutTariffs.Select(A => new redemptionAmount()
                         {
                             sum = decimal.Parse(A.InsSum.value),
                             year = A.Year.value,
-                            policyTerm = insurancePeriods[A.InsPeriod.value].Name,
+                            policyTerm = insurancePeriods.Single(B => B.ID, A.InsPeriod.value).Name,
                             currency = currency.RUR,
                             contributionsPeriodicity = periodicity.Item0,
                         }).ToArray(),
@@ -269,15 +334,15 @@ namespace TinkoffClient
                         {
                             periodicity.Item0,
                         },
-                        investParams = strategyDetails.Values
+                        investParams = strategyDetails
                             .Select(strategyDetail => new investParam()
                             {
                                 strategyId = strategyDetail.ID,
                                 strategy = strategyDetail.InvestmentStrategyRaw,
                                 coefficient = strategyDetail.Coefficient.Value,
                                 contributionsPeriodicity = periodicity.Item0,
-                                currencyInvest = getCurrency(currencies[strategyDetail.OptionCurrency]).Value,
-                                policyTerm = insurancePeriods[strategyDetail.OptionPeriod].Name,
+                                currencyInvest = getCurrency(currencies.Single(A => A.ID, strategyDetail.OptionCurrency)).Value,
+                                policyTerm = insurancePeriods.Single(A => A.ID, strategyDetail.OptionPeriod).Name,
                                 paymentsPeriodicitiesSpecified = true,
                                 paymentsPeriodicities = periodicity.Item0,
                                 coverCapitalSpecified = true,
@@ -289,39 +354,37 @@ namespace TinkoffClient
         }
         public CreatePolicyResponse CreatePolicy(CreatePolicyRequest parameter)
         {
-            var product = this.virtuClient.GetProducts()
-                .Single(A => string.Equals(A.Name, "Верное решение", StringComparison.OrdinalIgnoreCase));
+            var product = this.virtuClient.GetProducts().Single(A => A.Name, "Верное решение");
             var risks = this.virtuClient.GetRisks(product.ID);
-            var insuranceSums = this.virtuClient.GetInsuranceSums(product.ID).ToDictionary(A => A.ID, StringComparer.OrdinalIgnoreCase);
-            var insurancePeriods = this.virtuClient.GetInsurancePeriods(product.ID).ToDictionary(A => A.ID, StringComparer.OrdinalIgnoreCase);
-            var documentTypes = this.virtuClient.GetDocumentTypes(product.ID).ToDictionary(A => A.ID, StringComparer.OrdinalIgnoreCase);
-            var currencies = this.virtuClient.GetCurrencies(product.ID).ToDictionary(A => A.ID, StringComparer.OrdinalIgnoreCase);
-            var insuredDocumentTypes = this.virtuClient.InsuredDocumentTypes(product.ID).ToDictionary(A => A.ID, StringComparer.OrdinalIgnoreCase);
+            var insuranceSums = this.virtuClient.GetInsuranceSums(product.ID);
+            var insurancePeriods = this.virtuClient.GetInsurancePeriods(product.ID);
+            var currencies = this.virtuClient.GetCurrencies(product.ID);
             var getBuyoutTariffs = this.virtuClient.GetTariffs(product.ID);
             var strategyDetails = this.virtuClient.StrategiesSearch(new StrategiesSearchInput()
             {
                 IsActive = true,
                 ReadRedefined = true,
-            }).ToDictionary(A => A.ID, StringComparer.OrdinalIgnoreCase);
+            });
+            var documentTypes = this.virtuClient.GetDocumentTypes(product.ID);
+            var insuredDocumentTypes = this.virtuClient.InsuredDocumentTypes(product.ID);
             var calculate = this.virtuClient.Calculate(new CalculateInput()
             {
                 ProductID = product.ID,
                 Premium = parameter.amount.ToString(),
             });
-            var statuses = this.virtuClient.GetStatuses(product.ID);
-            var status = statuses.Single(A => string.Equals(A.Name, "Проект", StringComparison.OrdinalIgnoreCase));
+            var status = this.virtuClient.GetStatuses(product.ID).Single(A => A.Name, "Проект");
 
             DateTime today = DateTime.Today;
             DateTime effectiveDate = today;
             int periodInYears = int.Parse(parameter.policyTerm);
             var insured = parameter.insurantIsInsured ? parameter.insurant : parameter.insured;
 
-            var strategyDetail = strategyDetails[parameter.strategyId];
-            var strategyCurrency = currencies[strategyDetail.OptionCurrency];
-            var currency = getCurrency(parameter.currency, currencies.Values);
-            var insurancePeriod = insurancePeriods[strategyDetail.OptionPeriod];
-            var insuranceSum = insuranceSums.Values.First(A => decimal.Parse(A.Name) == parameter.amount);
-            var documentType = documentTypes.Values.Single(A => string.Equals(A.Name, "Паспорт гражданина Российской Федерации", StringComparison.OrdinalIgnoreCase));
+            var strategyDetail = strategyDetails.Single(A => A.ID, parameter.strategyId);
+            var strategyCurrency = currencies.Single(A => A.ID, strategyDetail.OptionCurrency);
+            var currency = getCurrency(parameter.currency, currencies);
+            var insurancePeriod = insurancePeriods.Single(A => A.ID, strategyDetail.OptionPeriod);
+            var insuranceSum = insuranceSums.First(A => decimal.Parse(A.Name) == parameter.amount);
+            var documentType = documentTypes.Single(A => A.Name, "Паспорт гражданина Российской Федерации");
             var policy = this.virtuClient.Save(new Policy()
             {
                 ProductID = parameter.productId,
@@ -416,7 +479,7 @@ namespace TinkoffClient
                 {
                     KLADRCode = "000000000000000",
                 },
-                AddressText = getFullAddress(parameter.insurant.addresses.First(A => A.type == addressType.registration)),
+                AddressText = getFullAddress(parameter.insurant.addresses.First(A => A.type, addressType.registration)),
                 AgreeForSpam = false,
                 DocumentType = documentType.ID,
                 DocumentTypeRaw = documentType.Name,
@@ -463,7 +526,7 @@ namespace TinkoffClient
                 {
                     KLADRCode = "000000000000000",
                 },
-                InsuredAddressText = getFullAddress(insured.addresses.First(A => A.type == addressType.registration)),
+                InsuredAddressText = getFullAddress(insured.addresses.First(A => A.type, addressType.registration)),
                 InsuredAgreeForSpam = false,
                 InsuredDocumentType = documentType.ID,
                 InsuredDocumentTypeRaw = documentType.Name,
@@ -545,42 +608,36 @@ namespace TinkoffClient
         }
         public GetPolicyResponse GetPolicy(GetPolicyRequest parameter)
         {
-			var product = this.virtuClient.GetProducts()
-                .Single(A => string.Equals(A.Name, "Верное решение", StringComparison.OrdinalIgnoreCase));
+            var product = this.virtuClient.GetProducts().Single(A => A.Name, "Верное решение");
             var risks = this.virtuClient.GetRisks(product.ID);
-            var insuranceSums = this.virtuClient.GetInsuranceSums(product.ID).ToDictionary(A => A.ID, StringComparer.OrdinalIgnoreCase);
-            var insurancePeriods = this.virtuClient.GetInsurancePeriods(product.ID).ToDictionary(A => A.ID, StringComparer.OrdinalIgnoreCase);
-            var documentTypes = this.virtuClient.GetDocumentTypes(product.ID).ToDictionary(A => A.ID, StringComparer.OrdinalIgnoreCase);
-            var currencies = this.virtuClient.GetCurrencies(product.ID).ToDictionary(A => A.ID, StringComparer.OrdinalIgnoreCase);
-            var insuredDocumentTypes = this.virtuClient.InsuredDocumentTypes(product.ID).ToDictionary(A => A.ID, StringComparer.OrdinalIgnoreCase);
+            var currencies = this.virtuClient.GetCurrencies(product.ID);
             var getBuyoutTariffs = this.virtuClient.GetTariffs(product.ID);
             var strategyDetails = this.virtuClient.StrategiesSearch(new StrategiesSearchInput()
             {
                 IsActive = true,
                 ReadRedefined = true,
-            }).ToDictionary(A => A.ID, StringComparer.OrdinalIgnoreCase);
-
+            });
+            var insuredDocumentTypes = this.virtuClient.InsuredDocumentTypes(product.ID);
             var policy = this.virtuClient.Read(parameter.policyId);
-			var strategyDetail = strategyDetails.Where(A => string.Equals(A.Value.InvestmentStrategy, policy.InvestmentStrategy, StringComparison.OrdinalIgnoreCase)).First().Value;
-
-			return new GetPolicyResponse()
+            var strategyDetail = strategyDetails.First(A => A.InvestmentStrategy, policy.InvestmentStrategy);
+            return new GetPolicyResponse()
             {
                 amount = policy.Premium.Value,
                 coefficient = policy.ParticipationCoefficient.Value,
                 status = getStatus(policy.StatusName),
                 strategy = policy.InvestmentStrategyRaw,
                 fullDescription = product.Description,
-                currency = getCurrency(currencies[policy.Currency]).Value,
+                currency = getCurrency(currencies.Single(A => A.ID, policy.Currency)).Value,
                 coverCapital = 100,
                 profitability = strategyDetail.Profitability,
-				effectiveDate = getDate(policy.EffectiveDate).Value,
+                effectiveDate = getDate(policy.EffectiveDate).Value,
                 expirationDate = getDate(policy.ExpirationDate).Value,
                 insuranceRisks = risks.Select(A => new risk()
-				{
-					id = A.ID,
-					sum = policy.Premium.Value.ToString(),
-					text = A.Name,
-				}).ToArray(),
+                {
+                    id = A.ID,
+                    sum = policy.Premium.Value.ToString(),
+                    text = A.Name,
+                }).ToArray(),
                 paymentsPlan = null,
                 policyNumber = policy.SERIAL + " " + policy.NUMBER,
                 productId = policy.ProductID,
@@ -592,12 +649,11 @@ namespace TinkoffClient
                 }).ToArray(),
             };
         }
-
         public GetPolicyDocumentResponse GetPolicyDocument(GetPolicyDocumentRequest parameter)
         {
             var productId = this.virtuClient.Read(parameter.policyId).ProductID;
             string printformCaption = getPrintformCaption(parameter.documentType);
-            var printform = this.virtuClient.GetPrintforms(productId).Single(A => string.Equals(A.Value.Caption, printformCaption, StringComparison.OrdinalIgnoreCase));
+            var printform = this.virtuClient.GetPrintforms(productId).Single(A => A.Value.Caption, printformCaption);
             return new GetPolicyDocumentResponse()
             {
                 documentData = this.virtuClient.Print(new PrintInput()
@@ -612,7 +668,7 @@ namespace TinkoffClient
         public AcceptPolicyResponse Accept(AcceptPolicyRequest parameter)
         {
             Policy policy = this.virtuClient.Read(parameter.policyId);
-            var status = this.virtuClient.GetStatuses(policy.ProductID).Single(A => string.Equals(A.Name, "Действующий", StringComparison.OrdinalIgnoreCase));
+            var status = this.virtuClient.GetStatuses(policy.ProductID).Single(A => A.Name, "Действующий");
             policy.AcceptationDate = getDate(DateTime.Now);
             policy.ReceiptDate = getDate(DateTime.Now);
             policy.PaymentType = "4";

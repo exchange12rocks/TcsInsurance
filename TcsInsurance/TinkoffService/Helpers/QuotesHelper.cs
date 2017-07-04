@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using tinkoff.ru.partners.insurance.investing.types;
+using TinkoffClient;
 using TinkoffService.Entities;
 namespace TinkoffService.Helpers
 {
@@ -68,7 +69,7 @@ namespace TinkoffService.Helpers
                 IsActive = true,
                 ReadRedefined = true,
             });
-            var strategy = strategies.First(A => string.Equals(A.ID, parameter.strategyId, StringComparison.OrdinalIgnoreCase));
+            var strategy = strategies.Single(A => A.ID, parameter.strategyId);
             using (Model db = new Model())
             {
                 string ticker = strategy.InvestmentStrategyRaw;
