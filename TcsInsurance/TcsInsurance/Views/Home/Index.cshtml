@@ -4,7 +4,6 @@
 }
 <h2>Index</h2>
 <p>
-    @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
     <tr>
@@ -20,7 +19,7 @@
         <td>@item.Name</td>
         <td>@item.Input</td>
         <td>@item.Output</td>
-        <td>@item.Exception</td>
+        <td>@(Newtonsoft.Json.JsonConvert.DeserializeObject<TcsInsurance.ViewModels.ExceptionMessage>(item.Exception).Message)</td>
     </tr>
 }
 </table>
