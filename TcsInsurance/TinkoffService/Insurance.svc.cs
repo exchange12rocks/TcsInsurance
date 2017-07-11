@@ -96,7 +96,7 @@ namespace TinkoffService
                 return new FaultException<CommonFault>(new CommonFault()
                 {
                     errorCode = "500",
-                    errorMessage = "Произошла внутренняя ошибка сервиса",
+                    errorMessage = exception.Message,
                 });
             }
         }
