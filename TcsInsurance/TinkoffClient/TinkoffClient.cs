@@ -540,7 +540,7 @@ namespace TinkoffClient
                 InsuredIsCreatorOfPublicOrganisation = "2",
                 InsuredIsResidentOfEconomicZone = "2",
                 InsuredIsPublicFace = "2",
-                IsSuccessor = parameter.beneficiaries?.Any() == true ? "1" : "2",
+                IsSuccessor = parameter.beneficiaries?.Any() == true ? "2" : "1",
                 Beneficiaries = parameter.beneficiaries?.Select(beneficiary => new Beneficiary()
                 {
                     LastName = beneficiary.lastName,
