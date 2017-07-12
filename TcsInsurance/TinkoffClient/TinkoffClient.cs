@@ -457,7 +457,7 @@ namespace TinkoffClient
                 Sex = getSex(parameter.insurant.sex),
                 INN = parameter.insurant.inn,
                 Cityzenship = "1",
-                InsuranceSumType = "1",
+                InsuranceSumType = insuranceSum == null ? "2" : "1",
                 OtherCityzenship = "",
                 Resident = "1",
                 StayingDocumentType = "",
