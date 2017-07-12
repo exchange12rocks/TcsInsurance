@@ -383,7 +383,7 @@ namespace TinkoffClient
             var strategyCurrency = currencies.Single(A => A.ID, strategyDetail.OptionCurrency);
             var currency = getCurrency(parameter.currency, currencies);
             var insurancePeriod = insurancePeriods.Single(A => A.ID, strategyDetail.OptionPeriod);
-            var insuranceSum = insuranceSums.First(A => decimal.Parse(A.Name) == parameter.amount);
+            var insuranceSum = insuranceSums.FirstOrDefault(A => decimal.Parse(A.Name) == parameter.amount);
             var documentType = documentTypes.Single(A => A.Name, "Паспорт гражданина Российской Федерации");
             var policy = this.virtuClient.Save(new Policy()
             {
@@ -444,8 +444,8 @@ namespace TinkoffClient
                 InsurancePeriod = insurancePeriod.ID,
                 InsurancePeriodRaw = insurancePeriod.Name,
                 ParticipationCoefficient = strategyDetail.Coefficient,
-                InsuranceSum = insuranceSum.ID,
-                ManualInsuranceSum = "",
+                InsuranceSum = insuranceSum != null ? insuranceSum?.ID : "",
+                ManualInsuranceSum = insuranceSum == null ? parameter.amount.ToString() : "",
                 ContributionsFrequency = "1",
                 Premium = parameter.amount,
                 Currency = currency.ID,
