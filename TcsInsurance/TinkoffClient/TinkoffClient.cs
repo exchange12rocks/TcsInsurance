@@ -35,7 +35,7 @@ namespace TinkoffClient
             }
             return values.Single();
         }
-        public static T Single<T>(this IEnumerable<T> enumerable, params Tuple<Expression<Func<T, string>>, string>[] andPredicators)
+        public static T Single<T>(this IEnumerable<T> enumerable, IEnumerable<Tuple<Expression<Func<T, string>>, string>> andPredicators)
         {
             var values = enumerable;
             foreach (var predicator in andPredicators)
@@ -642,9 +642,11 @@ namespace TinkoffClient
             });
             var policy = this.virtuClient.Read(parameter.policyId);
             var currency = currencies.Single(A => A.ID, policy.Currency);
-            var strategyDetail = strategyDetails.Single(
+            var strategyDetail = strategyDetails.Single(new Tuple<Expression<Func<StrategiesSearchDataOutput, string>>, string>[]
+            {
                 Tuple.Create<Expression<Func<StrategiesSearchDataOutput, string>>, string>(A => A.InvestmentStrategy, policy.InvestmentStrategy),
-                Tuple.Create<Expression<Func<StrategiesSearchDataOutput, string>>, string>(A => A.OptionCurrencyRaw, currency.Name));
+                Tuple.Create<Expression<Func<StrategiesSearchDataOutput, string>>, string>(A => A.OptionCurrencyRaw, policy.StrategyCurrencyRaw)
+            });
             return new GetPolicyResponse()
             {
                 amount = policy.Premium.Value,
