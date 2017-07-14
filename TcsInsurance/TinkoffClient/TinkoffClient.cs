@@ -35,6 +35,29 @@ namespace TinkoffClient
             }
             return values.Single();
         }
+        public static T Single<T>(this IEnumerable<T> enumerable, params Tuple<Expression<Func<T, string>>, string>[] andPredicators)
+        {
+            var values = enumerable;
+            foreach (var predicator in andPredicators)
+            {
+                Func<T, string> predicatorFunc = predicator.Item1.Compile();
+                values = values.Where(A => string.Equals(predicatorFunc(A), predicator.Item2, StringComparison.OrdinalIgnoreCase));
+            }
+            if (values.Count() != 1)
+            {
+                string message = string.Join(" AND ", andPredicators.Select(predicator => $"{PropertyHelper.GetPropertyName(predicator.Item1)}={predicator.Item2}"));
+                string possibleValues = string.Join(", ", enumerable.Select(value => "{ " + string.Join(", ", andPredicators.Select(predicator => $"{PropertyHelper.GetPropertyName(predicator.Item1)}: {predicator.Item1.Compile().Invoke(value)}")) + " }"));
+                if (values.Count() == 0)
+                {
+                    throw new Exception($"Не найдено записей {typeof(T).Name} удовлетворяющих условию: {message}. Возможные значения: {possibleValues}");
+                }
+                if (values.Count() > 1)
+                {
+                    throw new Exception($"Найдено {values.Count()} записей {typeof(T).Name} удовлетворяющих условию: {message}. Возможные значения: {possibleValues}");
+                }
+            }
+            return values.Single();
+        }
         public static T First<T>(this IEnumerable<T> enumerable, Expression<Func<T, string>> predicator, string key)
         {
             Func<T, string> predicatorFunc = predicator.Compile();
@@ -617,9 +640,11 @@ namespace TinkoffClient
                 IsActive = true,
                 ReadRedefined = true,
             });
-            var insuredDocumentTypes = this.virtuClient.InsuredDocumentTypes(product.ID);
             var policy = this.virtuClient.Read(parameter.policyId);
-            var strategyDetail = strategyDetails.First(A => A.InvestmentStrategy, policy.InvestmentStrategy);
+            var currency = currencies.Single(A => A.ID, policy.Currency);
+            var strategyDetail = strategyDetails.Single(
+                Tuple.Create<Expression<Func<StrategiesSearchDataOutput, string>>, string>(A => A.InvestmentStrategy, policy.InvestmentStrategy),
+                Tuple.Create<Expression<Func<StrategiesSearchDataOutput, string>>, string>(A => A.OptionCurrencyRaw, currency.Name));
             return new GetPolicyResponse()
             {
                 amount = policy.Premium.Value,
@@ -627,7 +652,7 @@ namespace TinkoffClient
                 status = getStatus(policy.StatusName),
                 strategy = policy.InvestmentStrategyRaw,
                 fullDescription = product.Description,
-                currency = getCurrency(currencies.Single(A => A.ID, policy.Currency)).Value,
+                currency = getCurrency(currency).Value,
                 coverCapital = 100,
                 profitability = strategyDetail.Profitability,
                 effectiveDate = getDate(policy.EffectiveDate).Value,
