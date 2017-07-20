@@ -42,6 +42,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DispatchByBodyBehaviorAttribute.cs" />
+    <Compile Include="DispatchByBodyOperationSelector.cs" />
     <Compile Include="Models\Models.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TinkoffClient.cs" />

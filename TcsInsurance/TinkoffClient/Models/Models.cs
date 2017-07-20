@@ -9,6 +9,7 @@
 //------------------------------------------------------------------------------
 
 
+using Microsoft.Samples.RouteByBody;
 using System.Runtime.Serialization;
 
 namespace tinkoff.ru.partners.insurance.investing.types
@@ -782,43 +783,46 @@ namespace tinkoff.ru.partners.insurance.investing.types
     }
 
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(Namespace = "http://tinkoff.ru/partners/insurance/investing/0.1", ConfigurationName = "ServiceReference2.InvestingInsuranceInterface")]
+    [System.ServiceModel.ServiceContractAttribute(Namespace = "", ConfigurationName = "ServiceReference2.InvestingInsuranceInterface")]
+    [System.ServiceModel.XmlSerializerFormatAttribute]
+    [DispatchByBodyBehavior]
     public interface InvestingInsuranceInterface
     {
 
         // CODEGEN: Generating message contract since the operation getProducts is neither RPC nor document wrapped.
-        [System.ServiceModel.OperationContractAttribute]
-        [System.ServiceModel.FaultContractAttribute(typeof(CommonFault), Action = "", Name = "CommonFault", Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
+        //[System.ServiceModel.OperationContractAttribute(Action = "")]
+        [System.ServiceModel.OperationContractAttribute(Action = "")]
+        [System.ServiceModel.FaultContractAttribute(typeof(CommonFault), Action = "", Name = "CommonFault", Namespace = "")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults = true)]
         getProductsResponse getProducts(getProductsRequest1 request);
 
         // CODEGEN: Generating message contract since the operation getQuotes is neither RPC nor document wrapped.
-        [System.ServiceModel.OperationContractAttribute]
-        [System.ServiceModel.FaultContractAttribute(typeof(CommonFault), Action = "", Name = "CommonFault", Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
+        [System.ServiceModel.OperationContractAttribute(Action = "")]
+        [System.ServiceModel.FaultContractAttribute(typeof(CommonFault), Action = "", Name = "CommonFault", Namespace = "")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults = true)]
         getQuotesResponse1 getQuotes(getQuotesRequest1 request);
 
         // CODEGEN: Generating message contract since the operation createPolicy is neither RPC nor document wrapped.
-        [System.ServiceModel.OperationContractAttribute]
-        [System.ServiceModel.FaultContractAttribute(typeof(CommonFault), Action = "", Name = "CommonFault", Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
+        [System.ServiceModel.OperationContractAttribute(Action = "")]
+        [System.ServiceModel.FaultContractAttribute(typeof(CommonFault), Action = "", Name = "CommonFault", Namespace = "")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults = true)]
         createPolicyResponse1 createPolicy(createPolicyRequest1 request);
 
         // CODEGEN: Generating message contract since the operation getPolicy is neither RPC nor document wrapped.
-        [System.ServiceModel.OperationContractAttribute]
-        [System.ServiceModel.FaultContractAttribute(typeof(CommonFault), Action = "", Name = "CommonFault", Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
+        [System.ServiceModel.OperationContractAttribute(Action = "")]
+        [System.ServiceModel.FaultContractAttribute(typeof(CommonFault), Action = "", Name = "CommonFault", Namespace = "")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults = true)]
         getPolicyResponse1 getPolicy(getPolicyRequest1 request);
 
         // CODEGEN: Generating message contract since the operation getPolicyDocument is neither RPC nor document wrapped.
-        [System.ServiceModel.OperationContractAttribute]
-        [System.ServiceModel.FaultContractAttribute(typeof(CommonFault), Action = "", Name = "CommonFault", Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
+        [System.ServiceModel.OperationContractAttribute(Action = "")]
+        [System.ServiceModel.FaultContractAttribute(typeof(CommonFault), Action = "", Name = "CommonFault", Namespace = "")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults = true)]
         getPolicyDocumentResponse1 getPolicyDocument(getPolicyDocumentRequest1 request);
 
         // CODEGEN: Generating message contract since the operation acceptPolicy is neither RPC nor document wrapped.
-        [System.ServiceModel.OperationContractAttribute]
-        [System.ServiceModel.FaultContractAttribute(typeof(CommonFault), Action = "", Name = "CommonFault", Namespace = "http://tinkoff.ru/partners/insurance/investing/types")]
+        [System.ServiceModel.OperationContractAttribute(Action = "")]
+        [System.ServiceModel.FaultContractAttribute(typeof(CommonFault), Action = "", Name = "CommonFault", Namespace = "")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults = true)]
         acceptPolicyResponse1 acceptPolicy(acceptPolicyRequest1 request);
     }
