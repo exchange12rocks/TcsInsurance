@@ -9,11 +9,12 @@ namespace VirtuClient
 {
 	public class Log
 	{
-		public string Name { get; set; }
-		public string Input { get; set; }
-		public string Output { get; set; }
-		public string Exception { get; set; }
-		public DateTime DateTime { get; set; }
+        public string Name { get; set; }
+        public string Input { get; set; }
+        public string Output { get; set; }
+        public string Exception { get; set; }
+        public DateTime Start { get; set; }
+        public DateTime End { get; set; }
 	}
     public class VirtuClient
     {
@@ -116,6 +117,10 @@ namespace VirtuClient
 		{
 			try
 			{
+                if(value is string)
+                {
+                    return value as string;
+                }
 				return JsonConvert.SerializeObject(value);
 			}
 			catch
@@ -134,11 +139,12 @@ namespace VirtuClient
 				return exception.ToString();
 			}
 		}
-		private void addLog(IRestRequest input = null, IRestResponse output = null, Exception exception = null, [CallerMemberName] string methodName = null)
+		private void addLog(DateTime start, IRestRequest input = null, IRestResponse output = null, Exception exception = null, [CallerMemberName] string methodName = null)
 		{
 			this.Logger?.Invoke(new Log()
 			{
-				DateTime = DateTime.Now,
+                Start = start,
+				End = DateTime.Now,
 				Input = this.trySerialize(input.Parameters.SingleOrDefault(A => A.Type == ParameterType.RequestBody)),
 				Output = this.trySerialize(output.Content),
 				Exception = this.trySerializeException(exception),
@@ -151,6 +157,7 @@ namespace VirtuClient
 			IRestRequest input = null;
 			IRestResponse output = null;
 			Exception exception = null;
+            DateTime start = DateTime.Now;
 			try
 			{
 				input = createRequest();
@@ -164,6 +171,7 @@ namespace VirtuClient
 			finally
 			{
 				this.addLog(
+                    start: start,
 					input: input,
 					output: output,
 					exception: exception,

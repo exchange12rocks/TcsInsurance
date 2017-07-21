@@ -22,7 +22,8 @@ namespace TinkoffService
 				{
 					db.Logs.Add(new Log()
 					{
-						DateTime = log.DateTime,
+						Start = log.Start,
+                        End = log.End,
 						Input = log.Input,
 						Output = log.Output,
 						Exception = log.Exception,
@@ -66,13 +67,14 @@ namespace TinkoffService
                 return exception.ToString();
             }
         }
-        private void addLog(object input = null, object output = null, Exception exception = null, [CallerMemberName] string methodName = null)
+        private void addLog(DateTime start, object input = null, object output = null, Exception exception = null, [CallerMemberName] string methodName = null)
         {
             using (var db = new Model())
             {
                 db.Logs.Add(new Log()
                 {
-                    DateTime = DateTime.Now,
+                    Start = start,
+                    End = DateTime.Now,
                     Input = this.trySerialize(input),
                     Output = this.trySerialize(output),
                     Exception = this.trySerializeException(exception),
@@ -107,6 +109,7 @@ namespace TinkoffService
             TInput input = null;
             TOutput output = null;
             Exception exception = null;
+            DateTime start = DateTime.Now;
             try
             {
                 input = inputFunc();
@@ -120,6 +123,7 @@ namespace TinkoffService
             finally
             {
                 this.addLog(
+                    start: start,
                     input: input,
                     output: output,
                     exception: exception,

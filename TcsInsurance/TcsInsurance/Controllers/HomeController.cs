@@ -13,7 +13,7 @@ namespace TcsInsurance.Controllers
         {
             using (var db = new Model())
             {
-                return View(db.Logs.OrderByDescending(A => A.DateTime).Where(A => A.Exception != "null").Take(100).ToArray());
+                return View(db.Logs.OrderByDescending(A => A.Start).Where(A => A.Exception != "null").Take(100).ToArray());
             }
         }
     }

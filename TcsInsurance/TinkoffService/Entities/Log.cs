@@ -15,7 +15,8 @@ namespace TinkoffService.Entities
         [StringLength(50)]
         public string Name { get; set; }
 
-        public DateTime DateTime { get; set; }
+        public DateTime Start { get; set; }
+        public DateTime End { get; set; }
 
         public string Input { get; set; }
 
