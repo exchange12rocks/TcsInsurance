@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.ServiceModel;
 using tinkoff.ru.partners.insurance.investing.types;
+using TinkoffClient;
 using TinkoffService.Entities;
 using TinkoffService.Helpers;
 using VirtuClient.Models;
@@ -41,27 +42,29 @@ namespace TinkoffService
             });
             return result;
         }
+        private decimal getQuote(DateTime date, string strategyId)
+        {
+            var result = this.getQuotes(new getQuotesRequest1()
+            {
+                GetQuotesRequest = new GetQuotesRequest()
+                {
+                    strategyId = strategyId,
+                    dateFrom = DateTime.Today.AddDays(-70),
+                    dateTo = DateTime.Today,
+                }
+            });
+            return result.GetQuotesResponse.quotes.OrderByDescending(A => A.date).First().price;
+        }
+        private decimal getRate(DateTime date, currency currency)
+        {
+            return currency == currency.RUR ? 1 : new CbrHelper().getRate(date, currency);
+        }
         private TinkoffClient.TinkoffClient createTinkoffClient(VirtuClient.VirtuClient virtuClient = null)
         {
             return new TinkoffClient.TinkoffClient(virtuClient ?? this.createVirtuClient())
             {
-                getQuote = (date, startegyId) =>
-                {
-                    var result = this.getQuotes(new getQuotesRequest1()
-                    {
-                        GetQuotesRequest = new GetQuotesRequest()
-                        {
-                            strategyId = startegyId,
-                            dateFrom = DateTime.Today.AddDays(-7),
-                            dateTo = DateTime.Today,
-                        }
-                    });
-                    return result.GetQuotesResponse.quotes.OrderByDescending(A => A.date).First().price;
-                },
-                getRate = (date, currency) =>
-                {
-                    return currency == currency.RUR ? 1 : new CbrHelper().getRate(date, currency);
-                },
+                getQuote = this.getQuote,
+                getRate = this.getRate,
             };
         }
         private string trySerialize(object value)
