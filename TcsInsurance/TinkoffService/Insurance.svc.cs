@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.ServiceModel;
 using tinkoff.ru.partners.insurance.investing.types;
@@ -16,23 +17,22 @@ namespace TinkoffService
         {
             ConfigurationManagerHelper configurationManagerHelper = ConfigurationManagerHelper.Default;
             VirtuClient.VirtuClient result = new VirtuClient.VirtuClient(new Uri(configurationManagerHelper.VirtuBaseUrl));
-			result.Logger = (log) =>
-			{
-				using (var db = new Model())
-				{
-					db.Logs.Add(new Log()
-					{
-						Start = log.Start,
+            result.Logger = (log) =>
+            {
+                using (var db = new Model())
+                {
+                    db.Logs.Add(new Log()
+                    {
+                        Start = log.Start,
                         End = log.End,
-						Input = log.Input,
-						Output = log.Output,
-						Exception = log.Exception,
-						Name = log.Name ?? "",
-					});
-					db.SaveChanges();
-				}
-			};
-
+                        Input = log.Input,
+                        Output = log.Output,
+                        Exception = log.Exception,
+                        Name = log.Name ?? "",
+                    });
+                    db.SaveChanges();
+                }
+            };
             result.Authenticate(authenticationInput ?? new AuthenticationInput()
             {
                 createPersistentCookie = true,
@@ -43,7 +43,26 @@ namespace TinkoffService
         }
         private TinkoffClient.TinkoffClient createTinkoffClient(VirtuClient.VirtuClient virtuClient = null)
         {
-            return new TinkoffClient.TinkoffClient(virtuClient ?? this.createVirtuClient());
+            return new TinkoffClient.TinkoffClient(virtuClient ?? this.createVirtuClient())
+            {
+                getQuote = (date, startegyId) =>
+                {
+                    var result = this.getQuotes(new getQuotesRequest1()
+                    {
+                        GetQuotesRequest = new GetQuotesRequest()
+                        {
+                            strategyId = startegyId,
+                            dateFrom = DateTime.Today.AddDays(-7),
+                            dateTo = DateTime.Today,
+                        }
+                    });
+                    return result.GetQuotesResponse.quotes.OrderByDescending(A => A.date).First().price;
+                },
+                getRate = (date, currency) =>
+                {
+                    return currency == currency.RUR ? 1 : new CbrHelper().getRate(date, currency);
+                },
+            };
         }
         private string trySerialize(object value)
         {
@@ -91,7 +110,7 @@ namespace TinkoffService
                 {
                     errorCode = "502",
                     errorMessage = "Произошла ошибка взаимодействия с вышестоящим сервером",
-                });
+                }, "Произошла ошибка взаимодействия с вышестоящим сервером");
             }
             else
             {
@@ -99,7 +118,7 @@ namespace TinkoffService
                 {
                     errorCode = "500",
                     errorMessage = exception.Message,
-                });
+                }, exception.Message);
             }
         }
         private TResponce tryAction<TResponce, TInput, TOutput>(Func<TInput> inputFunc, Func<TInput, TOutput> actionFunc, Func<TOutput, TResponce> outputFunc, [CallerMemberName] string methodName = null)

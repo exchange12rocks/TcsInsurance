@@ -76,15 +76,26 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Insurance.svc" />
+    <Content Include="Properties\DataSources\System.Data.DataSet.datasource" />
+    <Content Include="Properties\DataSources\System.Xml.XmlNode.datasource" />
+    <None Include="Service References\CbrServiceReference\DailyInfo.wsdl" />
     <None Include="Service References\TikerHistoryServiceReference\configuration91.svcinfo" />
     <None Include="Service References\TikerHistoryServiceReference\configuration.svcinfo" />
     <None Include="Service References\TikerHistoryServiceReference\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <None Include="Service References\CbrServiceReference\DailyInfo.disco" />
+    <None Include="Service References\CbrServiceReference\configuration91.svcinfo" />
+    <None Include="Service References\CbrServiceReference\configuration.svcinfo" />
+    <None Include="Service References\CbrServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\CbrHelper.cs" />
     <Compile Include="Helpers\ConfigurationManagerHelper.cs" />
     <Compile Include="Entities\Log.cs" />
     <Compile Include="Entities\Model.cs" />
@@ -96,6 +107,11 @@
     <Compile Include="Insurance.svc.cs">
       <DependentUpon>Insurance.svc</DependentUpon>
     </Compile>
+    <Compile Include="Service References\CbrServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\TikerHistoryServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -104,6 +120,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -177,6 +194,7 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Service References\CbrServiceReference\" />
     <WCFMetadataStorage Include="Service References\TikerHistoryServiceReference\" />
   </ItemGroup>
   <PropertyGroup>

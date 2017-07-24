@@ -99,6 +99,21 @@ namespace TinkoffClient
     }
     public class TinkoffClient
     {
+        public Func<DateTime, currency, decimal> getRate;
+        public Func<DateTime, string, decimal> getQuote;
+        private decimal calcDividends(decimal premium, decimal participationCoefficient, currency currency, currency investingCurrency, DateTime effectiveDate, DateTime expirationDate, string strategyId)
+        {
+            decimal result = premium * (participationCoefficient / 100) * (this.getQuote(expirationDate, strategyId) / this.getQuote(effectiveDate, strategyId) - 1);
+            if (currency == currency.RUR)
+            {
+                result *= this.getRate(expirationDate, investingCurrency) / this.getRate(expirationDate, investingCurrency);
+            }
+            else
+            {
+                result *= this.getRate(expirationDate, investingCurrency);
+            }
+            return Math.Max(result, 0);
+        }
         private static IEnumerable<TResult> CrossJoin<T1, T2, TResult>(IEnumerable<T1> enumerable1, IEnumerable<T2> enumerable2, Func<T1, T2, TResult> func)
         {
             foreach (T1 t1 in enumerable1)
@@ -642,12 +657,14 @@ namespace TinkoffClient
             });
             var policy = this.virtuClient.Read(parameter.policyId);
             var currency = currencies.Single(A => A.ID, policy.Currency);
+            
             var strategyDetail = strategyDetails.Single(new Tuple<Expression<Func<StrategiesSearchDataOutput, string>>, string>[]
             {
                 Tuple.Create<Expression<Func<StrategiesSearchDataOutput, string>>, string>(A => A.InvestmentStrategy, policy.InvestmentStrategy),
                 Tuple.Create<Expression<Func<StrategiesSearchDataOutput, string>>, string>(A => A.OptionCurrencyRaw, policy.StrategyCurrencyRaw)
             });
-            return new GetPolicyResponse()
+            var investingCurrency = currencies.Single(A => A.ID, strategyDetail.OptionCurrency);
+            GetPolicyResponse result = new GetPolicyResponse()
             {
                 amount = policy.Premium.Value,
                 coefficient = policy.ParticipationCoefficient.Value,
@@ -656,7 +673,6 @@ namespace TinkoffClient
                 fullDescription = product.Description,
                 currency = getCurrency(currency).Value,
                 coverCapital = 100,
-                profitability = strategyDetail.Profitability,
                 effectiveDate = getDate(policy.EffectiveDate).Value,
                 expirationDate = getDate(policy.ExpirationDate).Value,
                 insuranceRisks = risks.Select(A => new risk()
@@ -675,6 +691,15 @@ namespace TinkoffClient
                     date = DateTime.Today.AddYears(int.Parse(A.Year.value))
                 }).ToArray(),
             };
+            result.profitability = calcDividends(
+                premium: result.amount, 
+                participationCoefficient: result.coefficient, 
+                currency: result.currency, 
+                investingCurrency: getCurrency(investingCurrency).Value,
+                effectiveDate: result.effectiveDate,
+                expirationDate: result.expirationDate,
+                strategyId: strategyDetail.ID);
+            return result;
         }
         public GetPolicyDocumentResponse GetPolicyDocument(GetPolicyDocumentRequest parameter)
         {
