@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Xml;
 using System.Xml.Serialization;
 using tinkoff.ru.partners.insurance.investing.types;
@@ -130,7 +131,8 @@ namespace TinkoffService.Helpers
         public decimal getRate(DateTime date, currency currency)
         {
             if (currency == currency.RUR) return 1;
-            DailyInfoSoapClient cbrClient = new DailyInfoSoapClient();
+            DailyInfo cbrClient = new DailyInfo();
+            cbrClient.Credentials = new NetworkCredential("svcTinkoff", "USER4tinkoff");
             XmlNode resultXml = cbrClient.GetCursOnDateXML(date);
             XmlSerializer serializer = new XmlSerializer(typeof(ValuteData));
             ValuteData result = (ValuteData)serializer.Deserialize(new StringReader(resultXml.OuterXml));

@@ -78,20 +78,18 @@
     <Content Include="Insurance.svc" />
     <Content Include="Properties\DataSources\System.Data.DataSet.datasource" />
     <Content Include="Properties\DataSources\System.Xml.XmlNode.datasource" />
-    <None Include="Service References\CbrServiceReference\DailyInfo.wsdl" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
     <None Include="Service References\TikerHistoryServiceReference\configuration91.svcinfo" />
     <None Include="Service References\TikerHistoryServiceReference\configuration.svcinfo" />
     <None Include="Service References\TikerHistoryServiceReference\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <None Include="Service References\CbrServiceReference\DailyInfo.disco" />
-    <None Include="Service References\CbrServiceReference\configuration91.svcinfo" />
-    <None Include="Service References\CbrServiceReference\configuration.svcinfo" />
-    <None Include="Service References\CbrServiceReference\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
+    <None Include="Web References\CbrServiceReference\DailyInfo.disco" />
+    <Content Include="Test.asmx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -107,15 +105,24 @@
     <Compile Include="Insurance.svc.cs">
       <DependentUpon>Insurance.svc</DependentUpon>
     </Compile>
-    <Compile Include="Service References\CbrServiceReference\Reference.cs">
+    <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Service References\TikerHistoryServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Test.asmx.cs">
+      <DependentUpon>Test.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Web References\CbrServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -173,6 +180,11 @@
     <None Include="Service References\TikerHistoryServiceReference\WSService.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Web References\CbrServiceReference\DailyInfo.wsdl" />
+    <Content Include="Web References\CbrServiceReference\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -194,8 +206,23 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Service References\CbrServiceReference\" />
     <WCFMetadataStorage Include="Service References\TikerHistoryServiceReference\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="http://www.cbr.ru/DailyInfoWebServ/DailyInfo.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\CbrServiceReference\</RelPath>
+      <UpdateFromURL>http://www.cbr.ru/DailyInfoWebServ/DailyInfo.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>TinkoffService_CbrServiceReference_DailyInfo</CachedSettingsPropName>
+    </WebReferenceUrl>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
