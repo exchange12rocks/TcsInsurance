@@ -3,16 +3,14 @@
     ViewBag.Title = "Index";
 }
 <h2>Index</h2>
-<p>
-</p>
-<table class="table">
+<table class="table table-sm">
     <tr>
-        <th>Start</th>
-        <th>Duration</th>
-        <th>MethodName</th>
-        <th>Input</th>
-        <th>Output</th>
-        <th>Exception</th>
+        <th class="col-lg-2">Start</th>
+        <th class="col-lg-1">Duration</th>
+        <th class="col-lg-1">MethodName</th>
+        <th class="col-lg-1">Input</th>
+        <th class="col-lg-1">Output</th>
+        <th class="col-lg-6">Exception</th>
     </tr>
 @foreach (var item in Model) {
     <tr>
