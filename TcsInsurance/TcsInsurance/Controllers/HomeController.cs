@@ -11,9 +11,23 @@ namespace TcsInsurance.Controllers
         [HttpGet]
         public ActionResult Index()
         {
+            string[] methodNames = new string[]
+            {
+                "acceptPolicy",
+                "createPolicy",
+                "getPolicy",
+                "getPolicyDocument",
+                "getProducts",
+                "getQuotes",
+            };
             using (var db = new Model())
             {
-                return View(db.Logs.OrderByDescending(A => A.Start).Where(A => A.Exception != "null").Take(100).ToArray());
+                return View(db.Logs
+                    .Where(A => methodNames.Contains(A.Name))
+                    .Where(A => A.Exception != "null")
+                    .OrderByDescending(A => A.Start)
+                    .Take(100)
+                    .ToArray());
             }
         }
     }

@@ -89,7 +89,6 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <None Include="Web References\CbrServiceReference\DailyInfo.disco" />
-    <Content Include="Test.asmx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -114,10 +113,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
-    <Compile Include="Test.asmx.cs">
-      <DependentUpon>Test.asmx</DependentUpon>
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Web References\CbrServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>

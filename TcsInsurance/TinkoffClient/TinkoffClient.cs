@@ -101,18 +101,26 @@ namespace TinkoffClient
     {
         public Func<DateTime, currency, decimal> getRate;
         public Func<DateTime, string, decimal> getQuote;
-        private decimal calcDividends(decimal premium, decimal participationCoefficient, currency currency, currency investingCurrency, DateTime effectiveDate, DateTime expirationDate, string strategyId)
+        public Action<DateTime, string> Log;
+        private decimal calcDividends(decimal premium, decimal participationCoefficient, currency currency, currency investingCurrency, DateTime effectiveDate, string strategyId)
         {
-            decimal result = premium * (participationCoefficient / 100) * (this.getQuote(expirationDate, strategyId) / this.getQuote(effectiveDate, strategyId) - 1);
+            DateTime start = DateTime.Now;
+            decimal quoteOnExpirationDate = this.getQuote(DateTime.Today, strategyId);
+            decimal quoteOnEffectiveDate = this.getQuote(effectiveDate, strategyId);
+            decimal rateOnExpirationDate = this.getRate(DateTime.Today, investingCurrency);
+            decimal result = premium * (participationCoefficient / 100) * (quoteOnExpirationDate / quoteOnEffectiveDate - 1);
             if (currency == currency.RUR)
             {
-                result *= this.getRate(expirationDate, investingCurrency) / this.getRate(expirationDate, investingCurrency);
+                decimal rateOnEffectiveDate = this.getRate(effectiveDate, investingCurrency);
+                result *= rateOnExpirationDate / rateOnEffectiveDate;
+                this.Log?.Invoke(start, $"{premium} * ({participationCoefficient / 100}) * ({quoteOnExpirationDate} / {quoteOnEffectiveDate} - 1) * ({rateOnExpirationDate} / {rateOnEffectiveDate})");
             }
             else
             {
-                result *= this.getRate(expirationDate, investingCurrency);
+                result *= rateOnExpirationDate;
+                this.Log?.Invoke(start, $"{premium} * ({participationCoefficient / 100}) * ({quoteOnExpirationDate} / {quoteOnEffectiveDate} - 1) * {rateOnExpirationDate}");
             }
-            return Math.Max(result, 0);
+            return Math.Max(Math.Round(result, 2, MidpointRounding.ToEven), 0);
         }
         private static IEnumerable<TResult> CrossJoin<T1, T2, TResult>(IEnumerable<T1> enumerable1, IEnumerable<T2> enumerable2, Func<T1, T2, TResult> func)
         {
@@ -693,7 +701,6 @@ namespace TinkoffClient
                 currency: result.currency, 
                 investingCurrency: getCurrency(investingCurrency).Value,
                 effectiveDate: result.effectiveDate,
-                expirationDate: result.expirationDate,
                 strategyId: strategyDetail.ID);
             return result;
         }

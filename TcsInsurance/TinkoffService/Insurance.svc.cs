@@ -49,8 +49,8 @@ namespace TinkoffService
                 GetQuotesRequest = new GetQuotesRequest()
                 {
                     strategyId = strategyId,
-                    dateFrom = DateTime.Today.AddDays(-70),
-                    dateTo = DateTime.Today,
+                    dateFrom = date.AddDays(-365),
+                    dateTo = date,
                 }
             });
             return result.GetQuotesResponse.quotes.OrderByDescending(A => A.date).First().price;
@@ -65,6 +65,7 @@ namespace TinkoffService
             {
                 getQuote = this.getQuote,
                 getRate = this.getRate,
+                Log = (start, message) => this.addLog(start, output: message, methodName: "calcDividends"),
             };
         }
         private string trySerialize(object value)
@@ -192,7 +193,10 @@ namespace TinkoffService
         {
             return this.tryAction(
                 inputFunc: () => request.GetQuotesRequest,
-                actionFunc: input => new QuotesHelper(this.createVirtuClient()).GetQuotes(input),
+                actionFunc: input => new QuotesHelper(this.createVirtuClient())
+                {
+                    Log = message => this.addLog(DateTime.Now, output: message, methodName: "GetTicker")
+                }.GetQuotes(input),
                 outputFunc: output => new getQuotesResponse1(output));
         }
     }

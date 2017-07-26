@@ -17,7 +17,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>@item.Start.ToString("yyyy-MM-dd hh-mm-ss")</td>
-        <td>@(item.End - item.Start).TotalMilliseconds.ToString() ms</td>
+        <td>@((item.End - item.Start).TotalMilliseconds.ToString()) ms</td>
         <td>@item.Name</td>
         <td>@item.Input</td>
         <td>@item.Output</td>

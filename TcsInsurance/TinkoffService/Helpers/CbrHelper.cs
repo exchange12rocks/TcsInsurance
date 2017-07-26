@@ -132,7 +132,10 @@ namespace TinkoffService.Helpers
         {
             if (currency == currency.RUR) return 1;
             DailyInfo cbrClient = new DailyInfo();
-            cbrClient.Credentials = new NetworkCredential("svcTinkoff", "USER4tinkoff");
+            cbrClient.Proxy = new WebProxy("http://msk01-wsncls02.uralsibins.ru:8080")
+            {
+                Credentials = new NetworkCredential(@"uralsibins\svcTinkoff", "USER4tinkoff"),
+            };
             XmlNode resultXml = cbrClient.GetCursOnDateXML(date);
             XmlSerializer serializer = new XmlSerializer(typeof(ValuteData));
             ValuteData result = (ValuteData)serializer.Deserialize(new StringReader(resultXml.OuterXml));
