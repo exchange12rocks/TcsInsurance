@@ -89,7 +89,7 @@ namespace TinkoffService.Helpers
                 {
                     date = this.getQuotesLastUpdateDateTime(db, ticker).Value,
                     dateSpecified = true,
-                    quotes = queryable.Where(A => A.Date >= parameter.dateFrom && A.Date < parameter.dateTo).Select(A => new quote()
+                    quotes = queryable.Where(A => A.Date >= parameter.dateFrom && A.Date <= parameter.dateTo).Select(A => new quote()
                     {
                         price = A.Value,
                         date = A.Date,
