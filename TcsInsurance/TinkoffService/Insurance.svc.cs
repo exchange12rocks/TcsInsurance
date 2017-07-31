@@ -65,7 +65,11 @@ namespace TinkoffService
             {
                 getQuote = this.getQuote,
                 getRate = this.getRate,
-                Log = (start, message) => this.addLog(start, output: message, methodName: "calcDividends"),
+                Log = (log) => this.addLog(
+                        methodName: log.Name ?? "TinkoffClient",
+                        start: log.Start ?? DateTime.Now,
+                        input: log.Input,
+                        output: log.Output),
             };
         }
         private string trySerialize(object value)
@@ -195,7 +199,11 @@ namespace TinkoffService
                 inputFunc: () => request.GetQuotesRequest,
                 actionFunc: input => new QuotesHelper(this.createVirtuClient())
                 {
-                    Log = message => this.addLog(DateTime.Now, output: message, methodName: "GetTicker")
+                    Log = (log) => this.addLog(
+                        methodName: log.Name ?? "QuotesHelper",
+                        start: log.Start ?? DateTime.Now,
+                        input: log.Input,
+                        output: log.Output),
                 }.GetQuotes(input),
                 outputFunc: output => new getQuotesResponse1(output));
         }

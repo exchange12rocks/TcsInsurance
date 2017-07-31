@@ -188,6 +188,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj">
+      <Project>{2a649c58-9b9b-41dc-8e7b-721b692228e8}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TinkoffClient\TinkoffClient.csproj">
       <Project>{ae7d52bc-fe45-43a5-bdc8-0b64eb6387d0}</Project>
       <Name>TinkoffClient</Name>

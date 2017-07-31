@@ -19,7 +19,7 @@ namespace TinkoffService.Helpers
             };
         }
         private VirtuClient.VirtuClient virtuClient;
-        public Action<string> Log;
+        public Action<Core.Log> Log;
         public QuotesHelper(VirtuClient.VirtuClient virtuClient)
         {
             this.virtuClient = virtuClient;
@@ -77,9 +77,11 @@ namespace TinkoffService.Helpers
                 DateTime? quotesLastUpdateDateTimeSetting = this.getQuotesLastUpdateDateTime(db, ticker);
                 if (!quotesLastUpdateDateTimeSetting.HasValue || (DateTime.Now - quotesLastUpdateDateTimeSetting.Value).TotalHours >= 1)
                 {
-                    TickerHistoryHelper tickerHistoryHelper = new TickerHistoryHelper(db);
+                    TickerHistoryHelper tickerHistoryHelper = new TickerHistoryHelper(db)
+                    {
+                        Log = this.Log,
+                    };
                     var tickers = tickerHistoryHelper.LoadFromService(ticker);
-                    this.Log?.Invoke($"LoadFromService({ticker}) = {JsonConvert.SerializeObject(tickers.OrderByDescending(A => A.Date))}");
                     tickerHistoryHelper.AddOrUpdate(tickers);
                     this.setQuotesLastUpdateDateTime(db, ticker, DateTime.Now);
                     db.SaveChanges();

@@ -101,7 +101,7 @@ namespace TinkoffClient
     {
         public Func<DateTime, currency, decimal> getRate;
         public Func<DateTime, string, decimal> getQuote;
-        public Action<DateTime, string> Log;
+        public Action<Core.Log> Log;
         private decimal calcDividends(decimal premium, decimal participationCoefficient, currency currency, currency investingCurrency, DateTime effectiveDate, string strategyId)
         {
             DateTime start = DateTime.Now;
@@ -113,12 +113,58 @@ namespace TinkoffClient
             {
                 decimal rateOnEffectiveDate = this.getRate(effectiveDate, investingCurrency);
                 result *= rateOnExpirationDate / rateOnEffectiveDate;
-                this.Log?.Invoke(start, $"{premium} * ({participationCoefficient / 100}) * ({quoteOnExpirationDate} / {quoteOnEffectiveDate} - 1) * ({rateOnExpirationDate} / {rateOnEffectiveDate})");
+                this.Log?.Invoke(
+                    new Core.Log()
+                    {
+                        Name = "TinkoffClient.calcDividends",
+                        Start = start,
+                        Input = Newtonsoft.Json.JsonConvert.SerializeObject(new {
+                            premium,
+                            participationCoefficient,
+                            currency,
+                            investingCurrency,
+                            effectiveDate,
+                            strategyId,
+                            today = DateTime.Today,
+                        }),
+                        Output = Newtonsoft.Json.JsonConvert.SerializeObject(new
+                        {
+                            quoteOnExpirationDate,
+                            quoteOnEffectiveDate,
+                            rateOnExpirationDate,
+                            rateOnEffectiveDate,
+                            result,
+                            resultString = $"{premium} * ({participationCoefficient / 100}) * ({quoteOnExpirationDate} / {quoteOnEffectiveDate} - 1) * ({rateOnExpirationDate} / {rateOnEffectiveDate})",
+                        }),
+                    });
             }
             else
             {
                 result *= rateOnExpirationDate;
-                this.Log?.Invoke(start, $"{premium} * ({participationCoefficient / 100}) * ({quoteOnExpirationDate} / {quoteOnEffectiveDate} - 1) * {rateOnExpirationDate}");
+                this.Log?.Invoke(
+                    new Core.Log()
+                    {
+                        Name = "TinkoffClient.calcDividends",
+                        Start = start,
+                        Input = Newtonsoft.Json.JsonConvert.SerializeObject(new
+                        {
+                            premium,
+                            participationCoefficient,
+                            currency,
+                            investingCurrency,
+                            effectiveDate,
+                            strategyId,
+                            today = DateTime.Today,
+                        }),
+                        Output = Newtonsoft.Json.JsonConvert.SerializeObject(new
+                        {
+                            quoteOnExpirationDate,
+                            quoteOnEffectiveDate,
+                            rateOnExpirationDate,
+                            result,
+                            resultString = $"{premium} * ({participationCoefficient / 100}) * ({quoteOnExpirationDate} / {quoteOnEffectiveDate} - 1) * {rateOnExpirationDate}",
+                        }),
+                    });
             }
             return Math.Max(Math.Round(result, 2, MidpointRounding.ToEven), 0);
         }
@@ -330,6 +376,9 @@ namespace TinkoffClient
         }
 
         private VirtuClient.VirtuClient virtuClient;
+
+        public string JsonConvert { get; private set; }
+
         public TinkoffClient(VirtuClient.VirtuClient virtuClient)
         {
             this.virtuClient = virtuClient;
