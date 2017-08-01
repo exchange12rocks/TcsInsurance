@@ -102,17 +102,17 @@ namespace TinkoffClient
         public Func<DateTime, currency, decimal> getRate;
         public Func<DateTime, string, decimal> getQuote;
         public Action<Core.Log> Log;
-        private decimal calcDividends(decimal premium, decimal participationCoefficient, currency currency, currency investingCurrency, DateTime effectiveDate, string strategyId)
+        private decimal calcDividends(decimal premium, decimal participationCoefficient, currency currency, currency investingCurrency, DateTime startDate, DateTime endDate, string strategyId)
         {
             DateTime start = DateTime.Now;
-            decimal quoteOnExpirationDate = this.getQuote(DateTime.Today, strategyId);
-            decimal quoteOnEffectiveDate = this.getQuote(effectiveDate, strategyId);
-            decimal rateOnExpirationDate = this.getRate(DateTime.Today, investingCurrency);
-            decimal result = premium * (participationCoefficient / 100) * (quoteOnExpirationDate / quoteOnEffectiveDate - 1);
+            decimal quoteOnEndDate = this.getQuote(endDate, strategyId);
+            decimal quoteOnStartDate = this.getQuote(startDate, strategyId);
+            decimal rateOnEndDate = this.getRate(endDate, investingCurrency);
+            decimal result = premium * (participationCoefficient / 100) * (quoteOnEndDate / quoteOnStartDate - 1);
             if (currency == currency.RUR)
             {
-                decimal rateOnEffectiveDate = this.getRate(effectiveDate, investingCurrency);
-                result *= rateOnExpirationDate / rateOnEffectiveDate;
+                decimal rateOnStartDate = this.getRate(startDate, investingCurrency);
+                result *= rateOnEndDate / rateOnStartDate;
                 this.Log?.Invoke(
                     new Core.Log()
                     {
@@ -123,24 +123,24 @@ namespace TinkoffClient
                             participationCoefficient,
                             currency,
                             investingCurrency,
-                            effectiveDate,
+                            startDate,
+                            endDate,
                             strategyId,
-                            today = DateTime.Today,
                         }),
                         Output = Newtonsoft.Json.JsonConvert.SerializeObject(new
                         {
-                            quoteOnExpirationDate,
-                            quoteOnEffectiveDate,
-                            rateOnExpirationDate,
-                            rateOnEffectiveDate,
+                            quoteOnEndDate,
+                            quoteOnStartDate,
+                            rateOnEndDate,
+                            rateOnStartDate,
                             result,
-                            resultString = $"{premium} * ({participationCoefficient / 100}) * ({quoteOnExpirationDate} / {quoteOnEffectiveDate} - 1) * ({rateOnExpirationDate} / {rateOnEffectiveDate})",
+                            resultString = $"{premium} * ({participationCoefficient / 100}) * ({quoteOnEndDate} / {quoteOnStartDate} - 1) * ({rateOnEndDate} / {rateOnStartDate})",
                         }),
                     });
             }
             else
             {
-                result *= rateOnExpirationDate;
+                result *= rateOnEndDate;
                 this.Log?.Invoke(
                     new Core.Log()
                     {
@@ -152,17 +152,17 @@ namespace TinkoffClient
                             participationCoefficient,
                             currency,
                             investingCurrency,
-                            effectiveDate,
+                            startDate,
+                            endDate,
                             strategyId,
-                            today = DateTime.Today,
                         }),
                         Output = Newtonsoft.Json.JsonConvert.SerializeObject(new
                         {
-                            quoteOnExpirationDate,
-                            quoteOnEffectiveDate,
-                            rateOnExpirationDate,
+                            quoteOnEndDate,
+                            quoteOnStartDate,
+                            rateOnEndDate,
                             result,
-                            resultString = $"{premium} * ({participationCoefficient / 100}) * ({quoteOnExpirationDate} / {quoteOnEffectiveDate} - 1) * {rateOnExpirationDate}",
+                            resultString = $"{premium} * ({participationCoefficient / 100}) * ({quoteOnEndDate} / {quoteOnStartDate} - 1) * {rateOnEndDate}",
                         }),
                     });
             }
@@ -749,7 +749,8 @@ namespace TinkoffClient
                 participationCoefficient: result.coefficient, 
                 currency: result.currency, 
                 investingCurrency: getCurrency(investingCurrency).Value,
-                effectiveDate: result.effectiveDate,
+                startDate: getDate(strategyDetail.InvestmentStartDate).Value,
+                endDate: DateTime.Today,
                 strategyId: strategyDetail.ID);
             return result;
         }
