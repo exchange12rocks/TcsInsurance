@@ -102,11 +102,11 @@ namespace TinkoffClient
         public Func<DateTime, currency, decimal> getRate;
         public Func<DateTime, string, decimal> getQuote;
         public Action<Core.Log> Log;
-        private decimal calcDividends(decimal premium, decimal participationCoefficient, currency currency, currency investingCurrency, DateTime startDate, DateTime endDate, string strategyId)
+        private decimal calcDividends(decimal premium, decimal participationCoefficient, currency currency, currency investingCurrency, DateTime startDate, DateTime endDate, string strategyId, decimal quoteOnStartDate)
         {
             DateTime start = DateTime.Now;
             decimal quoteOnEndDate = this.getQuote(endDate, strategyId);
-            decimal quoteOnStartDate = this.getQuote(startDate, strategyId);
+            //decimal quoteOnStartDate = this.getQuote(startDate, strategyId);
             decimal rateOnEndDate = this.getRate(endDate, investingCurrency);
             decimal result = premium * (participationCoefficient / 100) * (quoteOnEndDate / quoteOnStartDate - 1);
             if (currency == currency.RUR)
@@ -197,7 +197,18 @@ namespace TinkoffClient
             }
             else
             {
-                return DateTime.ParseExact(value, "yyyy-MM-dd", null);
+                try
+                {
+                    return DateTime.ParseExact(value, new string[]
+                        {
+                            "yyyy-MM-dd",
+                            "yyyy-MM-ddT00:00:00",
+                        }, null, System.Globalization.DateTimeStyles.None);
+                }
+                catch(Exception exception)
+                {
+                    throw new Exception($"{value} is not valid DateTime yyyy-MM-dd or yyyy-MM-ddT00:00:00", exception);
+                }
             }
         }
         private static GetClassifierOutput getCurrency(currency? value, IEnumerable<GetClassifierOutput> currencies)
@@ -751,7 +762,8 @@ namespace TinkoffClient
                 investingCurrency: getCurrency(investingCurrency).Value,
                 startDate: getDate(strategyDetail.InvestmentStartDate).Value,
                 endDate: DateTime.Today,
-                strategyId: strategyDetail.ID);
+                strategyId: strategyDetail.ID,
+                quoteOnStartDate: strategyDetail.BaseIndexOnStartDate.Value);
             return result;
         }
         public GetPolicyDocumentResponse GetPolicyDocument(GetPolicyDocumentRequest parameter)
