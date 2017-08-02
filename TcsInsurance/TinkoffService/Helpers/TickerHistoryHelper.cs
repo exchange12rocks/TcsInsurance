@@ -55,7 +55,7 @@ namespace TinkoffService.Helpers
                 else
                 {
                     this.db.TickerHistoryValues.Add(value);
-                    logString.AppendLine($"insert {value.Ticker} {value.Date.ToString("yyyy-MM-dd")}");
+                    logString.AppendLine($"insert {value.Ticker} {value.Date.ToString("yyyy-MM-dd")} {value.Value}");
                 }
             }
             this.db.SaveChanges();

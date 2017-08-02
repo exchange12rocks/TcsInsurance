@@ -106,7 +106,6 @@ namespace TinkoffClient
         {
             DateTime start = DateTime.Now;
             decimal quoteOnEndDate = this.getQuote(endDate, strategyId);
-            //decimal quoteOnStartDate = this.getQuote(startDate, strategyId);
             decimal rateOnEndDate = this.getRate(endDate, investingCurrency);
             decimal result = premium * (participationCoefficient / 100) * (quoteOnEndDate / quoteOnStartDate - 1);
             if (currency == currency.RUR)
