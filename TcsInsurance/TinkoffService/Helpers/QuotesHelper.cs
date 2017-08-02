@@ -29,7 +29,11 @@ namespace TinkoffService.Helpers
             Setting quotesLastUpdateDateTimeSetting = db.Settings.SingleOrDefault(A => A.Key == getQuotesLastUpdateDateTimeSettingName);
             if(quotesLastUpdateDateTimeSetting != null && quotesLastUpdateDateTimeSetting.Value != null)
             {
-                Dictionary<string, DateTime?> quotesLastUpdateDateTime = JsonConvert.DeserializeObject<Dictionary<string, DateTime?>>(quotesLastUpdateDateTimeSetting.Value);
+                Dictionary<string, DateTime?> quotesLastUpdateDateTime = null;
+                if(quotesLastUpdateDateTimeSetting.Value != null)
+                {
+                    quotesLastUpdateDateTime = JsonConvert.DeserializeObject<Dictionary<string, DateTime?>>(quotesLastUpdateDateTimeSetting.Value);
+                }
                 if(quotesLastUpdateDateTime != null && quotesLastUpdateDateTime.Keys.Contains(ticker, StringComparer.OrdinalIgnoreCase))
                 {
                     return quotesLastUpdateDateTime[ticker];
@@ -53,7 +57,11 @@ namespace TinkoffService.Helpers
             }
             else
             {
-                Dictionary<string, DateTime?> quotesLastUpdateDateTime = JsonConvert.DeserializeObject<Dictionary<string, DateTime?>>(quotesLastUpdateDateTimeSetting.Value);
+                Dictionary<string, DateTime?> quotesLastUpdateDateTime = null;
+                if(quotesLastUpdateDateTimeSetting.Value != null)
+                {
+                    quotesLastUpdateDateTime = JsonConvert.DeserializeObject<Dictionary<string, DateTime?>>(quotesLastUpdateDateTimeSetting.Value);
+                }
                 if(quotesLastUpdateDateTime == null)
                 {
                     quotesLastUpdateDateTime = new Dictionary<string, DateTime?>();

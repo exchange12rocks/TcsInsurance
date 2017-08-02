@@ -46,8 +46,11 @@ namespace TinkoffService.Helpers
                 TickerHistoryValue oldTickerHistoryValue = oldTickerHistoryValues.SingleOrDefault(A => A.Ticker == value.Ticker && A.Date == value.Date);
                 if (oldTickerHistoryValue != null)
                 {
-                    oldTickerHistoryValue.Value = oldTickerHistoryValue.Value;
-                    logString.AppendLine($"update {value.Ticker} {value.Date.ToString("yyyy-MM-dd")}");
+                    if (oldTickerHistoryValue.Value != value.Value)
+                    {
+                        oldTickerHistoryValue.Value = value.Value;
+                        logString.AppendLine($"update {value.Ticker} {value.Date.ToString("yyyy-MM-dd")} from {oldTickerHistoryValue.Value} to {value.Value}");
+                    }
                 }
                 else
                 {
@@ -56,12 +59,15 @@ namespace TinkoffService.Helpers
                 }
             }
             this.db.SaveChanges();
-            this.Log?.Invoke(new Core.Log()
+            if (!string.IsNullOrEmpty(logString.ToString()))
             {
-                Name = "TickerHistoryHelper.AddOrUpdate",
-                Start = start,
-                Output = logString.ToString(),
-            });
+                this.Log?.Invoke(new Core.Log()
+                {
+                    Name = "TickerHistoryHelper.AddOrUpdate",
+                    Start = start,
+                    Output = logString.ToString(),
+                });
+            }
         }
     }
 }
