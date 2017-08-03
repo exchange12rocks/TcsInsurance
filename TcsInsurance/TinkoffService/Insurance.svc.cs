@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.ServiceModel;
 using tinkoff.ru.partners.insurance.investing.types;
 using TinkoffClient;
+using TinkoffClient.Models;
 using TinkoffService.Entities;
 using TinkoffService.Helpers;
 using VirtuClient.Models;
@@ -120,13 +121,21 @@ namespace TinkoffService
                     errorMessage = "Произошла ошибка взаимодействия с вышестоящим сервером",
                 }, "Произошла ошибка взаимодействия с вышестоящим сервером");
             }
-            else
+            else if (exception is ServiceException)
             {
                 return new FaultException<CommonFault>(new CommonFault()
                 {
                     errorCode = "500",
                     errorMessage = exception.Message,
                 }, exception.Message);
+            }
+            else
+            {
+                return new FaultException<CommonFault>(new CommonFault()
+                {
+                    errorCode = "500",
+                    errorMessage = "Произошла внутреняя ошибка сервиса",
+                }, "Произошла внутреняя ошибка сервиса");
             }
         }
         private TResponce tryAction<TResponce, TInput, TOutput>(Func<TInput> inputFunc, Func<TInput, TOutput> actionFunc, Func<TOutput, TResponce> outputFunc, [CallerMemberName] string methodName = null)

@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using tinkoff.ru.partners.insurance.investing.types;
+using TinkoffClient.Models;
 using VirtuClient.Models;
 namespace TinkoffClient
 {
@@ -27,11 +28,11 @@ namespace TinkoffClient
             var values = enumerable.Where(A => string.Equals(predicatorFunc(A), key, StringComparison.OrdinalIgnoreCase));
             if (values.Count() == 0)
             {
-                throw new Exception($"Не найдено записей {typeof(T).Name} удовлетворяющих условию: {PropertyHelper.GetPropertyName(predicator)}={key}. Возможные значения: {string.Join(", ", enumerable.Select(predicatorFunc))}");
+                throw new ServiceException($"Не найдено записей {typeof(T).Name} удовлетворяющих условию: {PropertyHelper.GetPropertyName(predicator)}={key}. Возможные значения: {string.Join(", ", enumerable.Select(predicatorFunc))}");
             }
             if (values.Count() > 1)
             {
-                throw new Exception($"Найдено {values.Count()} записей {typeof(T).Name} удовлетворяющих условию: {PropertyHelper.GetPropertyName(predicator)}={key}. Возможные значения: {string.Join(", ", enumerable.Select(predicatorFunc))}");
+                throw new ServiceException($"Найдено {values.Count()} записей {typeof(T).Name} удовлетворяющих условию: {PropertyHelper.GetPropertyName(predicator)}={key}. Возможные значения: {string.Join(", ", enumerable.Select(predicatorFunc))}");
             }
             return values.Single();
         }
@@ -49,11 +50,11 @@ namespace TinkoffClient
                 string possibleValues = string.Join(", ", enumerable.Select(value => "{ " + string.Join(", ", andPredicators.Select(predicator => $"{PropertyHelper.GetPropertyName(predicator.Item1)}: {predicator.Item1.Compile().Invoke(value)}")) + " }"));
                 if (values.Count() == 0)
                 {
-                    throw new Exception($"Не найдено записей {typeof(T).Name} удовлетворяющих условию: {message}. Возможные значения: {possibleValues}");
+                    throw new ServiceException($"Не найдено записей {typeof(T).Name} удовлетворяющих условию: {message}. Возможные значения: {possibleValues}");
                 }
                 if (values.Count() > 1)
                 {
-                    throw new Exception($"Найдено {values.Count()} записей {typeof(T).Name} удовлетворяющих условию: {message}. Возможные значения: {possibleValues}");
+                    throw new ServiceException($"Найдено {values.Count()} записей {typeof(T).Name} удовлетворяющих условию: {message}. Возможные значения: {possibleValues}");
                 }
             }
             return values.Single();
@@ -64,7 +65,7 @@ namespace TinkoffClient
             var values = enumerable.Where(A => string.Equals(predicatorFunc(A), key, StringComparison.OrdinalIgnoreCase));
             if (values.Count() == 0)
             {
-                throw new Exception($"Не найдено записей {typeof(T).Name} удовлетворяющих условию: {PropertyHelper.GetPropertyName(predicator)}={key}. Возможные значения: {string.Join(", ", enumerable.Select(predicatorFunc))}");
+                throw new ServiceException($"Не найдено записей {typeof(T).Name} удовлетворяющих условию: {PropertyHelper.GetPropertyName(predicator)}={key}. Возможные значения: {string.Join(", ", enumerable.Select(predicatorFunc))}");
             }
             return values.First();
         }
@@ -74,7 +75,7 @@ namespace TinkoffClient
             var values = enumerable.Where(A => key.Equals(predicatorFunc(A)));
             if (values.Count() == 0)
             {
-                throw new Exception($"Не найдено записей {typeof(T).Name} удовлетворяющих условию: {PropertyHelper.GetPropertyName(predicator)}={key}. Возможные значения: {string.Join(", ", enumerable.Select(predicatorFunc))}");
+                throw new ServiceException($"Не найдено записей {typeof(T).Name} удовлетворяющих условию: {PropertyHelper.GetPropertyName(predicator)}={key}. Возможные значения: {string.Join(", ", enumerable.Select(predicatorFunc))}");
             }
             return values.First();
         }
@@ -83,7 +84,7 @@ namespace TinkoffClient
             Func<T, string> predicatorFunc = predicator.Compile();
             if (enumerable.Count() == 0)
             {
-                throw new Exception($"Не найдено записей {typeof(T).Name} для вычисления Min");
+                throw new ServiceException($"Не найдено записей {typeof(T).Name} для вычисления Min");
             }
             return enumerable.Min(A => converter(predicatorFunc(A)));
         }
@@ -92,7 +93,7 @@ namespace TinkoffClient
             Func<T, string> predicatorFunc = predicator.Compile();
             if (enumerable.Count() == 0)
             {
-                throw new Exception($"Не найдено записей {typeof(T).Name} для вычисления Max");
+                throw new ServiceException($"Не найдено записей {typeof(T).Name} для вычисления Max");
             }
             return enumerable.Min(A => converter(predicatorFunc(A)));
         }
@@ -206,7 +207,7 @@ namespace TinkoffClient
                 }
                 catch(Exception exception)
                 {
-                    throw new Exception($"{value} is not valid DateTime yyyy-MM-dd or yyyy-MM-ddT00:00:00", exception);
+                    throw new ServiceException($"{value} is not valid DateTime yyyy-MM-dd or yyyy-MM-ddT00:00:00", exception);
                 }
             }
         }
@@ -230,7 +231,7 @@ namespace TinkoffClient
             }
             else
             {
-                throw new ArgumentException("unknown currency value");
+                throw new ServiceException("unknown currency value");
             }
         }
         private static currency? getCurrency(GetClassifierOutput value)
@@ -253,7 +254,7 @@ namespace TinkoffClient
             }
             else
             {
-                throw new ArgumentException("unknown currency value");
+                throw new ServiceException("unknown currency value");
             }
         }
         private static string getSex(sex value)
@@ -268,7 +269,7 @@ namespace TinkoffClient
             }
             else
             {
-                throw new ArgumentException("unknown sex value");
+                throw new ServiceException("unknown sex value");
             }
         }
         private static sex getSex(string value)
@@ -283,7 +284,7 @@ namespace TinkoffClient
             }
             else
             {
-                throw new ArgumentException("unknown sex value");
+                throw new ServiceException("unknown sex value");
             }
         }
         private static string getFullName(person person)
@@ -381,7 +382,7 @@ namespace TinkoffClient
             }
             else
             {
-                throw new Exception($"неизвестный тип документа documentType: {documentType.ToString()}");
+                throw new ServiceException($"неизвестный тип документа documentType: {documentType.ToString()}");
             }
         }
 
@@ -707,7 +708,7 @@ namespace TinkoffClient
             }
             else
             {
-                throw new Exception($"неизвестный статус полиса, status: {status}");
+                throw new ServiceException($"неизвестный статус полиса, status: {status}");
             }
 
         }
