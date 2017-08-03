@@ -49,16 +49,20 @@ namespace TinkoffService.Helpers
                     if (oldTickerHistoryValue.Value != value.Value)
                     {
                         oldTickerHistoryValue.Value = value.Value;
+                        this.db.SaveChanges();
                         logString.AppendLine($"update {value.Ticker} {value.Date.ToString("yyyy-MM-dd")} from {oldTickerHistoryValue.Value} to {value.Value}");
                     }
                 }
                 else
                 {
-                    this.db.TickerHistoryValues.Add(value);
-                    logString.AppendLine($"insert {value.Ticker} {value.Date.ToString("yyyy-MM-dd")} {value.Value}");
+                    if (!this.db.TickerHistoryValues.Any(A => A.Ticker == value.Ticker && A.Date == value.Date))
+                    {
+                        this.db.TickerHistoryValues.Add(value);
+                        this.db.SaveChanges();
+                        logString.AppendLine($"insert {value.Ticker} {value.Date.ToString("yyyy-MM-dd")} {value.Value}");
+                    }
                 }
             }
-            this.db.SaveChanges();
             if (!string.IsNullOrEmpty(logString.ToString()))
             {
                 this.Log?.Invoke(new Core.Log()
