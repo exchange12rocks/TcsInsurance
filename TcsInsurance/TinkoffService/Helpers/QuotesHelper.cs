@@ -83,7 +83,7 @@ namespace TinkoffService.Helpers
             {
                 string ticker = strategy.InvestmentStrategyRaw;
                 DateTime? quotesLastUpdateDateTimeSetting = this.getQuotesLastUpdateDateTime(db, ticker);
-                if (!quotesLastUpdateDateTimeSetting.HasValue || (DateTime.Now - quotesLastUpdateDateTimeSetting.Value).TotalHours >= 1)
+                if (!quotesLastUpdateDateTimeSetting.HasValue || (DateTime.Now - quotesLastUpdateDateTimeSetting.Value).TotalHours >= 3)
                 {
                     TickerHistoryHelper tickerHistoryHelper = new TickerHistoryHelper(db)
                     {

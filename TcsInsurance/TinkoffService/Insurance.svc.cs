@@ -50,7 +50,7 @@ namespace TinkoffService
                 GetQuotesRequest = new GetQuotesRequest()
                 {
                     strategyId = strategyId,
-                    dateFrom = date.AddDays(-365),
+                    dateFrom = date.AddDays(-60),
                     dateTo = date,
                 }
             });
