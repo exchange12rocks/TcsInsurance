@@ -10,4 +10,15 @@
     {
         public string value { get; set; }
     }
+    public class GetInsSumsOutput
+    {
+        public GetTariffValueOutput InsPeriod { get; set; }
+        public GetTariffValueOutput InsSum { get; set; }
+    }
+    public class GetMinInsSumsOutput
+    {
+        public GetTariffValueOutput InsPeriod { get; set; }
+        public GetTariffValueOutput MaxInsSum { get; set; }
+        public GetTariffValueOutput MinInsSum { get; set; }
+    }
 }

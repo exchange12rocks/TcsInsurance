@@ -2,6 +2,7 @@
 {
     public class Policy
     {
+        public string InsurerType { get; set; }
         public string ProductID { get; set; }
         public string DocumentDate { get; set; }
         public string AcceptationDate { get; set; }

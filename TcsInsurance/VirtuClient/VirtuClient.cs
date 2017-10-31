@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using RestSharp;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using VirtuClient.Models;
@@ -254,7 +255,7 @@ namespace VirtuClient
         {
             return this.GetClassifier(productId, "33DB538C-6EDC-4708-8ABE-E90345F5361E");
         }
-        public GetTariffOutput[] GetTariffs(string productId, bool decodeClassified = true)
+        public GetTariffOutput[] GetBuyouts(string productId, bool decodeClassified = true)
         {
 			return this.tryAction(
 				createRequest: () => this.getNewRequest("/ClientCardFeature/Product/Tariffs.dat?id=8603db0d-d9c1-c80f-53c3-422774502afd", Method.GET)
@@ -267,6 +268,32 @@ namespace VirtuClient
 				createResponse: request => this.execute(request),
 				createResult: response => this.GetSimpleResult<GetTariffOutput[]>(response));
 		}
+        public GetInsSumsOutput[] GetInsSums(string productId, bool decodeClassified = true)
+        {
+            return this.tryAction(
+                createRequest: () => this.getNewRequest("/ClientCardFeature/Product/Tariffs.dat?id=8603db0d-d9c1-c80f-53c3-422774502afd", Method.GET)
+                .AddHeader("x-vs-parameters", JsonConvert.SerializeObject(new
+                {
+                    tariffId = "InsSums",
+                    productId = productId,
+                    decodeClassified = decodeClassified,
+                })),
+                createResponse: request => this.execute(request),
+                createResult: response => this.GetSimpleResult<GetInsSumsOutput[]>(response));
+        }
+        public GetMinInsSumsOutput[] GetMinInsSums(string productId, bool decodeClassified = true)
+        {
+            return this.tryAction(
+                createRequest: () => this.getNewRequest("/ClientCardFeature/Product/Tariffs.dat?id=8603db0d-d9c1-c80f-53c3-422774502afd", Method.GET)
+                .AddHeader("x-vs-parameters", JsonConvert.SerializeObject(new
+                {
+                    tariffId = "MinInsSums",
+                    productId = productId,
+                    decodeClassified = decodeClassified,
+                })),
+                createResponse: request => this.execute(request),
+                createResult: response => this.GetSimpleResult<GetMinInsSumsOutput[]>(response));
+        }
         public GetPrintformsOutput[] GetPrintforms(string productId)
         {
 			return this.tryAction(
@@ -296,6 +323,26 @@ namespace VirtuClient
 				createResponse: request => this.execute(request),
 				createResult: response => this.GetRpcDataResult<StrategiesSearchDataOutput[]>(response));
 		}
+        
+        public string GetProfileElements(ProfileType profieType, string productId)
+        {
+            return this.tryAction(
+                createRequest: () => this.getNewRequest("/Companies/UralsibLife/RightDecision/Resources/api.vlib", Method.POST)
+                .AddJsonBody(new RpcInput<string[]>()
+                {
+                    tid = 22,
+                    action = "Profile",
+                    method = "LoadValue",
+                    type = "rpc",
+                    data = new string[]
+                    {
+                        profieType.ToString(),
+                        productId
+                    }
+                }),
+                createResponse: request => this.execute(request),
+                createResult: response => this.GetRpcDataResult<Dictionary<string, string>>(response)).Values.Single();
+        }
         public CalculateOutput Calculate(CalculateInput parameter)
         {
 			return this.tryAction(

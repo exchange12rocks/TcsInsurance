@@ -385,6 +385,22 @@ namespace TinkoffClient
                 throw new ServiceException($"неизвестный тип документа documentType: {documentType.ToString()}");
             }
         }
+        private static policyStatus getStatus(string status)
+        {
+            if (string.Equals(status, "Проект", StringComparison.OrdinalIgnoreCase))
+            {
+                return policyStatus.Item;
+            }
+            else if (string.Equals(status, "Действующий", StringComparison.OrdinalIgnoreCase))
+            {
+                return policyStatus.Item1;
+            }
+            else
+            {
+                throw new ServiceException($"неизвестный статус полиса, status: {status}");
+            }
+
+        }
 
         private VirtuClient.VirtuClient virtuClient;
 
@@ -402,7 +418,8 @@ namespace TinkoffClient
             var insuranceSums = this.virtuClient.GetInsuranceSums(product.ID);
             var insurancePeriods = this.virtuClient.GetInsurancePeriods(product.ID);
             var currencies = this.virtuClient.GetCurrencies(product.ID);
-            var getBuyoutTariffs = this.virtuClient.GetTariffs(product.ID);
+            var getBuyoutTariffs = this.virtuClient.GetBuyouts(product.ID);
+            var getMinInsSums = this.virtuClient.GetMinInsSums(product.ID);
             var strategyDetails = this.virtuClient.StrategiesSearch(new StrategiesSearchInput()
             {
                 IsActive = true,
@@ -465,7 +482,7 @@ namespace TinkoffClient
             var insuranceSums = this.virtuClient.GetInsuranceSums(product.ID);
             var insurancePeriods = this.virtuClient.GetInsurancePeriods(product.ID);
             var currencies = this.virtuClient.GetCurrencies(product.ID);
-            var getBuyoutTariffs = this.virtuClient.GetTariffs(product.ID);
+            var getBuyoutTariffs = this.virtuClient.GetBuyouts(product.ID);
             var strategyDetails = this.virtuClient.StrategiesSearch(new StrategiesSearchInput()
             {
                 IsActive = true,
@@ -493,6 +510,7 @@ namespace TinkoffClient
             var documentType = documentTypes.Single(A => A.Name, "Паспорт гражданина Российской Федерации");
             var policy = this.virtuClient.Save(new Policy()
             {
+                InsurerType = "FL",
                 ProductID = parameter.productId,
                 DocumentDate = getDate(today),
                 EffectiveDate = getDate(effectiveDate),
@@ -679,9 +697,9 @@ namespace TinkoffClient
                 KvPartner1Rub = calculate.KvPartner1Rub,
                 KvPartner2Percent = calculate.KvPartner2Percent,
                 KvPartner2Rub = calculate.KvPartner2Rub,
-                Partner1Name = "",
-                Partner2Name = "",
-                CheafName = "Генерального директора",
+                Partner1Name = this.virtuClient.GetProfileElements(ProfileType.Partner1Name, product.ID),
+                Partner2Name = this.virtuClient.GetProfileElements(ProfileType.Partner2Name, product.ID),
+                CheafName = this.virtuClient.GetProfileElements(ProfileType.CheafName, product.ID),
                 SellerDivisionHierarchyInfo = "",
                 ScanWasSent = false,
                 SalesPartner = "",
@@ -696,28 +714,12 @@ namespace TinkoffClient
                 policyNumber = policy.SERIAL + " " + policy.NUMBER,
             };
         }
-        private static policyStatus getStatus(string status)
-        {
-            if (string.Equals(status, "Проект", StringComparison.OrdinalIgnoreCase))
-            {
-                return policyStatus.Item;
-            }
-            else if (string.Equals(status, "Действующий", StringComparison.OrdinalIgnoreCase))
-            {
-                return policyStatus.Item1;
-            }
-            else
-            {
-                throw new ServiceException($"неизвестный статус полиса, status: {status}");
-            }
-
-        }
         public GetPolicyResponse GetPolicy(GetPolicyRequest parameter)
         {
             var product = this.virtuClient.GetProducts().Single(A => A.Name, "Верное решение");
             var risks = this.virtuClient.GetRisks(product.ID);
             var currencies = this.virtuClient.GetCurrencies(product.ID);
-            var getBuyoutTariffs = this.virtuClient.GetTariffs(product.ID);
+            var getBuyoutTariffs = this.virtuClient.GetBuyouts(product.ID);
             var strategyDetails = this.virtuClient.StrategiesSearch(new StrategiesSearchInput()
             {
                 IsActive = true,

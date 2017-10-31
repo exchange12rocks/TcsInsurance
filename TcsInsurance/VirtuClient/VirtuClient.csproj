@@ -56,6 +56,7 @@
     <Compile Include="Models\GetClassifierOutput.cs" />
     <Compile Include="Models\CalculateInput.cs" />
     <Compile Include="Models\PrintInput.cs" />
+    <Compile Include="Models\ProfileType.cs" />
     <Compile Include="Models\StrategiesSearchOutput.cs" />
     <Compile Include="Models\StrategiesSearchInput.cs" />
     <Compile Include="Models\GetTariffOutput.cs" />
