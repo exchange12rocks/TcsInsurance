@@ -145,6 +145,7 @@
         public string StatusName { get; set; }
         public string NUMBAR { get; set; }
         public string ProductName { get; set; }
+        public bool PrintSpecialCondition { get; set; }
     }
     public class Investmentstrategydata
     {

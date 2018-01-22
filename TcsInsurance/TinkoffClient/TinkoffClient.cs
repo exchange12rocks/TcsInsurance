@@ -795,6 +795,7 @@ namespace TinkoffClient
             policy.StatusID = status.ID;
             policy.DocumentStatusID = status.ID;
             policy.StatusName = status.Name;
+            policy.PrintSpecialCondition = (getDate(policy.EffectiveDate).Value - getDate(policy.AcceptationDate).Value).TotalDays <= 14;
             this.virtuClient.Accept(policy);
             return new AcceptPolicyResponse()
             {
